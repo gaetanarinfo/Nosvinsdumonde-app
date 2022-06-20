@@ -1,0 +1,62 @@
+{
+  "name": "nosvinsdumonde",
+  "version": "3.0.1",
+  "description": "Nosvinsdumonde - ACHAT DE VIN - rouge, blanc, rosé, champagne ★★★",
+  "productName": "Nosvinsdumonde",
+  "author": "Seigneur Gaëtan",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js,.ts,.vue ./*",
+    "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@ionic-native/ionic-webview": "^5.36.0",
+    "@quasar/extras": "^1.0.0",
+    "@stripe/stripe-js": "^1.32.0",
+    "@vuelidate/core": "^2.0.0-alpha.41",
+    "@vuelidate/validators": "^2.0.0-alpha.29",
+    "axios": "^0.21.1",
+    "chart.js": "^3.8.0",
+    "composition-api": "^0.0.0",
+    "cordova": "^11.0.0",
+    "core-js": "^3.6.5",
+    "dotenv": "^16.0.1",
+    "html-entities": "^2.3.3",
+    "moment": "^2.29.3",
+    "quasar": "^2.6.0",
+    "vue": "^3.0.0",
+    "vue-chartjs": "^4.1.1",
+    "vue-moment": "^4.1.0",
+    "vue-router": "^4.0.0",
+    "vue2-filters": "^0.14.0",
+    "vuex": "^4.0.1"
+  },
+  "devDependencies": {
+    "@quasar/app-webpack": "^3.0.0",
+    "@types/node": "^12.20.21",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-vue": "^8.5.0",
+    "prettier": "^2.5.1",
+    "vue-stripe-elements-plus": "^1.0.3"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 12.22.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}

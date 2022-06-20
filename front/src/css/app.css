@@ -1,0 +1,413 @@
+// app global css in SCSS form
+
+// Global
+
+html,
+body {
+  background: #343b41;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.h3,
+h3 {
+  font-size: calc(1.3rem + .6vw);
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.show-mobile {
+  display: none;
+}
+
+@media all and (max-width: 980px) {
+  .hide-mobile {
+    display: none;
+  }
+
+  .show-mobile {
+    display: block;
+  }
+}
+
+// Navbar
+body.desktop .btn_home:hover>.q-focus-helper {
+  background: none !important;
+  opacity: 0 !important;
+}
+
+.langs {
+  width: 30px;
+}
+
+.users {
+  width: 30px;
+}
+
+// Home
+.body_page {
+  background: #343b41;
+}
+
+// Footer
+
+footer {
+  background: #212529 !important;
+}
+
+footer .footer_sub {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.btn_footer {
+  text-transform: lowercase
+}
+
+body.desktop .btn_footer:hover>.q-focus-helper {
+  background: none !important;
+  opacity: 0 !important;
+}
+
+footer .links {
+  border-bottom: 3px solid #ffc107;
+  padding-bottom: 13px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-align: center;
+  justify-content: center;
+}
+
+@media all and (max-width: 980px) {
+  footer {
+    position: relative !important;
+  }
+
+  footer .footer_items {
+    flex-direction: column;
+  }
+
+  footer .q-item__section:nth-child(2) .links {
+    margin-top: 1em;
+  }
+
+  footer .q-item__section:nth-child(3) .links {
+    margin-top: 1em;
+  }
+}
+
+// Vin jour
+#vin_jour {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 30px 0;
+  margin: 0 auto;
+}
+
+@media all and (max-width: 480px) {
+  #vin_jour {
+    padding: 0 5vw;
+  }
+}
+
+#bloc_vin_jour .vin_jour_img {
+  border-top: 3px solid white;
+  border-right: 3px solid white;
+  border-left: 3px solid white;
+  padding-top: 15px;
+  margin: 0 auto;
+  max-width: 325px;
+  padding-bottom: 15px;
+}
+
+#bloc_vin_jour .vin_jour_img img {
+  filter: drop-shadow(0 0 25px #ffffffbd);
+  color: #ffffffbd;
+  max-width: 250px;
+}
+
+@media all and (max-width: 480px) {
+  #bloc_vin_jour .vin_jour_img {
+    justify-content: center;
+  }
+
+  #bloc_vin_jour .vin_jour_img img {
+    max-width: 150px;
+  }
+}
+
+#bloc_vin_jour .appellation span {
+  font-size: 13px;
+}
+
+#bloc_vin_jour .contenance span {
+  font-size: 13px;
+}
+
+#bloc_vin_jour .prix span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#bloc_vin_jour .prix .chiffre {
+  font-size: 30px;
+}
+
+#bloc_vin_selection .card .card-title {
+  border-bottom: 3px solid #ffc107;
+  padding-bottom: 13px;
+  font-weight: 600;
+}
+
+#bloc_vin_selection .card {
+  width: 502px;
+  height: 284px;
+  border: 0;
+}
+
+@media all and (max-width: 480px) {
+  #bloc_vin_selection .card {
+    width: 100%;
+    height: 284px;
+  }
+}
+
+#bloc_vin_selection .card.card1 .card-body {
+  background: url('https://nosvinsdumonde.com/assets/img/bons_plans.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 284px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+#bloc_vin_selection .card.card2 .card-body {
+  background: url('https://nosvinsdumonde.com/assets/img/promotions_privilege.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 284px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+@media all and (max-width: 480px) {
+  #bloc_vin_selection .card.card1 .card-body {
+    height: 284px;
+    width: 100%;
+  }
+
+  #bloc_vin_selection .card.card2 .card-body {
+    height: 284px;
+    width: 100%;
+  }
+}
+
+#bloc_vin .row .card {
+  min-height: 100%;
+}
+
+#bloc_vin2 .row .card {
+  min-height: 100%;
+}
+
+#blocChampagne2 .row .card {
+  min-height: 100%;
+}
+
+#blocVin2 .row .card {
+  min-height: 100%;
+}
+
+#bloc_vin_jour .vin_jour_title {
+  max-width: 325px;
+  margin: 0 auto;
+  border-bottom: 3px solid white;
+  padding: 15px;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+}
+
+@media all and (max-width: 480px) {
+  #bloc_vin_jour .vin_jour_title {
+    padding: 0 10px 15px 10px;
+  }
+}
+
+#bloc_vin_jour .badge_region {
+  width: 300px;
+  display: block;
+  padding: 5px 0;
+  color: white;
+  font-weight: 700;
+  line-height: 2.1em;
+  text-align: center;
+  font-family: ralewayextrabold, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: initial;
+  word-break: break-all;
+  background: #a42f40;
+  border: 3px solid #6f6f6f45;
+  border-radius: 1em;
+  overflow: hidden;
+  margin: 1.5em auto 0 auto;
+}
+
+@media all and (max-width: 480px) {
+  #bloc_vin_jour .badge_region {
+    width: 100%;
+  }
+}
+
+.bloc_vin_title {
+  border-bottom: 3px solid #ffc107;
+  padding-bottom: 13px;
+  display: block;
+}
+
+@media all and (max-width: 480px) {
+  .bloc_vin_title {
+    margin: 0 5vw 10vw 5vw;
+    padding: 0 0 0 0;
+  }
+}
+
+.card_vin {
+  border: 0;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  border-radius: 0;
+  width: 100%;
+}
+
+@media all and (max-width: 480px) {
+  .card_image_vin {
+    justify-content: center;
+    max-width: 150px;
+  }
+}
+
+.card_imgs_vin {
+  display: flex;
+  align-items: center;
+  height: auto;
+  padding: 0 15px;
+  flex-direction: column;
+}
+
+shadow {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+}
+
+.separator {
+  border-bottom: 3px solid #ffc107;
+  padding-bottom: 13px;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.card_actus {
+  border: 0;
+  border-top-left-radius: 16px !important;
+  border-top-right-radius: 16px !important;
+  border-radius: 0;
+}
+
+.groupe_article {
+  background-color: #198754;
+  border: 2px solid #1749316e;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0.5rem 0;
+  padding: 0.25rem 0.5rem;
+  font-size: .875rem;
+  border-radius: 0.2rem;
+  position: relative;
+  flex: 1 1 auto;
+  display: inline-block;
+  line-height: 1.5;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.btn-outline-bordeaux {
+  border-color: #d8707d !important;
+  color: #d8707d !important;
+}
+
+.btn-outline-bordeaux:hover {
+  background-color: #d8707d !important;
+  border-color: #d8707d !important;
+  color: white !important;
+}
+
+.btn-check:active+.btn-outline-bordeaux,
+.btn-check:checked+.btn-outline-bordeaux,
+.btn-outline-bordeaux.active,
+.btn-outline-bordeaux:active {
+  background-color: #d8707d !important;
+  border-color: #d8707d !important;
+}
+
+.btn-outline-bordeaux:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(216, 112, 125, 0.25) !important;
+}
+
+body.desktop .btn-outline-bordeaux:hover>.q-focus-helper {
+  background: none !important;
+  opacity: 0 !important;
+}
+
+
+.border_center {
+  border-right: 3px solid #f4ba09;
+}
+
+@media all and (max-width: 768px) {
+  .border_center {
+    border-bottom: 3px solid #f4ba09;
+    border-right: none;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+    width: 95%;
+    margin: 0 auto 2em auto;
+  }
+}
