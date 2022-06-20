@@ -25,6 +25,9 @@ const mutations = {
   setLoggedIn(state, value) {
     state.loggedIn = value
   },
+  setListParams(state, value) {
+    state.listParams = value
+  },
 }
 
 const actions = {
@@ -85,8 +88,12 @@ const actions = {
 
             setTimeout(function () {
               commit('setLoggedIn', true);
-              if (payload.page == 'cart') document.location.href = '#/cart/3';
-              else document.location.href = '/';
+              if (payload.page == 'cart') {
+                document.location.href = '#/cart/3';
+                location.reload()
+              } else {
+                document.location.href = '/';
+              }
 
             }, 2000);
 
@@ -332,6 +339,15 @@ const actions = {
     }, 2500);
 
   },
+  paramsVerif({
+    commit
+  }) {
+    axios
+      .get('/params')
+      .then((res) => {
+        commit('setListParams', res.data.listParams);
+      })
+  },
 }
 
 const getters = {
@@ -340,6 +356,9 @@ const getters = {
   },
   setLoggedIn(state) {
     return state.loggedIn
+  },
+  setListParams(state) {
+    return state.listParams
   },
 }
 

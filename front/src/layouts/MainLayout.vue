@@ -10,6 +10,11 @@
 
         <q-space />
 
+        <q-btn v-if="params.appVersionOnline != params.appVersion" round dense size="md" @click="showNotifUpdate()"
+          icon="notifications" class="q-mr-sm q-ml-sm q-py-sm q-px-sm" style="border-radius: 12px">
+          <q-badge floating color="info" rounded size="md" />
+        </q-btn>
+
         <q-btn flat round dense size="lg" class="q-mr-sm q-ml-sm q-py-sm q-px-sm" style="border-radius: 12px">
           <img class="langs" src="../assets/img/langs/fr.png" />
 
@@ -38,6 +43,7 @@
             </q-list>
           </q-menu>
         </q-btn>
+
         <q-btn flat dense v-ripple size="lg" class="q-mr-sm q-ml-sm q-py-sm q-px-sm" style="border-radius: 12px">
           <img class="users" style="border-radius: 50%" :src="
             'https://nosvinsdumonde.com/assets/img/avatars/' +
@@ -111,7 +117,7 @@
 
               <q-item class="q-pa-none q-ma-none text-center q-mb-sm" style="display: block;min-height: auto;">Version -
                 {{
-                    replaceGuillemet(appVersion)
+                    replaceGuillemet(params.appVersion)
                 }} - <span style="text-transform:capitalize;">{{ platform.platform }}</span></q-item>
             </div>
           </q-menu>
@@ -1547,9 +1553,17 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
 
+    $q.notify.registerType('update', {
+      icon: 'announcement',
+      progress: true,
+      color: 'brown',
+      textColor: 'white',
+      classes: 'glossy'
+    })
+
     return {
       platform: $q.platform.is,
-      appVersion: '3.0.1',
+
       stringOptions,
       dense: ref(null),
       login: ref(false),
@@ -1561,6 +1575,24 @@ export default defineComponent({
           message: 'Connexion réussi à Nosvinsdumonde !',
           timeout: 2500,
         });
+      },
+      showNotifUpdate() {
+
+        // Mise à jour de l'app
+        if (this.params.appVersionOnline != this.params.appVersion) {
+
+          $q.notify({
+            type: 'update',
+            position: 'top-left',
+            icon: 'contactless',
+            message: 'Mise à jour disponible !',
+            caption: 'Merci de vous rendre <a style="color: white;" href="https://play.google.com/store/apps/details?id=org.nosvinsdumonde.app">ici</a> sur pour la télécharger',
+            color: 'primary',
+            html: true,
+            timeout: 3500
+          })
+
+        }
       },
       showNotifError() {
         $q.notify({
@@ -1592,6 +1624,10 @@ export default defineComponent({
     return {
       livraisonValue: false,
       societeValue: false,
+      params: {
+        appVersion: '3.0.3',
+        appVersionOnline: '3.0.3',
+      },
       user: {
         id: null,
         email: null,
@@ -1636,18 +1672,25 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters('users', ['setListUser']),
+    ...mapGetters('users', ['setListParams']),
     ...mapState('users', ['loggedIn']),
   },
   methods: {
     ...mapActions('users', ['handleAuthStateChange']),
+    ...mapActions('users', ['paramsVerif']),
     ...mapMutations('users', ['setLoggedIn']),
     checkAuth() {
-      if (this.user.id != 'null') {
+      if (this.user) {
         this.handleAuthStateChange();
         this.setListUser;
         this.mountedData();
+
         setTimeout(this.checkAuth, 300);
       }
+    },
+    check() {
+      this.params.appVersionOnline = this.setListParams.version;
+      setTimeout(this.check, 2500);
     },
     ...mapActions('users', ['handleAuthStateChange']),
     mountedData() {
@@ -1737,6 +1780,12 @@ export default defineComponent({
   },
   mounted() {
     this.checkAuth();
+    this.paramsVerif();
+
+    setTimeout(() => {
+      this.check();
+    }, 500);
+
     this.loggedDataUser();
 
     if (Cookies.has('favoris')) {

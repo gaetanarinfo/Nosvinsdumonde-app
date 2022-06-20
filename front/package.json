@@ -1,6 +1,6 @@
 {
   "name": "nosvinsdumonde",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "Nosvinsdumonde - ACHAT DE VIN - rouge, blanc, rosé, champagne ★★★",
   "productName": "Nosvinsdumonde",
   "author": "Seigneur Gaëtan",
@@ -11,6 +11,8 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@capacitor/ios": "^3.6.0",
+    "@capacitor/push-notifications": "^1.0.9",
     "@ionic-native/ionic-webview": "^5.36.0",
     "@quasar/extras": "^1.0.0",
     "@stripe/stripe-js": "^1.32.0",

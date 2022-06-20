@@ -112,7 +112,7 @@
 
         <div class="stepper-content-container q-mt-xl" style="overflow: hidden">
 
-          <q-item
+          <div
             :class="this.$route.params.etape == 1 ? 'stepper-content fade-in active show q-pa-none' : 'stepper-content q-pa-none'"
             v-if="this.$route.params.etape == 1" stepper-label="1">
             <div class="row q-mb-md" style="border: 1px solid #ccc; padding: 24px"
@@ -199,7 +199,7 @@
                   {{ points }} PTS</q-item-section>
               </p>
             </div>
-          </q-item>
+          </div>
 
           <q-item
             :class="!user.id && !user.email && this.$route.params.etape == 2 ? 'stepper-content fade-in active show q-pa-none' : 'stepper-content q-pa-none'"
@@ -406,6 +406,7 @@
               border: 1px solid #ccc;
               padding: 12px;
               background: darkslategrey;
+              display: block;
             ">
               <h5 style="font-size: 22px;"><b>Total commande</b></h5>
 
@@ -1930,7 +1931,6 @@ export default {
     const showSimulatedReturnData = ref(false);
     return {
       dense: ref(null),
-      total: 0,
       carts: [],
       showNotifCart() {
         $q.notify({
@@ -1971,6 +1971,7 @@ export default {
   },
   data() {
     return {
+      total: null,
       port: 0.00,
       port_definitif: 14.00,
       totalFDP: 0.00,
@@ -2274,9 +2275,7 @@ export default {
     this.loggedDataUser();
     this.getCartId(Cookies.get('cart'));
     this.showTextLoading();
-    if (Cookies.has('cart')) {
-      this.countCart();
-    }
+    this.countCart();
     if (!Cookies.has('port')) {
       Cookies.set('port', 2, {
         secure: true,
