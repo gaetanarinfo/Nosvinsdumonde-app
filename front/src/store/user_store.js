@@ -5,6 +5,7 @@
 
 import axios from 'axios'
 import {
+  Cookies,
   Notify
 } from 'quasar'
 
@@ -12,11 +13,19 @@ const state = {
   listUser: {},
   loggedIn: false,
   logged: false,
-  token: null
+  token: null,
+  points: 0,
+  cashback: 0,
+}
+
+if (!Cookies.has('setLoggedIn')) {
+  Cookies.set('setLoggedIn', false)
 }
 
 var compteur = 1;
 var compteur2 = 1;
+var compteur3 = 1;
+var compteur4 = 1;
 
 const mutations = {
   setListUser(state, value) {
@@ -27,6 +36,12 @@ const mutations = {
   },
   setListParams(state, value) {
     state.listParams = value
+  },
+  setPoints(state, value) {
+    state.points = value
+  },
+  setCashBack(state, value) {
+    state.cashback = value
   },
 }
 
@@ -86,6 +101,8 @@ const actions = {
               message: `Bonjour ${res.data.sess.firstname} ${res.data.sess.lastname}`
             })
 
+            Cookies.set('setLoggedIn', true);
+
             setTimeout(function () {
               commit('setLoggedIn', true);
               if (payload.page == 'cart') {
@@ -120,6 +137,7 @@ const actions = {
           const sess = localStorage.getItem('active')
 
           if (sess === 1) {
+            Cookies.set('setLoggedIn', true);
             commit('setLoggedIn', true)
           }
 
@@ -146,9 +164,10 @@ const actions = {
           const sess = localStorage.getItem('active')
 
           if (sess === 1) {
-
+            Cookies.set('setLoggedIn', true);
             commit('setLoggedIn', true)
-
+          } else {
+            commit('setLoggedIn', false)
           }
         })
 
@@ -189,15 +208,16 @@ const actions = {
       })
       .then(() => {
 
-        const sess = localStorage.getItem('active')
+        const sess = localStorage.getItem('active');
 
-        if (sess !== 1) {
+        if (sess == 1) {
 
-          document.location.href = '#/login';
+          commit('setLoggedIn', true)
+          Cookies.set('setLoggedIn', true);
 
         } else {
 
-          commit('setLoggedIn', true)
+          document.location.href = '#/';
 
         }
       })
@@ -223,6 +243,7 @@ const actions = {
           localStorage.removeItem('admin', null)
           localStorage.removeItem('userId', null)
           commit('setLoggedIn', false);
+          Cookies.set('setLoggedIn', false);
           document.location.href = '/';
         }, 2000);
       })
@@ -348,6 +369,137 @@ const actions = {
         commit('setListParams', res.data.listParams);
       })
   },
+  updateUser({}, payload) {
+
+    const users = {
+      email2: payload.email2,
+      password2: payload.password2,
+      societe: payload.societe,
+      societeName: payload.societeName,
+      civilite: payload.civilite,
+      nom: payload.nom,
+      prenom: payload.prenom,
+      adresse: payload.adresse,
+      ville: payload.ville,
+      code_postal: payload.code_postal,
+      pays: payload.pays,
+      phone: payload.phone,
+      livraison: payload.livraison,
+      nom_livraison: payload.nom_livraison,
+      prenom_livraison: payload.prenom_livraison,
+      adresse_livraison: payload.adresse_livraison,
+      ville_livraison: payload.ville_livraison,
+      code_postal_livraison: payload.code_postal_livraison,
+      pays_livraison: payload.pays_livraison,
+      carte: payload.carte,
+    };
+
+    if (compteur3 <= 1) {
+
+      compteur3++;
+
+      axios
+        .post('/update', users)
+        .then((res) => {
+
+          const error = res.data.error;
+          const success = res.data.success;
+
+          // User empty
+          if (error === true) {
+
+            Notify.create({
+              position: 'top-left',
+              type: 'negative',
+              message: 'Une erreur est survenue !',
+              timeout: 2500,
+            });
+
+          }
+
+          if (success === true) {
+            Notify.create({
+              position: 'top-left',
+              timeout: 2500,
+              type: 'positive',
+              message: 'Votre profil est maintenant à jour.'
+            })
+          }
+
+        });
+
+    }
+
+    setTimeout(() => {
+      compteur3 = 1;
+    }, 2500);
+
+  },
+  convertPointCash({}, payload) {
+
+    const users = {
+      id: payload.id,
+      email: payload.email,
+    };
+
+    if (compteur4 <= 1) {
+
+      compteur4++;
+
+      axios
+        .post('/convertCashback', users)
+        .then((res) => {
+
+          const error = res.data.error;
+          const success = res.data.success;
+
+          // User empty
+          if (error === true) {
+
+            Notify.create({
+              position: 'top-left',
+              type: 'negative',
+              message: 'Vous n\'avez pas assez de point !',
+              timeout: 2500,
+            });
+
+          }
+
+          if (success === true) {
+            Notify.create({
+              position: 'top-left',
+              timeout: 2500,
+              type: 'positive',
+              message: 'Vos points ont été transformés en euro.'
+            })
+
+          }
+
+        });
+
+    }
+
+    setTimeout(() => {
+      compteur4 = 1;
+    }, 2500);
+
+  },
+  verifPointCash({
+    // commit
+  }, payload) {
+
+    axios
+      .get('/verifCashback/' + payload)
+      .then((res) => {
+
+        const point = res.data.point;
+        const cashback = res.data.cashback;
+
+        Cookies.set('cashback', cashback);
+        Cookies.set('point', point);
+
+      })
+  },
 }
 
 const getters = {
@@ -359,6 +511,12 @@ const getters = {
   },
   setListParams(state) {
     return state.listParams
+  },
+  setPoints(state) {
+    return state.points
+  },
+  setCashBack(state) {
+    return state.cashback
   },
 }
 

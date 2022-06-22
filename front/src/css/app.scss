@@ -846,3 +846,98 @@ h1 {
   border: 2px solid #000;
   flex-direction: column;
 }
+
+/* CART */
+#language_nav .cart_bloc {
+  background: #ffffff1f;
+  border-radius: 14px;
+  max-width: 128px;
+  height: auto;
+  text-align: center;
+}
+
+#language_nav .cart_bloc img {
+  max-width: 100px;
+  padding: 10px;
+  width: 100% !important;
+  height: auto;
+}
+
+#language_nav .item_cart {
+  display: flex;
+  gap: 0 20px;
+  align-items: center;
+  height: auto;
+}
+
+#language_nav #cart_bloc {
+  min-width: 515px;
+}
+
+@media all and (max-width: 480px) {
+  #language_nav .cart_bloc img {
+    max-width: 50px;
+    padding: 10px;
+    width: 50px !important;
+    height: auto;
+  }
+
+  #language_nav #cart_bloc {
+    min-width: 100%;
+  }
+
+  #language_nav .item_cart {
+    display: flex;
+    gap: 0 15px;
+    align-items: center;
+    height: auto;
+  }
+
+  .item_cart b {
+    font-size: 13px !important;
+  }
+
+  #language_nav .cart_bloc {
+    margin-left: 10px !important;
+  }
+}
+
+.disabled {
+  pointer-events: none !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+#check_list2 {
+  display: none;
+}
+
+#error {
+  display: none;
+}
+
+.paypal_element {
+  display: none;
+}
+
+.carte {
+  background: url(https://nosvinsdumonde.com/assets/img/carte_privilege.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 90%;
+  margin: 0 auto;
+  height: 300px;
+  border-radius: 16px !important;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #000;
+  flex-direction: column;
+}
+
+#message_privilege {
+  display: none !important;
+}

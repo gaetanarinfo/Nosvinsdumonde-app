@@ -10,6 +10,11 @@
 
         <q-space />
 
+        <q-btn v-if="this.user.id && this.user.email && this.user.carte == 1" round dense size="md"
+          @click="giftmodal = true" text-color="pink-6" icon="fa-solid fa-gift" class="q-mr-sm q-ml-sm q-py-sm q-px-sm"
+          style="border-radius: 12px">
+        </q-btn>
+
         <q-btn v-if="params.appVersionOnline != params.appVersion" round dense size="md" @click="showNotifUpdate()"
           icon="notifications" class="q-mr-sm q-ml-sm q-py-sm q-px-sm" style="border-radius: 12px">
           <q-badge floating color="info" rounded size="md" />
@@ -45,14 +50,18 @@
         </q-btn>
 
         <q-btn flat dense v-ripple size="lg" class="q-mr-sm q-ml-sm q-py-sm q-px-sm" style="border-radius: 12px">
+
+          <img class="users" src="https://nosvinsdumonde.com/assets/img/user_empty.png"
+            v-if="!this.user.id && !this.user.email" />
+
           <img class="users" style="border-radius: 50%" :src="
             'https://nosvinsdumonde.com/assets/img/avatars/' +
             this.user.avatar +
             ''
-          " v-if="user.id && user.email" />
-          <img class="users" src="../assets/img/user_empty.png" v-else />
+          " v-if="this.user.id && this.user.email" />
 
-          <q-menu class="bg-dark text-white" style="min-width: 190px" v-if="!user.id && !user.email">
+
+          <q-menu class="bg-dark text-white" style="min-width: 190px" v-if="!this.user.id && !this.user.email">
             <q-list>
               <q-item clickable @click="login = true">
                 <q-item-section avatar style="min-width: 20px;padding: 0 10px 0 0;">
@@ -70,7 +79,7 @@
             </q-list>
           </q-menu>
 
-          <q-menu class="bg-dark text-white" style="min-width: 190px" v-if="user.id && user.email">
+          <q-menu class="bg-dark text-white" style="min-width: 190px" v-if="this.user.id && this.user.email">
             <div class="no-wrap q-pa-md">
               <div class="column items-center">
                 <q-avatar size="72px">
@@ -78,7 +87,7 @@
                     'https://nosvinsdumonde.com/assets/img/avatars/' +
                     this.user.avatar +
                     ''
-                  " />
+                  " v-if="logged && this.user.avatar != 'undefined'" />
                 </q-avatar>
 
                 <div class="text-subtitle1 q-mt-md q-mb-xs text-center q-mb-md" style="font-weight: 500">
@@ -88,10 +97,10 @@
                 <q-btn color="red-5" label="Déconnexion" push @click="logout()" size="md" v-close-popup />
               </div>
 
-              <q-separator horizontal inset class="q-mx-lg q-mt-lg q-mb-lg" style="background: #949494" />
+              <q-separator horizontal inset class="q-mx-md q-mt-lg q-mb-sm" style="background: #949494" />
 
               <div class="column">
-                <q-item>
+                <q-item clickable to="/gestion-utilisateur">
                   <q-item-section avatar style="min-width: 30px">
                     <q-icon size="15px" name="fa-solid fa-user-gear" />
                   </q-item-section>
@@ -113,12 +122,12 @@
                 </q-item>
               </div>
 
-              <q-separator horizontal inset class="q-mx-lg q-mt-lg q-mb-lg" style="background: #949494" />
+              <q-separator horizontal inset class="q-mx-lg q-mt-sm q-mb-md" style="background: #949494" />
 
-              <q-item class="q-pa-none q-ma-none text-center q-mb-sm" style="display: block;min-height: auto;">Version -
+              <q-item class="q-pa-none q-ma-none text-center q-mb-sm" style="display: block;min-height: auto;">
                 {{
                     replaceGuillemet(params.appVersion)
-                }} - <span style="text-transform:capitalize;">{{ platform.platform }}</span></q-item>
+                }} - <span>FR</span> - <span style="text-transform:capitalize;">{{ platform.platform }}</span></q-item>
             </div>
           </q-menu>
         </q-btn>
@@ -153,7 +162,7 @@
                   <q-icon size="15px" name="fa-solid fa-suitcase" />
                 </q-item-section>
 
-                <q-item-section>Nos offres</q-item-section>
+                <q-item-section class="text-bold">Nos offres</q-item-section>
                 <q-menu class="bg-dark text-white" auto-close>
                   <q-list>
                     <q-item clickable href="/">
@@ -180,14 +189,17 @@
                   ">
                   <q-icon size="15px" name="fa-solid fa-bag-shopping" />
                 </q-item-section>
-                <q-item-section>Panier</q-item-section>
+                <q-item-section class="text-bold">Panier</q-item-section>
                 <q-item-section name="tab4" v-ripple size="12px" disabled class="q-py-md q-mr-sm" />
                 <q-badge v-show="verifCartHead" style="
                     padding: 6px 9px;
-                    font-weight: 400;
+                    height: 23px;
+                    font-weight: 500;
                     line-height: 13px;
                     background: rgb(255 193 7);
                     color: black;
+                    position: relative;
+                    top: 4px;
                   " rounded :label="countCart" />
               </q-item>
 
@@ -199,7 +211,7 @@
                   ">
                   <q-icon size="15px" name="fa-solid fa-bag-shopping" />
                 </q-item-section>
-                <q-item-section>Panier</q-item-section>
+                <q-item-section class="text-bold">Panier</q-item-section>
                 <q-item-section name="tab4" v-ripple size="12px" disabled class="q-py-md q-mr-sm" />
               </q-item>
 
@@ -208,10 +220,11 @@
                   <q-icon size="15px" name="fa-solid fa-heart" />
                 </q-item-section>
 
-                <q-item-section style="color: white">Favoris </q-item-section>
+                <q-item-section class="text-bold" style="color: white">Favoris </q-item-section>
                 <q-item-section name="tab5" v-ripple size="12px" disabled class="q-py-md q-mr-sm" />
-                <q-badge v-show="verifCookieHead" style="padding: 6px 9px; font-weight: 400; line-height: 13px" rounded
-                  color="red" :label="countCookie" />
+                <q-badge v-show="verifCookieHead"
+                  style="padding: 6px 9px;height: 23px;font-weight: 500;line-height: 13px;position: relative;top: 0px;"
+                  rounded color="red" :label="countCookie" />
               </q-item>
 
               <q-item v-if="!verifCookieHead" style="align-items: center">
@@ -219,7 +232,7 @@
                   <q-icon size="15px" name="fa-solid fa-heart" />
                 </q-item-section>
 
-                <q-item-section style="color: white">Favoris </q-item-section>
+                <q-item-section class="text-bold" style="color: white">Favoris </q-item-section>
                 <q-item-section name="tab5" v-ripple size="12px" disabled class="q-py-md q-mr-sm" />
               </q-item>
             </q-list>
@@ -569,6 +582,57 @@
             <q-btn type="submit" color="warning" push label="Continuer" />
           </q-item>
         </q-form>
+      </q-card>
+    </q-dialog>
+
+    <!-- Gift Modal -->
+    <q-dialog v-if="this.user.id && this.user.email && this.user.carte == 1" v-model="giftmodal" persistent
+      transition-show="rotate" transition-hide="rotate">
+      <q-card>
+        <q-toolbar>
+          <q-avatar>
+            <img src="https://nosvinsdumonde.com/assets/img/logo.png" />
+          </q-avatar>
+
+          <q-toolbar-title><span class="text-weight-bold"></span>
+          </q-toolbar-title>
+
+          <q-btn flat round dense icon="close" v-close-popup />
+        </q-toolbar>
+
+        <q-card-section class="text-bold" style="font-size: 18px; text-align: center">
+          MA CARTE PRIVILÈGE
+        </q-card-section>
+
+        <div class="carte">
+          <p class="text-center text-white fw-bold no-border q-mt-md"><i class="fa-solid fa-gift"
+              style="font-size: 50px;"></i>
+          </p>
+          <h3 class="text-center text-white fw-bold no-border">N° de carte {{ this.user.numero_carte }} </h3>
+          <h4 class="text-center text-white fw-bold no-border">{{ this.user.point }} point(s)</h4>
+          <div class="mt-3">
+            <img alt="testing"
+              :src="'https://nosvinsdumonde.com/modules/barcode.php?codetype=code39&amp;size=50&amp;text=' + this.user.numero_carte + '&amp;print=true'">
+
+          </div>
+        </div>
+
+        <div class="text-center q-mb-md q-mt-md postition-relative">
+
+          <q-btn @click="convertPoint()" v-if="this.user.point >= 15" size="md" push color="info"><i
+              class="fa-solid fa-money-bill-transfer q-mr-sm"></i>Convertir
+            mes points</q-btn>
+
+          <q-btn v-if="this.user.point < 14" class="disabled" size="md" push color="info"><i
+              class="fa-solid fa-money-bill-transfer q-mr-sm"></i>Convertir
+            mes points</q-btn>
+
+          <h6 class="q-mt-md q-mb-sm text-bold">Mon solde actuel : </h6><span class="text-info"
+            style="font-size: 20px;">{{ replaceVirgule(this.user.cashback) }}
+            €</span>
+
+        </div>
+
       </q-card>
     </q-dialog>
   </q-layout>
@@ -1568,6 +1632,7 @@ export default defineComponent({
       dense: ref(null),
       login: ref(false),
       register: ref(false),
+      giftmodal: ref(false),
       showNotif() {
         $q.notify({
           position: 'top-left',
@@ -1622,18 +1687,23 @@ export default defineComponent({
   },
   data() {
     return {
+      logged: Cookies.get('setLoggedIn'),
       livraisonValue: false,
       societeValue: false,
       params: {
-        appVersion: '3.0.3',
-        appVersionOnline: '3.0.3',
+        appVersion: '3.0.4',
+        appVersionOnline: '3.0.4',
       },
       user: {
         id: null,
         email: null,
-        avatar: null,
+        avatar: 'user_empty.png',
         nom: null,
         prenom: null,
+        numero_carte: null,
+        point: null,
+        carte: null,
+        cashback: 0.00
       },
       form: {
         email: null,
@@ -1680,13 +1750,9 @@ export default defineComponent({
     ...mapActions('users', ['paramsVerif']),
     ...mapMutations('users', ['setLoggedIn']),
     checkAuth() {
-      if (this.user) {
-        this.handleAuthStateChange();
-        this.setListUser;
-        this.mountedData();
-
-        setTimeout(this.checkAuth, 300);
-      }
+      this.handleAuthStateChange();
+      this.mountedData();
+      setTimeout(this.checkAuth, 100);
     },
     check() {
       this.params.appVersionOnline = this.setListParams.version;
@@ -1694,15 +1760,19 @@ export default defineComponent({
     },
     ...mapActions('users', ['handleAuthStateChange']),
     mountedData() {
-      if (this.user) {
-        this.user.id = this.setListUser.id;
-        this.user.email = this.setListUser.email;
-        this.user.avatar = this.setListUser.user_profil_image;
-        this.user.nom = this.setListUser.nom;
-        this.user.prenom = this.setListUser.prenom;
-      }
+      this.user.id = this.setListUser.id;
+      this.user.email = this.setListUser.email;
+      this.user.avatar = this.setListUser.user_profil_image;
+      this.user.nom = this.setListUser.nom;
+      this.user.prenom = this.setListUser.prenom;
+      this.user.carte = this.setListUser.carte;
+      this.user.numero_carte = this.setListUser.numero_carte;
     },
     ...mapActions('users', ['loggedDataUser']),
+    ...mapActions('users', ['loggedAuth']),
+    replaceVirgule(html) {
+      return (html + '').replace('.', ',');
+    },
     verifCookieHeads() {
       if (Cookies.has('favoris')) {
         this.verifCookieHead = true;
@@ -1762,7 +1832,9 @@ export default defineComponent({
     },
     ...mapActions('users', ['loginUser']),
     ...mapActions('users', ['registerUser']),
+    ...mapActions('users', ['verifPointCash']),
     ...mapActions('users', ['newsLetterUser']),
+    ...mapActions('users', ['convertPointCash']),
     logout() {
       this.logoutUser(this.user.prenom + ' ' + this.user.nom);
     },
@@ -1777,9 +1849,22 @@ export default defineComponent({
       if (this.livraisonValue == 0) this.livraisonValue = true;
       else this.livraisonValue = false;
     },
+    convertPoint() {
+      this.convertPointCash({ id: this.user.id, email: this.user.email });
+    },
+    reloadGift() {
+      this.verifPointCash(this.user.id);
+      this.user.point = Cookies.get('point');
+      this.user.cashback = Cookies.get('cashback');
+      setTimeout(this.reloadGift, 200);
+    }
   },
   mounted() {
+    this.verifPointCash(this.user.id);
+    this.reloadGift();
     this.checkAuth();
+    this.mountedData();
+    this.loggedAuth();
     this.paramsVerif();
 
     setTimeout(() => {

@@ -116,6 +116,11 @@ const routes: RouteRecordRaw[] = [
         name: 'CartPage',
         component: () => import('src/pages/CartPage.vue'),
       },
+      {
+        path: '/gestion-utilisateur',
+        name: 'GestionUser',
+        component: () => import('src/pages/user/GestionUser.vue'),
+      },
     ],
   },
 

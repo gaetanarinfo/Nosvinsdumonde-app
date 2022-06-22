@@ -29,7 +29,7 @@
         <div class="steps-container">
           <div class="steps">
             <q-item :class="
-              this.$route.params.etape == 1 || this.$route.params.etape == 2 || this.$route.params.etape == 3 || this.$route.params.etape == 4
+              this.$route.params.etape == 1 || this.$route.params.etape == 2 || this.$route.params.etape == 3 || this.$route.params.etape == 4 || this.$route.params.etape == 5
                 ? 'step active q-pa-none'
                 : 'step ' + ' disabled q-pa-none'
             " icon="fa fa-bag-shopping" id="1">
@@ -46,7 +46,7 @@
             </q-item>
 
             <q-item :class="
-              this.$route.params.etape == 2 || this.$route.params.etape == 3 || this.$route.params.etape == 4
+              this.$route.params.etape == 2 || this.$route.params.etape == 3 || this.$route.params.etape == 4 || this.$route.params.etape == 5
                 ? 'step active q-pa-none'
                 : 'step ' + ' disabled  q-pa-none'
             " icon="fa fa-user-clock" id="2">
@@ -63,7 +63,7 @@
             </q-item>
 
             <q-item :class="
-              this.$route.params.etape == 3 || this.$route.params.etape == 4
+              this.$route.params.etape == 3 || this.$route.params.etape == 4 || this.$route.params.etape == 5
                 ? 'step active  q-pa-none'
                 : 'step ' + ' disabled  q-pa-none'
             " icon="fa fa-map-location-dot" id="3">
@@ -80,7 +80,7 @@
             </q-item>
 
             <q-item :class="
-              this.$route.params.etape == 4
+              this.$route.params.etape == 4 || this.$route.params.etape == 5
                 ? 'step active  q-pa-none'
                 : 'step ' + ' disabled  q-pa-none'
             " icon="fa fa-credit-card" id="4">
@@ -96,7 +96,11 @@
               </div>
             </q-item>
 
-            <q-item class="step disabled q-pa-none" icon="fa fa-check" id="5">
+            <q-item :class="
+              this.$route.params.etape == 5
+                ? 'step active  q-pa-none'
+                : 'step ' + ' disabled  q-pa-none'
+            " icon="fa fa-check" id="5">
               <div class="step-title">
                 <span class="step-number">05</span>
                 <div class="step-text">Confirmation</div>
@@ -294,7 +298,7 @@
                     <div class="row d-flex q-mt-md q-mb-lg" style="align-items: center;">
 
                       <div class="text-start col">
-                        <q-btn @click="showTextLoading()" to="#/cart/1" size="md" push color="warning"><i
+                        <q-btn @click="showTextLoading()" to="/cart/1" size="md" push color="warning"><i
                             class="fa-solid fa-angle-left q-mr-sm"></i>
                           Précédent</q-btn>
                       </div>
@@ -330,7 +334,110 @@
                     <div class="col-lg-12 m-auto text-left">
 
                       <div class="m-auto text-center w-100">
-                        <h4 class="text-white">Votre mode de livraison</h4>
+                        <h4 class="text-white">Votre mode de paiement</h4>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="container-md q-mt-lg">
+
+                  <div class="col-lg-12">
+
+                    <div class="row">
+
+                      <div class="col-md-6" v-if="!getCookiePaiementToken()">
+
+                        <q-radio size="sm" @click="showPaiement(1)" dark name="paiementMethod"
+                          v-model="formLivraison.paiementMethod" :dense="dense" val="1" color="orange"
+                          label="Carte bancaire" />
+
+                        <q-item class="q-pa-none q-ma-none" v-show="card" v-model="card">
+                          <q-btn color="warning" :class="disabled == true ? 'q-mt-md disabled' : 'q-mt-md'" push
+                            @click="addPaiementIntentCard()" label="Payer maintenant" />
+                        </q-item>
+
+                        <div class="q-mt-lg q-mb-sm">
+
+                          <q-radio size="sm" dark @click="showPaiement(2)" name="paiementMethod"
+                            v-model="formLivraison.paiementMethod" :dense="dense" val="2" color="info" label="Paypal" />
+
+                          <q-item class="q-pa-none q-ma-none" v-model="paypal" v-show="paypal">
+                            <q-btn color="info" :class="disabled == true ? 'q-mt-md disabled' : 'q-mt-md'" push
+                              @click="addPaiementIntentPaypal()" label="Payer maintenant" />
+                          </q-item>
+
+                        </div>
+
+                        <div class="p-0 text-start q-mt-lg" v-if="user.cashback >= 1">
+                          <h6 class="no-border text-white q-ma-none q-pa-none">Mes euros cumulé : </h6>
+                          <h6 class="no-border text-info q-ma-none q-pa-none">
+                            {{ replaceVirgule(user.cashback) }} € </h6>
+                          <q-btn @click="useCashBack()" v-if="user.cashBackActive == 0" size="md" class="q-mt-lg"
+                            color="info" push>
+                            Utiliser
+                            pour ma commande</q-btn>
+
+                          <q-btn @click="removeCashBack()" v-if="user.cashBackActive == 1" size="md" class="q-mt-lg"
+                            color="info" push>
+                            Supprimer
+                            pour ma commande</q-btn>
+                        </div>
+
+                      </div>
+
+                      <div class="col-md-6" v-if="getCookiePaiementToken()">
+
+                        <div class="doc-note doc-note--tip">
+                          <p class="doc-note__title text-dark">Validation de paiement</p>
+                          <p class="text-dark">Merci de valider votre paiement en <a
+                              :href="'https://nosvinsdumonde.com/fr/paiement/' + getCookiePaiementToken()">cliquant
+                              ici</a>
+                          </p>
+                        </div>
+
+                      </div>
+
+                      <div class="p-0 text-start q-mt-lg q-mb-lg">
+                        <span>En passant commande sur le site et en acceptant les conditions générales de vente, je
+                          certifie être en âge de contracter.</span>
+                      </div>
+
+                      <div class="text-start col q-mb-lg">
+                        <q-btn @click="showTextLoading()" to="/cart/3" size="md" push color="warning"><i
+                            class="fa-solid fa-angle-left q-mr-sm"></i>
+                          Précédent</q-btn>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </q-item>
+
+          <q-item
+            :class="user.id && user.email && this.$route.params.etape == 5 ? 'stepper-content fade-in active show q-pa-none' : 'stepper-content q-pa-none'"
+            v-if="this.$route.params.etape == 5 && !getCookiePaiementToken()">
+            <div class="col-lg-12">
+
+              <div class="m-auto">
+
+                <div class="container-md">
+
+                  <div>
+
+                    <div class="col-lg-12 m-auto text-left">
+
+                      <div class="m-auto text-center w-100">
+                        <h4 class="text-white">Paiement validé</h4>
                       </div>
 
                     </div>
@@ -347,15 +454,16 @@
 
                       <div class="col-md-6">
 
-                        <q-radio size="sm" dark name="paiementMethod" v-model="formLivraison.paiementMethod"
-                          :dense="dense" val="1" color="orange" label="Carte bancaire" />
-
-                        <div class="q-mt-lg q-mb-sm">
-
-                          <q-radio size="sm" dark name="paiementMethod" v-model="formLivraison.paiementMethod"
-                            :dense="dense" val="2" color="orange" label="Paypal" />
-
+                        <div class="doc-note doc-note--tip">
+                          <p class="text-dark"><span class="text-bold text-dark">Merci pour votre
+                              achat.</span><br /><br />À
+                            n'importe quel moment
+                            trouvez-le
+                            dans votre espace personnel.
+                          </p><br />
+                          <p class="text-dark"><a href="/" style="text-decoration: none;">Retour</a></p>
                         </div>
+
                       </div>
 
                       <div class="p-0 text-start q-mt-lg q-mb-lg">
@@ -364,7 +472,7 @@
                       </div>
 
                       <div class="text-start col q-mb-lg">
-                        <q-btn @click="showTextLoading()" to="#/cart/3" size="md" push color="warning"><i
+                        <q-btn @click="showTextLoading()" to="/cart/3" size="md" push color="warning"><i
                             class="fa-solid fa-angle-left q-mr-sm"></i>
                           Précédent</q-btn>
                       </div>
@@ -437,8 +545,23 @@
 
                 <h5 style="font-size: 22px;"><b>Récapitulatif de la commande</b></h5>
 
+                <div class="col-md-12 q-mt-lg" v-if="user.cashBackActive == 1">
 
-                <div class="col-md-12 q-mt-lg">
+                  <div class="row" style="display: flex;align-items: center;justify-content: space-between;">
+
+                    <div class="col-md-6" style="display: flex;align-items: center;justify-content: space-between;">
+                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;"><b>MES EUROS CUMULÉ</b></h6>
+                    </div>
+
+                    <div class="col-md-6 text-end">
+                      <span>{{ replaceVirgule(user.cashback) }} €</span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="col-md-12 q-mt-sm">
 
                   <div class="row" style="display: flex;align-items: center;justify-content: space-between;">
 
@@ -502,8 +625,8 @@
 
                 <div class="col-md-12 q-mt-md">
 
-                  <span v-if="user.societe != ''">{{ user.societe }}</span>
                   <span>{{ (user.civilite == 1) ? 'Mme' : 'Mr' }}</span><br>
+                  <span v-if="user.societe != ''">{{ user.societe }}</span><br v-if="user.societe != ''">
                   <span>{{ user.prenom }} {{ user.nom }}</span><br>
                   <span>{{ user.adresse }}</span><br>
                   <span>{{ user.code_postal }} {{ user.ville }}</span><br>
@@ -519,8 +642,8 @@
 
                 <div class="col-md-12 q-mt-md" v-if="user.livraison == 1">
 
-                  <span v-if="user.societe != ''">{{ user.societe }}</span>
                   <span>{{ (user.civilite_livraison == 1) ? 'Mme' : 'Mr' }}</span><br>
+                  <span v-if="user.societe != ''">{{ user.societe }}</span><br v-if="user.societe != ''">
                   <span>{{ user.prenom_livraison }} {{ user.nom_livraison }}</span><br>
                   <span>{{ user.adresse_livraison }}</span><br>
                   <span>{{ user.code_postal_livraison }} {{ user.ville_livraison }}</span><br>
@@ -565,6 +688,11 @@
 </template>
 
 <style>
+.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
 .stepper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -844,6 +972,36 @@
   border-right: none;
   background: transparent;
   border-bottom: 1px solid #ced4da !important;
+}
+
+.doc-note {
+  font-family: Avenir, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin: 16px auto;
+  padding: 16px 24px;
+  font-size: 1em;
+  line-height: 1.35em;
+  border-width: 0 5px;
+  width: 100%;
+  border-style: solid;
+  border-color: #eee;
+  letter-spacing: .5px;
+}
+
+.doc-note--tip {
+  background-color: #daf8e1;
+  border-color: #9cedaf;
+}
+
+.doc-note>p,
+.doc-note>ul {
+  margin-bottom: 0;
+}
+
+.doc-note__title {
+  font-weight: 500;
+  padding-bottom: 8px;
 }
 
 #message_forgot {
@@ -1929,7 +2087,10 @@ export default {
     const $q = useQuasar();
     const visible = ref(false);
     const showSimulatedReturnData = ref(false);
+
     return {
+      card: true,
+      paypal: null,
       dense: ref(null),
       carts: [],
       showNotifCart() {
@@ -1956,6 +2117,14 @@ export default {
           timeout: 2500,
         });
       },
+      showNotifPaiementIntent() {
+        $q.notify({
+          position: 'top-left',
+          type: 'positive',
+          message: 'Vous allez être redirigés dans quelques secondes...',
+          timeout: 2000,
+        });
+      },
       visible,
       showSimulatedReturnData,
       showTextLoading() {
@@ -1970,7 +2139,9 @@ export default {
     };
   },
   data() {
+
     return {
+      disabled: false,
       total: null,
       port: 0.00,
       port_definitif: 14.00,
@@ -1987,6 +2158,9 @@ export default {
       },
       points: 0,
       user: {
+        cashBackActive: 0,
+        point: null,
+        cashback: 0.00,
         id: null,
         email: null,
         avatar: null,
@@ -2013,6 +2187,30 @@ export default {
     ...mapState('users', ['loggedIn']),
   },
   methods: {
+    getCookiePaiementToken() {
+      const paiementToken = Cookies.get('paiementToken');
+      return paiementToken;
+    },
+    ...mapActions('paiements', ['sendPaiementWithcard']),
+    addPaiementIntentCard() {
+      this.sendPaiementWithcard({ user: this.user, formLivraison: this.formLivraison, paiement: { total: this.port_definitif, port: this.port, totalFDP: this.totalFDP, vin_id: Cookies.get('cart') } });
+      this.showNotifPaiementIntent();
+      this.disabled = true;
+    },
+    addPaiementIntentPaypal() {
+      this.sendPaiementWithcard({ user: this.user, formLivraison: this.formLivraison, paiement: { total: this.port_definitif, port: this.port, totalFDP: this.totalFDP, vin_id: Cookies.get('cart') } });
+      this.showNotifPaiementIntent();
+      this.disabled = true;
+    },
+    showPaiement(value) {
+      if (value == 1) {
+        this.card = true;
+        this.paypal = false;
+      } else {
+        this.paypal = true;
+        this.card = false;
+      }
+    },
     showNotif() {
       $q.notify({
         position: 'top-left',
@@ -2044,7 +2242,9 @@ export default {
       }
     },
     ...mapActions('users', ['handleAuthStateChange']),
+    ...mapActions('paiements', ['getPaiementWithPay']),
     ...mapMutations('users', ['setLoggedIn']),
+    ...mapActions('users', ['convertPointCash']),
     checkAuth() {
       this.handleAuthStateChange();
       this.setListUser;
@@ -2191,6 +2391,11 @@ export default {
               this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port));
             }
 
+            if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
+            else var cashback = 0.00;
+
+            this.totalFDP = (this.totalFDP - cashback);
+
             this.countCart();
           }
         }, 500);
@@ -2269,8 +2474,35 @@ export default {
         });
       }
     },
+    checkPaiementWithToken() {
+      this.getPaiementWithPay(Cookies.get('paiementToken'));
+      setTimeout(this.checkPaiementWithToken, 1000);
+    },
+    ...mapActions('users', ['verifPointCash']),
+    reloadGift() {
+      this.verifPointCash(this.user.id);
+      this.user.point = Cookies.get('point');
+      this.user.cashback = Cookies.get('cashback');
+      setTimeout(this.reloadGift, 200);
+    },
+    useCashBack() {
+      Cookies.set('cashBackActive', 1);
+      this.user.cashBackActive = Cookies.get('cashBackActive');
+      location.reload();
+    },
+    removeCashBack() {
+      Cookies.set('cashBackActive', 0);
+      this.user.cashBackActive = Cookies.get('cashBackActive');
+      location.reload();
+    }
   },
   mounted() {
+    this.user.cashBackActive = Cookies.get('cashBackActive');
+    this.verifPointCash(this.user.id);
+    this.reloadGift();
+    this.getPaiementWithPay(Cookies.get('paiementToken'));
+    this.getCookiePaiementToken();
+    this.checkPaiementWithToken();
     this.checkAuth();
     this.loggedDataUser();
     this.getCartId(Cookies.get('cart'));
@@ -2285,6 +2517,11 @@ export default {
     }
     if (Cookies.has('giftMessage')) {
       this.formLivraison.giftMessage = Cookies.get('giftMessage');
+    }
+
+    if (!Cookies.has('cashBackActive')) {
+      Cookies.set('cashBackActive', 0);
+      this.user.cashBackActive = Cookies.get('cashBackActive');
     }
   },
   props: {

@@ -15,6 +15,7 @@ import regions from './region_store';
 import contact from './contact_store';
 import users from './user_store';
 import carts from './carts_store';
+import paiements from './paiements_store';
 
 /*
  * If not building with SSR mode, you can
@@ -38,6 +39,7 @@ export interface StateInterface {
   contact: typeof contact;
   users: typeof users;
   carts: typeof carts;
+  paiements: typeof paiements;
 }
 
 // provide typings for `this.$store`
@@ -63,6 +65,7 @@ export default store(function (/* { ssrContext } */) {
       contact,
       users,
       carts,
+      paiements,
     },
 
     // enable strict mode (adds overhead!)
