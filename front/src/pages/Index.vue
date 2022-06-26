@@ -1,34 +1,15 @@
 <template>
   <q-page class="body_page q-mt-lg">
     <div class="q-pa-md q-mb-lg" style="width: 100%">
-      <q-expansion-item
-        class="shadow-1 overflow-hidden"
-        style="border-radius: 12px"
-        icon="fa-solid fa-magnifying-glass"
-        label="Faite votre recherche"
-        header-class="bg-primary text-white"
-        expand-icon-class="text-white"
-      >
+      <q-expansion-item class="shadow-1 overflow-hidden" style="border-radius: 12px" icon="fa-solid fa-magnifying-glass"
+        label="Faite votre recherche" header-class="bg-primary text-white" expand-icon-class="text-white">
         <q-card>
           <q-card-section>
-            <q-input
-              bottom-slots
-              v-model="searchInput"
-              :loading="loadingState"
-              ref="inputRef"
-              label="Recherchez un produit, une actu ..."
-              hint="100 caractère max"
-              error-message="Veuillez utiliser maximum 100 caractères"
-              :error="!isValid"
-              :rules="[searchRule]"
-            >
+            <q-input bottom-slots v-model="searchInput" :loading="loadingState" ref="inputRef"
+              label="Recherchez un produit, une actu ..." hint="100 caractère max"
+              error-message="Veuillez utiliser maximum 100 caractères" :error="!isValid" :rules="[searchRule]">
               <template v-slot:append>
-                <q-icon
-                  v-if="searchInput !== ''"
-                  name="close"
-                  @click="searchInput = ''"
-                  class="cursor-pointer"
-                />
+                <q-icon v-if="searchInput !== ''" name="close" @click="searchInput = ''" class="cursor-pointer" />
                 <q-icon name="search" />
               </template>
 
@@ -38,54 +19,31 @@
 
           <q-card-section v-if="listNewsSearch != '' || listNewsSearch2 != ''">
             <ul style="list-style-type: none" class="q-pa-none q-mt-none">
-              <li
-                class="list-group-item q-mb-lg text-bold"
-                style="font-size: 18px"
-              >
+              <li class="list-group-item q-mb-lg text-bold" style="font-size: 18px">
                 Nos vins et Champagnes
               </li>
 
-              <li
-                class="list-group-item q-mb-lg"
-                v-for="search in listNewsSearch"
-                :key="search.id"
-              >
-                <a
-                  class="text-decoration-none text-dark text-bold"
-                  clickable
-                  :href="
-                    '/#/' + search.typeBoisson + '/' + search.idBoisson + ''
-                  "
-                  ><i class="fa-solid fa-magnifying-glass-arrow-right"></i>
+              <li class="list-group-item q-mb-lg" v-for="search in listNewsSearch" :key="search.id">
+                <a class="text-decoration-none text-dark text-bold" clickable :href="
+                  '/#/' + search.typeBoisson + '/' + search.idBoisson + ''
+                "><i class="fa-solid fa-magnifying-glass-arrow-right"></i>
                   {{ decode(search.nomBoisson) }}
                   <span v-if="search.millesimeBoisson != ''">
                     - {{ search.millesimeBoisson }} -
                   </span>
-                  {{ search.apellationBoisson }}</a
-                >
+                  {{ search.apellationBoisson }}</a>
               </li>
 
               <q-separator class="q-mb-lg" />
 
-              <li
-                class="list-group-item q-mb-lg text-bold"
-                style="font-size: 18px"
-              >
+              <li class="list-group-item q-mb-lg text-bold" style="font-size: 18px">
                 Nos actualités
               </li>
 
-              <li
-                class="list-group-item q-mb-lg"
-                v-for="search in listNewsSearch2"
-                :key="search.id"
-              >
-                <a
-                  class="text-decoration-none text-dark text-bold"
-                  clickable
-                  :href="'/#/actualite/' + search.url + ''"
-                  ><i class="fa-solid fa-magnifying-glass-arrow-right"></i>
-                  {{ decode(search.title) }}</a
-                >
+              <li class="list-group-item q-mb-lg" v-for="search in listNewsSearch2" :key="search.id">
+                <a class="text-decoration-none text-dark text-bold" clickable
+                  :href="'/#/actualite/' + search.url + ''"><i class="fa-solid fa-magnifying-glass-arrow-right"></i>
+                  {{ decode(search.title) }}</a>
               </li>
             </ul>
           </q-card-section>
@@ -94,35 +52,20 @@
     </div>
 
     <div class="container-md" id="bloc_vin_jour">
-      <q-item
-        class="text-h5 text-white bloc_vin_title q-mb-lg"
-        style="font-size: 500; display: flex"
-      >
+      <q-item class="text-h5 text-white bloc_vin_title q-mb-lg" style="font-size: 500; display: flex">
         <q-item avatar style="min-width: 30px; padding: 0 0">
-          <q-icon
-            size="15px"
-            name="fa-solid fa-chevron-right"
-            style="margin: 0.5rem !important"
-          />
+          <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
         </q-item>
 
-        <q-item style="padding: 0 0; padding-bottom: 13px"
-          >NOTRE SÉLECTION DU JOUR</q-item
-        >
+        <q-item style="padding: 0 0; padding-bottom: 13px">NOTRE SÉLECTION DU JOUR</q-item>
       </q-item>
 
       <vins-one-component :listVinsOne="listVinsOne"></vins-one-component>
 
-      <q-item
-        class="text-h5 text-white bloc_vin_title q-mb-lg q-mt-lg"
-        style="font-size: 500; display: flex; margin-top: 3rem"
-      >
+      <q-item class="text-h5 text-white bloc_vin_title q-mb-lg q-mt-lg"
+        style="font-size: 500; display: flex; margin-top: 3rem">
         <q-item avatar style="min-width: 30px; padding: 0 0">
-          <q-icon
-            size="15px"
-            name="fa-solid fa-chevron-right"
-            style="margin: 0.5rem !important"
-          />
+          <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
         </q-item>
 
         <q-item style="padding: 0 0">LES IMMANQUABLES</q-item>
@@ -133,10 +76,7 @@
       </div>
 
       <div style="justify-content: center; padding: 0 5vw" class="q-mb-lg">
-        <q-item
-          class="q-my-md q-mx-none"
-          style="justify-content: center; padding: 1em 0"
-        >
+        <q-item class="q-my-md q-mx-none" style="justify-content: center; padding: 1em 0">
           <q-btn push to="/produits" color="warning" size="lg">
             <q-item-section avatar style="min-width: 20px; padding-right: 10px">
               <q-icon size="15px" name="fa-solid fa-list" />
@@ -149,77 +89,53 @@
       <div class="text-white text-center">
         <div class="q-mb-lg">
           <div class="q-mb-md">
-            <i
-              class="fa-solid fa-euro-sign shadow"
-              style="
+            <i class="fa-solid fa-euro-sign shadow" style="
                 font-size: 40px;
                 transform: rotate(320deg);
                 text-shadow: 0 0 3px #ffffff33;
-              "
-            ></i>
+              "></i>
           </div>
           <p>MEILLEUR PRIX <br /><span class="fw-bold">GARANTI</span></p>
         </div>
 
         <div class="q-mb-lg">
           <div class="q-mb-md">
-            <i
-              class="fa-solid fa-truck shadow"
-              style="font-size: 40px; text-shadow: 0 0 3px #ffffff33"
-            ></i>
+            <i class="fa-solid fa-truck shadow" style="font-size: 40px; text-shadow: 0 0 3px #ffffff33"></i>
           </div>
           <p>DISPONIBLE <br /><span class="fw-bold">EN 48H CHEZ VOUS*</span></p>
         </div>
 
         <div class="q-mb-lg">
           <div class="q-mb-md">
-            <i
-              class="fa-solid fa-lock shadow"
-              style="font-size: 40px; text-shadow: 0 0 3px #ffffff33"
-            ></i>
+            <i class="fa-solid fa-lock shadow" style="font-size: 40px; text-shadow: 0 0 3px #ffffff33"></i>
           </div>
           <p>PAIEMENT <br /><span class="fw-bold">SÉCURISÉ</span></p>
         </div>
 
         <div>
           <div class="q-mb-md">
-            <i
-              class="fa-solid fa-wine-bottle shadow"
-              style="
+            <i class="fa-solid fa-wine-bottle shadow" style="
                 font-size: 40px;
                 transform: rotate(0);
                 text-shadow: 0 0 3px #ffffff33;
-              "
-            ></i>
+              "></i>
           </div>
           <p>
-            100% DES VINS <br /><span class="fw-bold"
-              >DÉGUSTÉS ET APPROUVÉS</span
-            >
+            100% DES VINS <br /><span class="fw-bold">DÉGUSTÉS ET APPROUVÉS</span>
           </p>
         </div>
       </div>
 
-      <q-item
-        class="text-h5 text-white bloc_vin_title q-mb-lg q-mt-lg"
-        style="font-size: 500; display: flex; margin-top: 3rem"
-      >
+      <q-item class="text-h5 text-white bloc_vin_title q-mb-lg q-mt-lg"
+        style="font-size: 500; display: flex; margin-top: 3rem">
         <q-item avatar style="min-width: 30px; padding: 0 0">
-          <q-icon
-            size="15px"
-            name="fa-solid fa-chevron-right"
-            style="margin: 0.5rem !important"
-          />
+          <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
         </q-item>
 
         <q-item style="padding: 0 0">EN CE MOMENT</q-item>
       </q-item>
 
-      <div
-        class="container-md q-my-lg"
-        style="padding: 0 5vw"
-        id="bloc_vin_selection"
-      >
+      <div class="container-md q-my-lg" style="padding: 0 5vw" id="bloc_vin_selection">
         <div class="justify-content-center">
           <div class="q-mb-lg">
             <div class="card card1 mb-4 shadow">
@@ -253,22 +169,14 @@
         </div>
       </div>
 
-      <q-item
-        class="text-h5 text-white bloc_vin_title q-mb-lg q-mt-lg"
-        style="font-size: 500; display: flex; margin-top: 3rem"
-      >
+      <q-item class="text-h5 text-white bloc_vin_title q-mb-lg q-mt-lg"
+        style="font-size: 500; display: flex; margin-top: 3rem">
         <q-item avatar style="min-width: 30px; padding: 0 0">
-          <q-icon
-            size="15px"
-            name="fa-solid fa-chevron-right"
-            style="margin: 0.5rem !important"
-          />
+          <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
         </q-item>
 
-        <q-item style="padding: 0 0 5vw 0"
-          >NOSVINSDUMONDE: MISE EN RELATION DES VINS, CHAMPAGNE DEPUIS
-          2022</q-item
-        >
+        <q-item style="padding: 0 0 5vw 0">NOSVINSDUMONDE: MISE EN RELATION DES VINS, CHAMPAGNE DEPUIS
+          2022</q-item>
       </q-item>
 
       <div class="container-md q-my-lg q-mx-lg">
@@ -277,9 +185,8 @@
           meilleurs millésimes et bien entendu toutes les bouteilles de vins,
           champagnes qui ont marqués l’année. Seules ou en coffrets cadeau elles
           sont disponibles sur
-          <a class="text-warning text-decoration-none" href="/"
-            >nosvinsdumonde.com</a
-          >. Et qui de mieux placé que votre caviste pour délivrer des messages
+          <a class="text-warning text-decoration-none" href="/">nosvinsdumonde.com</a>. Et qui de mieux placé que votre
+          caviste pour délivrer des messages
           simples, clairs et positifs en matière bonnes pratiques de
           consommation
         </p>
@@ -321,26 +228,15 @@
           </h4>
         </div>
 
-        <q-item
-          to="/contact/suggest"
-          class="text-decoration-none text-center q-mt-lg q-mb-lg q-pa-none"
-          style="display: block"
-        >
+        <q-item to="/contact/suggest" class="text-decoration-none text-center q-mt-lg q-mb-lg q-pa-none"
+          style="display: block">
           <img src="https://nosvinsdumonde.com/assets/img/add_vin.png" alt="" />
         </q-item>
       </div>
 
-      <q-item
-        id="vitisphere"
-        class="text-h5 text-white bloc_vin_title q-mb-lg"
-        style="font-size: 500; display: flex"
-      >
+      <q-item id="vitisphere" class="text-h5 text-white bloc_vin_title q-mb-lg" style="font-size: 500; display: flex">
         <q-item avatar style="min-width: 30px; padding: 0 0">
-          <q-icon
-            size="15px"
-            name="fa-solid fa-chevron-right"
-            style="margin: 0.5rem !important"
-          />
+          <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
         </q-item>
 
         <q-item style="padding: 0 0 5vw 0">NOS ACTUALITÉS</q-item>
@@ -351,10 +247,7 @@
       </div>
 
       <div style="justify-content: center; padding: 0 5vw" class="q-mb-lg">
-        <q-item
-          class="q-my-md q-mx-none"
-          style="justify-content: center; padding: 1em 0"
-        >
+        <q-item class="q-my-md q-mx-none" style="justify-content: center; padding: 1em 0">
           <q-btn push clickable to="/actualites" color="warning" size="lg">
             <q-item-section avatar style="min-width: 20px; padding-right: 10px">
               <q-icon size="15px" name="fa-solid fa-bars" />
@@ -364,17 +257,9 @@
         </q-item>
       </div>
 
-      <q-item
-        id="livraison"
-        class="text-h5 text-white bloc_vin_title"
-        style="font-size: 500; display: flex"
-      >
+      <q-item id="livraison" class="text-h5 text-white bloc_vin_title" style="font-size: 500; display: flex">
         <q-item avatar style="min-width: 30px; padding: 0 0">
-          <q-icon
-            size="15px"
-            name="fa-solid fa-chevron-right"
-            style="margin: 0.5rem !important"
-          />
+          <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
         </q-item>
 
         <q-item style="padding: 0 0 5vw 0">LIVRAISON FRANCE - EUROPE</q-item>
@@ -384,11 +269,7 @@
         <div class="text-left m-auto">
           <div class="row" style="display: flex; align-items: flex-start">
             <div>
-              <img
-                class="w-100"
-                src="https://nosvinsdumonde.com/assets/img/livraison.png"
-                alt=""
-              />
+              <img class="w-100" src="https://nosvinsdumonde.com/assets/img/livraison.png" alt="" />
             </div>
 
             <div class="q-mt-sm">
@@ -402,10 +283,7 @@
                 PERMET D'EXPÉDIER VOS BOUTEILLES DANS LES MEILLEURS DÉLAIS.
               </h6>
 
-              <h6
-                class="q-mt-lg q-mb-md text-white fw-bold"
-                style="line-height: 26px"
-              >
+              <h6 class="q-mt-lg q-mb-md text-white fw-bold" style="line-height: 26px">
                 <i class="fa-solid fa-truck-fast q-mr-sm"></i>Livraison France
                 Métropolitaine Standard sous 72 heures au départ du colis
               </h6>
@@ -417,19 +295,10 @@
             </div>
           </div>
 
-          <div
-            style="justify-content: center; padding: 0 5vw"
-            class="q-mb-lg q-mt-none"
-          >
-            <q-item
-              class="q-mb-md q-mx-none q-mt-none"
-              style="justify-content: center"
-            >
+          <div style="justify-content: center; padding: 0 5vw" class="q-mb-lg q-mt-none">
+            <q-item class="q-mb-md q-mx-none q-mt-none" style="justify-content: center">
               <q-btn push color="warning" size="lg">
-                <q-item-section
-                  avatar
-                  style="min-width: 20px; padding-right: 10px"
-                >
+                <q-item-section avatar style="min-width: 20px; padding-right: 10px">
                   <q-icon size="15px" name="fa-solid fa-shoe-prints" />
                 </q-item-section>
                 En savoir plus
@@ -439,42 +308,24 @@
         </div>
       </div>
 
-      <q-item
-        id="appellationRegions"
-        class="text-h5 text-white bloc_vin_title"
-        style="font-size: 500; display: flex"
-      >
+      <q-item id="appellationRegions" class="text-h5 text-white bloc_vin_title" style="font-size: 500; display: flex">
         <q-item avatar style="min-width: 30px; padding: 0 0">
-          <q-icon
-            size="15px"
-            name="fa-solid fa-chevron-right"
-            style="margin: 0.5rem !important"
-          />
+          <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
         </q-item>
 
-        <q-item style="padding: 0 0 5vw 0"
-          >NOS APPELLATIONS ET NOS RÉGIONS</q-item
-        >
+        <q-item style="padding: 0 0 5vw 0">NOS APPELLATIONS ET NOS RÉGIONS</q-item>
       </q-item>
 
       <div class="container-md q-mb-lg q-mx-lg">
         <div class="text-left m-auto">
-          <appellations-component
-            :listAppellations="listAppellations"
-          ></appellations-component>
+          <appellations-component :listAppellations="listAppellations"></appellations-component>
 
           <regions-component :listRegions="listRegions"></regions-component>
 
           <div style="justify-content: center; padding: 0 5vw" class="q-mb-lg">
-            <q-item
-              class="q-my-md q-mx-none"
-              style="justify-content: center; padding: 1em 0"
-            >
+            <q-item class="q-my-md q-mx-none" style="justify-content: center; padding: 1em 0">
               <q-btn push color="warning" size="lg">
-                <q-item-section
-                  avatar
-                  style="min-width: 20px; padding-right: 10px"
-                >
+                <q-item-section avatar style="min-width: 20px; padding-right: 10px">
                   <q-icon size="15px" name="fa-solid fa-bars" />
                 </q-item-section>
                 Voir plus
@@ -503,9 +354,7 @@
                 Languedoc proposent aussi des volumes importants. Les vins de
                 Bourgogne, d’ Alsace, du Sud-Ouest et du Beaujolais ferment la
                 liste des grandes régions françaises.
-                <a class="text-white fw-bold" title="En savoir plus" href=""
-                  >En savoir plus ›</a
-                >
+                <a class="text-white fw-bold" title="En savoir plus" href="">En savoir plus ›</a>
               </p>
             </div>
 
@@ -568,39 +417,26 @@
                 maisons de champagne sur Internet. A découvrir également notre
                 offre Prosecco, Moscato, Lambrusco, Crémant, Cava, Cerdon,
                 Clairette de Die.
-                <a class="text-white fw-bold" href="" title="En savoir plus"
-                  >En savoir plus ›</a
-                >
+                <a class="text-white fw-bold" href="" title="En savoir plus">En savoir plus ›</a>
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <q-item
-        id="appellationRegions"
-        class="text-h5 text-white bloc_vin_title"
-        style="font-size: 500; display: flex"
-      >
+      <q-item id="appellationRegions" class="text-h5 text-white bloc_vin_title" style="font-size: 500; display: flex">
         <q-item avatar style="min-width: 30px; padding: 0 0">
-          <q-icon
-            size="15px"
-            name="fa-solid fa-chevron-right"
-            style="margin: 0.5rem !important"
-          />
+          <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
         </q-item>
 
-        <q-item style="padding: 0 0 5vw 0"
-          >🍷Chaque jour est un instant de dégustation</q-item
-        >
+        <q-item style="padding: 0 0 5vw 0">🍷Chaque jour est un instant de dégustation</q-item>
       </q-item>
 
       <div class="q-pa-md">
-        <q-video
-          :ratio="16 / 9"
-          src="https://player.vimeo.com/video/715112452?h=c5ee1f0f21&badge=0&autopause=0&player_id=0&app_id=58479"
-        />
+        <q-video :ratio="16 / 9"
+          src="https://player.vimeo.com/video/715112452?h=c5ee1f0f21&badge=0&autopause=0&player_id=0&app_id=58479" />
       </div>
+
     </div>
   </q-page>
 </template>

@@ -66,7 +66,8 @@ const actions = {
           if (success === true) {
 
             Cookies.set('paiementToken', res.data.token, {
-              secure: true
+              secure: true,
+              sameSite: 'None'
             });
 
             setTimeout(() => {

@@ -1,32 +1,24 @@
 <template>
   <!-- BreadCrump -->
-  <div class="q-pa-md q-mt-lg q-gutter-sm">
+  <div class="q-pa-none q-mt-lg q-gutter-sm">
     <q-breadcrumbs class="text-brown">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="white" />
       </template>
 
-      <q-breadcrumbs-el
-        clickable
-        to="/"
-        label="Accueil"
-        style="color: #ffc107"
-      />
+      <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
       <q-breadcrumbs-el clickable label="Cgv" style="color: white" />
     </q-breadcrumbs>
   </div>
 
   <div class="container-md q-mt-lg q-mb-lg" style="padding: 0 5vw">
-    <div
-      class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg"
-      style="
+    <div class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg" style="
         font-size: 500;
         justify-content: center;
         display: flex;
         width: 100%;
         margin: 24px 0;
-      "
-    >
+      ">
       <q-item class="title">Conditions générales de vente</q-item>
     </div>
   </div>
@@ -103,9 +95,7 @@
         être effectué&nbsp;:<br />- Par courrier à Nosvinsdumonde – 125, avenue
         Félix Geneslay 72100 Le Mans;<br />- Par le formulaire disponible sur la
         page :
-        <a href="https://www.nosvinsdumonde.com/fr/contact"
-          >https://www.nosvinsdumonde.com/fr/contact</a
-        >
+        <a href="https://www.nosvinsdumonde.com/fr/contact">https://www.nosvinsdumonde.com/fr/contact</a>
         en choisissant le sujet de votre demande en corrélation avec le droit
         que vous souhaitez exercer.<br /><br />L'abus d'alcool est dangereux
         pour la santé. A consommer avec modération.<br /><br />Les finalités,
@@ -114,8 +104,7 @@
         présentées dans les
         <a href="https://www.nosvinsdumonde.com/fr/cgu">CGU </a> du site et la
         <a href="https://www.nosvinsdumonde.com/fr/politique-confidentialite">
-          « POLITIQUE DE CONFIDENTIALITE »</a
-        >
+          « POLITIQUE DE CONFIDENTIALITE »</a>
         du site , qui détaille l’ensemble des informations relatives au
         traitement des données personnelles ainsi que les droits des personnes
         concernées en lien avec ces traitements.
@@ -184,9 +173,8 @@
       <p>
         Le règlement des achats s’effectue via l’un des moyens suivants, à la
         convenance du Client :<br />- Par carte bancaire<br />- Par Paypal<br />*L’expédition
-        sera effectuée après le versement.<br /><br /><strong
-          >Contrôle des commandes</strong
-        ><br /><br />Compte tenu de la recrudescence des fraudes répertoriées
+        sera effectuée après le versement.<br /><br /><strong>Contrôle des commandes</strong><br /><br />Compte tenu de
+        la recrudescence des fraudes répertoriées
         dans le cadre du commerce en ligne et afin de sécuriser les paiements,
         pour toute commande passée par un client sur le site NOSVINSDUMONDE.COM,
         NOSVINSDUMONDE procèdera à un contrôle des éléments de la commande avant
@@ -245,9 +233,8 @@
         est tenu de vérifier le bon état des articles livrés. Toute anomalie
         constatée (article manquant, colis endommagé, article cassé…) devra
         obligatoirement être indiquée dans les 3 jours, à NOSVINSDUMONDE DIRECT,
-        suivant la réception.<br /><br /><strong
-          >Circonstances indépendantes de notre volonté</strong
-        ><br />Nous ne pouvons être tenus responsables des pertes, dommages,
+        suivant la réception.<br /><br /><strong>Circonstances indépendantes de notre volonté</strong><br />Nous ne
+        pouvons être tenus responsables des pertes, dommages,
         erreurs ou défaut de livraison d'un envoi dès lors qu'il serait établi
         l'existence de circonstances indépendantes de notre volonté. Par
         "circonstances indépendantes de notre volonté", il faut entendre
@@ -262,17 +249,16 @@
         tiers à qui l'envoi serait confié par notre prestataire de transport,
         pour desservir des secteurs non desservis directement par lui- même, et
         ce, quand bien même l'expéditeur n'aurait pas demandé ou été informé du
-        recours à un tiers.<br /><br /><strong>Dommages indirects</strong
-        ><br />En cas de non-respect de nos engagements et quel qu’en soit la
+        recours à un tiers.<br /><br /><strong>Dommages indirects</strong><br />En cas de non-respect de nos engagements
+        et quel qu’en soit la
         cause, NOSVINSDUMONDE ne sera tenu qu'au seul remboursement de la
         prestation de livraison sous les réserves énoncées ci-dessus (Retard de
         Livraison) et en aucun cas des dommages indirects que le client
         viendrait à invoquer. Ces dommages indirects et pertes s'entendent
         notamment par toute perte de revenus, de bénéfices, d'intérêts ou de
         marchés et toute perte liée à l'impossibilité d'utiliser tout ou une
-        partie de l'envoi.<br /><br /><strong
-          >Casse au cours de l'expédition</strong
-        ><br />Si un colis arrive chez le destinataire endommagé (casse de la ou
+        partie de l'envoi.<br /><br /><strong>Casse au cours de l'expédition</strong><br />Si un colis arrive chez le
+        destinataire endommagé (casse de la ou
         les bouteilles), le destinataire doit refuser le colis. Le transporteur
         se chargera d'informer NOSVINSDUMONDE DIRECT. A réception de cette
         information, NOSVINSDUMONDE s'engage à réexpédier au destinataire
@@ -290,9 +276,8 @@
         la charge du Client. Le Client sera remboursé intégralement dans les
         meilleurs délais et au plus tard 14 jours après la date à laquelle il a
         exercé son droit de rétractation sous réserve de la réception de la
-        commande.<br /><br /><strong
-          >Conditions d’échange et de retour pour remboursement</strong
-        ><br />Les articles retournés doivent être intactes, non ouverts et en
+        commande.<br /><br /><strong>Conditions d’échange et de retour pour remboursement</strong><br />Les articles
+        retournés doivent être intactes, non ouverts et en
         parfait état. Ils devront être renvoyés dans un état permettant leur re
         commercialisation.<br /><br />Le Client devra effectuer son retour par
         le transporteur de son choix à ses frais exclusifs.<br /><br />Le client
@@ -341,8 +326,8 @@
         pas, vous pouvez recourir au service de médiation pour les litiges de
         consommation en adressant votre réclamation par mail à notre médiateur
         désigné : Monsieur Gaëtan Seigneur, Responsable du Service Clients à
-        <a href="mailto:contact@nosvinsdumonde.fr">contact@nosvinsdumonde.fr</a
-        ><br /><br />A défaut, les tribunaux français seront compétents.
+        <a href="mailto:contact@nosvinsdumonde.fr">contact@nosvinsdumonde.fr</a><br /><br />A défaut, les tribunaux
+        français seront compétents.
       </p>
 
       <p><strong>Preuve émargée de livraison</strong></p>
@@ -362,10 +347,8 @@
 
       <div>
         <p>
-          <strong
-            >Conditions générales de vente pour le service d'achat par téléphone
-            avec paiement à distance</strong
-          >
+          <strong>Conditions générales de vente pour le service d'achat par téléphone
+            avec paiement à distance</strong>
         </p>
 
         <div>
@@ -416,10 +399,8 @@
             </p>
 
             <p>
-              <strong
-                >DESCRIPTION DU SERVICE D’ACHAT PAR TELEPHONE AVEC PAIEMENT A
-                DISTANCE</strong
-              >
+              <strong>DESCRIPTION DU SERVICE D’ACHAT PAR TELEPHONE AVEC PAIEMENT A
+                DISTANCE</strong>
             </p>
 
             <p>
@@ -532,8 +513,7 @@
             </p>
 
             <p>
-              <strong
-                >REMISE, EXPEDITION ET DELAIS DE LIVRAISON DE LA COMMANDE
+              <strong>REMISE, EXPEDITION ET DELAIS DE LIVRAISON DE LA COMMANDE
               </strong>
             </p>
 
@@ -628,12 +608,9 @@
               d'un délai de rétractation de quatorze jours à compter de la
               livraison de leur commande pour faire retour du produit à
               NOSVINSDUMONDE pour échange ou remboursement sans pénalité, et
-              sans frais de retour.<br /><br /><strong
-                ><u
-                  >Notification du droit de rétractation et effets de la
+              sans frais de retour.<br /><br /><strong><u>Notification du droit de rétractation et effets de la
                   rétraction
-                </u></strong
-              ><br /><br />Conformément à l’article L221-21 du Code de la
+                </u></strong><br /><br />Conformément à l’article L221-21 du Code de la
               Consommation, pour l’exercice de son droit de rétractation, le
               Client est tenu de notifier sa décision de se rétracter à
               NOSVINSDUMONDE avant l’expiration du délai prévu de 14 jours à
@@ -657,18 +634,16 @@
               effectué par le même mode de paiement.<br /><br />Le VENDEUR peut
               différer le remboursement jusqu’à réception du bien ou jusqu’à ce
               que le CLIENT ait fourni une preuve d’expédition du bien, la date
-              <u>retenue étant celle du premier de ces faits.</u><br /><u
-                >Certains produits et services ne peuvent faire l’objet d’un
+              <u>retenue étant celle du premier de ces faits.</u><br /><u>Certains produits et services ne peuvent faire
+                l’objet d’un
                 droit de rétraction, conformément aux dispositions de l’article
                 L221-28 du Code de la consommation :<br />Et notamment les
                 fournitures de biens confectionnés selon les spécifications du
-                consommateur ou nettement personnalisés ;</u
-              >
+                consommateur ou nettement personnalisés ;</u>
             </p>
 
             <p>
-              <strong
-                >CONDITIONS D’ECHANGE ET DE RETOUR POUR REMBOURSEMENT
+              <strong>CONDITIONS D’ECHANGE ET DE RETOUR POUR REMBOURSEMENT
               </strong>
             </p>
 

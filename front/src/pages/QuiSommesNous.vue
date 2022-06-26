@@ -1,57 +1,39 @@
 <template>
   <!-- BreadCrump -->
-  <div class="q-pa-md q-mt-lg q-gutter-sm">
+  <div class="q-pa-none q-mt-lg q-gutter-sm">
     <q-breadcrumbs class="text-brown">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="white" />
       </template>
 
-      <q-breadcrumbs-el
-        clickable
-        to="/"
-        label="Accueil"
-        style="color: #ffc107"
-      />
-      <q-breadcrumbs-el
-        clickable
-        label="Qui sommes nous"
-        style="color: white"
-      />
+      <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+      <q-breadcrumbs-el clickable label="Qui sommes nous" style="color: white" />
     </q-breadcrumbs>
   </div>
 
   <div class="container-md q-mt-lg q-mb-lg" style="padding: 0 5vw">
-    <div
-      class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg"
-      style="
+    <div class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg" style="
         font-size: 500;
         justify-content: center;
         display: flex;
         width: 100%;
         margin: 24px 0;
-      "
-    >
+      ">
       <q-item class="title">Qui sommes nous ?</q-item>
     </div>
 
-    <div
-      class="text-white q-mb-lg q-mt-lg"
-      style="
+    <div class="text-white q-mb-lg q-mt-lg" style="
         font-size: 500;
         justify-content: center;
         width: 100%;
         margin: 24px 0;
-      "
-    >
+      ">
       <div class="container-md q-pa-none">
-        <h6
-          class="text-center text-white q-pa-none"
-          style="
+        <h6 class="text-center text-white q-pa-none" style="
             border-bottom: 3px solid #ffc107;
             padding-bottom: 13px;
             font-size: 19px;
-          "
-        >
+          ">
           NOUS PRENONS SOIN DE VOS VINS
         </h6>
 
@@ -72,55 +54,39 @@
           de consommation et de négoce : le vin en bouteille.
         </q-item>
 
-        <h6
-          class="text-center text-white q-pa-none"
-          style="
+        <h6 class="text-center text-white q-pa-none" style="
             border-bottom: 3px solid #ffc107;
             padding-bottom: 13px;
             font-size: 19px;
-          "
-        >
+          ">
           NOTRE MISSION, FACILITER L’ACCÈS AU VIN NOTRE VISION, VOUS PERMETTRE
           DE TROUVER LE VIN QUI VOUS CONVIENT
         </h6>
 
         <div class="row justify-content-center">
           <div class="col-md-4 text-center">
-            <img
-              style="width: 60%"
-              src="https://nosvinsdumonde.com/assets/img/gold-cup-with-laurel-leaves-png-clipart-image-5a1d43eae89be9.1769932315118673709528.png"
-            />
-            <q-item
-              class="text-white text-center q-mt-md"
-              style="width: 100%; margin: 0 auto"
-            >
+            <img style="width: 60%"
+              src="https://nosvinsdumonde.com/assets/img/gold-cup-with-laurel-leaves-png-clipart-image-5a1d43eae89be9.1769932315118673709528.png" />
+            <q-item class="text-white text-center q-mt-md" style="width: 100%; margin: 0 auto">
               <b>N°1 de la distribution de vin en France en centre-ville</b>
             </q-item>
           </div>
 
           <div class="col-md-4 text-center bloc_mobile q-mt-lg">
-            <img
-              style="width: 100%"
+            <img style="width: 100%"
               src="https://nosvinsdumonde.com/assets/img/png-transparent-black-glass-bottle-and-three-clear-wine-glasses-red-wine-cabernet-franc-distilled-beverage-cabernet-sauvignon-red-wine-red-wine-background-taobao-material-glass-wine-glass-champagne.png"
-              alt=""
-            />
-            <q-item
-              class="text-white text-center"
-              style="width: 100%; margin: 0 auto"
-            >
+              alt="" />
+            <q-item class="text-white text-center" style="width: 100%; margin: 0 auto">
               <b>+ de 1500 références en vins, champagnes et spiritueux</b>
             </q-item>
           </div>
         </div>
 
-        <h6
-          class="text-center text-white q-pa-none"
-          style="
+        <h6 class="text-center text-white q-pa-none" style="
             border-bottom: 3px solid #ffc107;
             padding-bottom: 13px;
             font-size: 19px;
-          "
-        >
+          ">
           UN SAVOIR-FAIRE AU SERVICE DU VIN
         </h6>
 
@@ -146,14 +112,11 @@
           consommation ?
         </p>
 
-        <h6
-          class="text-center text-white q-pa-none"
-          style="
+        <h6 class="text-center text-white q-pa-none" style="
             border-bottom: 3px solid #ffc107;
             padding-bottom: 13px;
             font-size: 19px;
-          "
-        >
+          ">
           CULTURE FORTE DE L’INNOVATION
         </h6>
 
@@ -171,14 +134,11 @@
         </p>
 
         <div class="mt-5 mb-5 mobile text-white text-center">
-          <h6
-            class="text-center text-white q-pa-none"
-            style="
+          <h6 class="text-center text-white q-pa-none" style="
               border-bottom: 3px solid #ffc107;
               padding-bottom: 13px;
               font-size: 19px;
-            "
-          >
+            ">
             LES TRIBULATIONS DE NECTAR
           </h6>
 
@@ -200,19 +160,14 @@
                 fait découvrir un nouveau visage.
               </p>
               <p>
-                <b
-                  >Aujourd’hui, le caviste est à l’honneur de la communication
-                  publicitaire de Nosvinsdumonde.</b
-                >
+                <b>Aujourd’hui, le caviste est à l’honneur de la communication
+                  publicitaire de Nosvinsdumonde.</b>
               </p>
             </div>
 
             <div class="col-md-4 q-mt-lg mb-5 item_img">
-              <img
-                style="width: 100%"
-                src="https://nosvinsdumonde.com/assets/img/bouteille-blanc-vermentino-decor.png"
-                alt=""
-              />
+              <img style="width: 100%" src="https://nosvinsdumonde.com/assets/img/bouteille-blanc-vermentino-decor.png"
+                alt="" />
             </div>
           </div>
         </div>

@@ -1,32 +1,24 @@
 <template>
   <!-- BreadCrump -->
-  <div class="q-pa-md q-mt-lg q-gutter-sm">
+  <div class="q-pa-none q-mt-lg q-gutter-sm">
     <q-breadcrumbs class="text-brown">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="white" />
       </template>
 
-      <q-breadcrumbs-el
-        clickable
-        to="/"
-        label="Accueil"
-        style="color: #ffc107"
-      />
+      <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
       <q-breadcrumbs-el clickable label="Cgu" style="color: white" />
     </q-breadcrumbs>
   </div>
 
   <div class="container-md q-mt-lg q-mb-lg" style="padding: 0 5vw">
-    <div
-      class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg"
-      style="
+    <div class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg" style="
         font-size: 500;
         justify-content: center;
         display: flex;
         width: 100%;
         margin: 24px 0;
-      "
-    >
+      ">
       <q-item class="title">Conditions Générales d'Utilisation</q-item>
     </div>
   </div>
@@ -75,8 +67,7 @@
       </p>
 
       <p>
-        <strong
-          >Acceptation et modification des Conditions Générales d’Utilisation
+        <strong>Acceptation et modification des Conditions Générales d’Utilisation
         </strong>
       </p>
 
@@ -180,9 +171,8 @@
         Les présentes CGU sont soumises à la loi française. Tout litige lié à
         l’interprétation, la validité et les conséquences des présentes CGU et à
         défaut de solution amiable préalable seuls les Tribunaux de Paris seront
-        compétents.<br /><br /><strong
-          >Données personnelles lors de la navigation</strong
-        ><br /><br />Lors de la navigation et notamment lors de la passation
+        compétents.<br /><br /><strong>Données personnelles lors de la navigation</strong><br /><br />Lors de la
+        navigation et notamment lors de la passation
         d’une commande telle que défini dans les CGV, nous recueillons des
         données nominatives, des informations telles que votre adresser (de
         facturation et de livraison lorsqu’elles sont différentes, votre nom,
@@ -208,8 +198,8 @@
         disposez également du droit à la portabilité des données déclarées
         activement et consciemment lors de la création de votre compte ainsi que
         l’ensemble des données générées par l’activité de votre compte
-        fidélité.<br /><br /><strong>Durée de conservation des données </strong
-        ><br /><br />- Données d'identification (nom, adresse électronique,
+        fidélité.<br /><br /><strong>Durée de conservation des données </strong><br /><br />- Données d'identification
+        (nom, adresse électronique,
         etc.) : 3 ans à compter de la dernière date de connexion sur le Site<br />-
         Données de commande: 3 ans à compter de la date de Votre commande<br />-
         Données prospects : 3 an après la date de la dernière activité sur le
@@ -225,21 +215,18 @@
         politique s’applique aux « Cookies ». Sur nos pages internet, nous
         utilisons des « Cookies », lesquels consistent en de petits fichiers
         texte qui sont enregistrés dans votre ordinateur ou votre appareil
-        portable lorsque vous visitez l’une de nos pages internet<br /><br /><strong
-          >2. Définition des cookies </strong
-        ><br /><br />Un cookie est une information déposée sur votre disque dur
+        portable lorsque vous visitez l’une de nos pages internet<br /><br /><strong>2. Définition des cookies
+        </strong><br /><br />Un cookie est une information déposée sur votre disque dur
         par le serveur du site visité. Il s’agit de traceurs déposés et lus lors
         de la consultation d’un site internet. Il contient plusieurs données :
         le nom du serveur qui l’a déposé, un identifiant sous forme de numéro
-        unique, éventuellement une date d’expiration.<br /><br /><strong
-          >3. Finalités des cookies sur le site </strong
-        ><br /><br />Afin de mieux vous servir et améliorer la navigation de son
+        unique, éventuellement une date d’expiration.<br /><br /><strong>3. Finalités des cookies sur le site
+        </strong><br /><br />Afin de mieux vous servir et améliorer la navigation de son
         site, Nosvinsdumonde utilise la technologie des cookies. Ces derniers
         permettent de vous fournir une expérience de navigation personnalisée à
         l’occasion de chacune de vos visites et de mesurer l’audience de son
-        site Nosvinsdumonde.com.<br /><br /><strong
-          >4. L’utilisation des cookies par Nosvinsdumonde </strong
-        ><br /><br />Les cookies utilisés sur notre site sont les suivants :
+        site Nosvinsdumonde.com.<br /><br /><strong>4. L’utilisation des cookies par Nosvinsdumonde
+        </strong><br /><br />Les cookies utilisés sur notre site sont les suivants :
       </p>
 
       <p>a) Cookie de mesure d’audience</p>
@@ -265,9 +252,7 @@
         celui-ci (adresse, horaires, lieu des stands de ses marques préférées),
         accéder aux offres spéciales et événements de votre magasin favori.
       </p>
-      <br /><br /><strong
-        >5. La durée de conservation des données collectées par les cookies </strong
-      ><br />
+      <br /><br /><strong>5. La durée de conservation des données collectées par les cookies </strong><br />
       <p>
         Les données collectées par les cookies sont conservées pendant une durée
         maximale de 13 mois à compter de votre première visite du site. Ainsi,
@@ -284,38 +269,24 @@
       votre ordinateur directement dans les réglages du serveur de votre
       navigateur. A ce sujet, vous trouverez plus d’informations sur la marche à
       suivre en cliquant sur le lien suivant :
-      <a
-        href="https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser"
-        target="_blank"
-        >https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser</a
-      >
+      <a href="https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser"
+        target="_blank">https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser</a>
       Cependant, il est à noter que votre expérience de navigation sur le site
       pourra alors être limitée.<br /><br />La marche à suivre afin de les
       supprimer est différente selon les navigateurs.<br /><br />Sous Google
       Chrome, vous trouverez la marche à suivre à l’adresse suivante :<br /><a
         href="https://support.google.com/chrome/answer/95647?hl=fr"
-        target="_blank"
-        >https://support.google.com/chrome/answer/95647?hl=fr</a
-      ><br />Sur Mozilla Firefox, vous trouverez la marche à suivre à l’adresse
-      suivante :<br /><a
-        href="https://support.mozilla.org/fr/kb/activer-desactiver-cookies "
-        target="_blank"
-        >https://support.mozilla.org/fr/kb/activer-desactiver-cookies </a
-      ><br />Sur Internet Explorer, vous trouverez la marche à suivre à
+        target="_blank">https://support.google.com/chrome/answer/95647?hl=fr</a><br />Sur Mozilla Firefox, vous
+      trouverez la marche à suivre à l’adresse
+      suivante :<br /><a href="https://support.mozilla.org/fr/kb/activer-desactiver-cookies "
+        target="_blank">https://support.mozilla.org/fr/kb/activer-desactiver-cookies </a><br />Sur Internet Explorer,
+      vous trouverez la marche à suivre à
       l’adresse suivante :<br /><a
-        href="https://support.microsoft.com/fr-fr/windows/supprimer-et-g%C3%A9rer-les-cookies-168dab11-0753-043d-7c16-ede5947fc64d"
-        >https://windows.microsoft.com/fr-fr/windows7/block-enable-or-allow-cookies</a
-      ><a
-        href="http://windows.microsoft.com/fr-fr/windows7/block-enable-or-allow-cookies "
-        target="_blank"
-      >
-      </a
-      ><br />Sur Safari, vous trouverez la marche à suivre à l’adresse suivante
-      :<br /><a
-        href="http://safari.helpmax.net/fr/securite-et-confidentialite/gestion-des-cookies"
-        target="_blank"
-        >http://safari.helpmax.net/fr/securite-et-confidentialite/gestion-des-cookies</a
-      >
+        href="https://support.microsoft.com/fr-fr/windows/supprimer-et-g%C3%A9rer-les-cookies-168dab11-0753-043d-7c16-ede5947fc64d">https://windows.microsoft.com/fr-fr/windows7/block-enable-or-allow-cookies</a><a
+        href="http://windows.microsoft.com/fr-fr/windows7/block-enable-or-allow-cookies " target="_blank">
+      </a><br />Sur Safari, vous trouverez la marche à suivre à l’adresse suivante
+      :<br /><a href="http://safari.helpmax.net/fr/securite-et-confidentialite/gestion-des-cookies"
+        target="_blank">http://safari.helpmax.net/fr/securite-et-confidentialite/gestion-des-cookies</a>
 
       <p></p>
 
@@ -387,9 +358,7 @@
         </p>
 
         <p>
-          <strong
-            >Conditions d'obtention de la Carte Privilège NOSVINSUMONDE</strong
-          >
+          <strong>Conditions d'obtention de la Carte Privilège NOSVINSUMONDE</strong>
         </p>
 
         <p>
@@ -517,10 +486,8 @@
         <p></p>
 
         <p>
-          <strong
-            >Modalités de fonctionnement de la Carte Privilège
-            NOSVINSUMONDE</strong
-          >
+          <strong>Modalités de fonctionnement de la Carte Privilège
+            NOSVINSUMONDE</strong>
         </p>
 
         <p class="ns-Bloc-paragraph ns-Bloc-paragraph--orange">
@@ -648,9 +615,7 @@
         </p>
 
         <p class="ns-TitleSection">
-          Conditions générales d'utilisationPOUR LE SERVICE E-RESERVATION<i
-            class="ns-TitleSection-icon"
-          ></i>
+          Conditions générales d'utilisationPOUR LE SERVICE E-RESERVATION<i class="ns-TitleSection-icon"></i>
         </p>
 
         <p>

@@ -11,7 +11,7 @@
     </div>
 
     <!-- BreadCrump -->
-    <div class="q-pa-md q-gutter-sm">
+    <div class="q-pa-none q-gutter-sm">
       <q-breadcrumbs class="text-brown">
         <template v-slot:separator>
           <q-icon size="1.5em" name="chevron_right" color="white" />
@@ -116,7 +116,7 @@
 
         <div class="stepper-content-container q-mt-xl" style="overflow: hidden">
 
-          <div
+          <div :loading="loading" :key="versionTable"
             :class="this.$route.params.etape == 1 ? 'stepper-content fade-in active show q-pa-none' : 'stepper-content q-pa-none'"
             v-if="this.$route.params.etape == 1" stepper-label="1">
             <div class="row q-mb-md" style="border: 1px solid #ccc; padding: 24px"
@@ -128,7 +128,7 @@
                   '/' +
                   item.imageBoisson +
                   ''
-                " :alt="item.nomBoisson" />
+                " :alt="decode(item.nomBoisson)" />
               </div>
 
               <div class="col-md-7" style="
@@ -139,7 +139,7 @@
                 <div class="col">
                   <h5>
                     <q-item clickable style="padding: 0 0" class="text-white text-decoration-none"
-                      :to="'/' + item.typeBoisson + '/' + item.idBoisson + ''"><b>{{ item.nomBoisson }} {{
+                      :to="'/' + item.typeBoisson + '/' + item.idBoisson + ''"><b>{{ decode(item.nomBoisson) }} {{
                           item.milessimeBoisson
                       }}</b></q-item>
                   </h5>
@@ -1110,7 +1110,7 @@ function round(num) {
 
 function checkNumberDigits(myNumber) {
   var myNumbers = myNumber.toString().split('.');
-  return myNumbers[1] <= 9 ? myNumbers[0] + '.' + myNumbers[1] + '0' : myNumber;
+  return myNumbers[1] <= 9 ? parseFloat(myNumbers[0] + '.' + myNumbers[1] + '0') : parseFloat(myNumber);
 }
 
 var stringOptions = [
@@ -2141,11 +2141,14 @@ export default {
   data() {
 
     return {
+      loading: ref(false),
+      versionTable: 1,
       disabled: false,
       total: null,
       port: 0.00,
       port_definitif: 14.00,
       totalFDP: 0.00,
+      nomBoisson: null,
       form: {
         email: null,
         password: null,
@@ -2154,7 +2157,7 @@ export default {
       formLivraison: {
         livraisonMode1: ref('2'),
         giftMessage: null,
-        paiementMethod: ref('1')
+        paiementMethod: ref('1'),
       },
       points: 0,
       user: {
@@ -2193,12 +2196,12 @@ export default {
     },
     ...mapActions('paiements', ['sendPaiementWithcard']),
     addPaiementIntentCard() {
-      this.sendPaiementWithcard({ user: this.user, formLivraison: this.formLivraison, paiement: { total: this.port_definitif, port: this.port, totalFDP: this.totalFDP, vin_id: Cookies.get('cart') } });
+      this.sendPaiementWithcard({ user: this.user, formLivraison: this.formLivraison, paiement: { nomBoisson: this.nomBoisson, total: this.port_definitif, port: this.port, totalFDP: this.totalFDP, vin_id: Cookies.get('cart') } });
       this.showNotifPaiementIntent();
       this.disabled = true;
     },
     addPaiementIntentPaypal() {
-      this.sendPaiementWithcard({ user: this.user, formLivraison: this.formLivraison, paiement: { total: this.port_definitif, port: this.port, totalFDP: this.totalFDP, vin_id: Cookies.get('cart') } });
+      this.sendPaiementWithcard({ user: this.user, formLivraison: this.formLivraison, paiement: { nomBoisson: this.nomBoisson, total: this.port_definitif, port: this.port, totalFDP: this.totalFDP, vin_id: Cookies.get('cart') } });
       this.showNotifPaiementIntent();
       this.disabled = true;
     },
@@ -2299,9 +2302,11 @@ export default {
       return (html + '').replace('.', ',');
     },
     countCart() {
+
       if (compteur <= 1) {
+
         setTimeout(() => {
-          compteur++;
+
           this.getCartId(Cookies.get('cart'));
 
           if (Cookies.has('cart')) {
@@ -2319,6 +2324,7 @@ export default {
               var imageBoisson = 0;
               var prixBoisson = 0;
               var typeBoisson = '';
+              var contenanceBoisson = '';
 
               id = this.listCartId[i].idBoisson;
               nomBoisson = this.listCartId[i].nomBoisson;
@@ -2326,6 +2332,9 @@ export default {
               imageBoisson = this.listCartId[i].imageBoisson;
               prixBoisson = this.listCartId[i].prixBoisson;
               typeBoisson = this.listCartId[i].typeBoisson;
+              contenanceBoisson = this.listCartId[i].contenanceBoisson;
+
+              var quantitys = parseInt(res.filter((e) => e == id).length);
 
               this.carts.push({
                 idBoisson: id,
@@ -2334,7 +2343,8 @@ export default {
                 imageBoisson: imageBoisson,
                 prixBoisson: prixBoisson,
                 typeBoisson: typeBoisson,
-                quantityBoisson: res.filter((e) => e == id).length,
+                quantityBoisson: quantitys,
+                contenanceBoisson: contenanceBoisson,
               });
 
               this.total += round(
@@ -2344,11 +2354,12 @@ export default {
 
               var point = 0;
 
-              for (i = 0; i <= parseInt(this.total); i += 5) {
+              for (var a = 0; a <= parseInt(this.total); a += 5) {
                 point += 1;
               }
 
               this.points = point;
+
             }
 
             this.total = checkNumberDigits(round(this.total));
@@ -2396,57 +2407,306 @@ export default {
 
             this.totalFDP = (this.totalFDP - cashback);
 
-            this.countCart();
+
           }
-        }, 500);
+
+          compteur++;
+
+        }, 600);
+
+        setTimeout(this.countCart, 600);
+
       }
     },
     addCart(idItem) {
+
+      var input = idItem;
+
+      compteur = 1;
+
       if (Cookies.has('cart')) {
+
         const value = Cookies.get('cart');
+
         Cookies.set('cart', value + '-' + idItem, {
           secure: true,
+          sameSite: 'None'
         });
+
         this.showNotifCart();
-        setTimeout(() => {
-          location.reload();
-        }, 600);
-      } else {
-        Cookies.set('cart', idItem, {
-          secure: true,
-        });
-        this.showNotifCart();
-        setTimeout(() => {
-          location.reload();
-        }, 600);
+
+        this.getCartId(Cookies.get('cart'));
+
+        var arr = [];
+
+        arr.push(Cookies.get('cart').split('-'));
+
+        // Ici on déclare les points les quantité etc..
+        for (let i = 0; i <= this.listCartId.length - 1; i++) {
+          var id = 0;
+          var nomBoisson = 0;
+          var millesimeBoisson = 0;
+          var imageBoisson = 0;
+          var prixBoisson = 0;
+          var typeBoisson = '';
+          var contenanceBoisson = '';
+
+          id = this.listCartId[i].idBoisson;
+          nomBoisson = this.listCartId[i].nomBoisson;
+          millesimeBoisson = this.listCartId[i].millesimeBoisson;
+          imageBoisson = this.listCartId[i].imageBoisson;
+          prixBoisson = this.listCartId[i].prixBoisson;
+          typeBoisson = this.listCartId[i].typeBoisson;
+          contenanceBoisson = this.listCartId[i].contenanceBoisson;
+
+          var cookie = Cookies.get('cart');
+
+          if (cookie.indexOf(input + '-') == -1) {
+
+            this.carts.pop();
+
+            var quantitys = parseInt(Cookies.get('cart').split('-').filter((e) => e == id).length) + 1;
+
+            quantitys--;
+
+            this.carts.push({
+              idBoisson: id,
+              nomBoisson: nomBoisson,
+              millesimeBoisson: millesimeBoisson,
+              imageBoisson: imageBoisson,
+              prixBoisson: prixBoisson,
+              typeBoisson: typeBoisson,
+              quantityBoisson: quantitys,
+              contenanceBoisson: contenanceBoisson,
+            });
+
+          } else {
+
+            var quantitys = parseInt(Cookies.get('cart').split('-').filter((e) => e == id).length) + 1;
+
+            quantitys--;
+
+            this.carts[i].quantityBoisson = quantitys;
+
+          }
+
+          this.total = 0;
+
+          this.total += round(
+            this.listCartId[i].prixBoisson *
+            Cookies.get('cart').split('-').filter((e) => e == id).length
+          );
+
+          var point = 0;
+
+          for (var a = 0; a <= parseInt(this.total); a += 5) {
+            point += 1;
+          }
+
+          this.points = point;
+
+        }
+
+        this.total = checkNumberDigits(round(this.total));
+
+        //Frais port
+        if (Cookies.has('port') && Cookies.get('port') == '1') {
+
+          this.port = 0.00;
+          this.port_definitif = 14.00;
+
+        } else {
+
+          this.port_definitif = 14.00;
+
+          var quantity = Cookies.get('cart').split('-').filter((e) => e == id).length;
+
+          if (quantity <= 12) {
+            this.port = 14.00;
+            this.port_definitif = 14.00;
+          } else if (quantity >= 13 && quantity <= 24) {
+            this.port = 23.00;
+            this.port_definitif = 23.00;
+          } else if (quantity >= 25 && quantity <= 36) {
+            this.port = 29.00;
+            this.port_definitif = 29.00;
+          } else if (quantity >= 37 && quantity <= 48) {
+            this.port = 34.00;
+            this.port_definitif = 34.00;
+          } else if (quantity >= 49 && quantity <= 60) {
+            this.port = 40.00;
+            this.port_definitif = 40.00;
+          }
+
+        }
+
+        // Calcul du total + des FDPS
+        if (Cookies.has('port') && Cookies.get('port') == '2') {
+          this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port_definitif));
+        } else {
+          this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port));
+        }
+
+        if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
+        else var cashback = 0.00;
+
+        this.totalFDP = (this.totalFDP - cashback);
+
+        this.versionTable++;
+
       }
+
     },
     removeCart(idItem) {
       if (Cookies.has('cart')) {
-        var cookie = Cookies.get('cart');
+
         var input = idItem;
 
+        var counter = Cookies.get('cart').split(',').length;
+
+        console.log(input);
+        console.log(counter);
+
+        var cookie = Cookies.get('cart');
+
         if (cookie.indexOf(input + '-') != -1) {
-          var total = cookie.replace(input + '-', '');
-          Cookies.set('cart', total, {
-            secure: true,
-          });
+          var newCookie = Cookies.get('cart');
+          Cookies.set('cart', newCookie.replace(input + '-', ''));
         } else if (cookie.indexOf('-' + input) != -1) {
-          var total = cookie.replace('-' + input, '');
-          Cookies.set('cart', total, {
-            secure: true,
-          });
+          var newCookie = Cookies.get('cart');
+          Cookies.set('cart', newCookie.replace('-', input, ''));
         }
 
         if (cookie.split('-').length === 1) {
           Cookies.remove('cart');
         }
 
-        this.showNotifCartDelete();
+        compteur = 1;
 
-        setTimeout(() => {
-          location.reload();
-        }, 600);
+        this.getCartId(Cookies.get('cart'));
+
+        if (compteur <= 1) {
+
+          var arr = [];
+
+          arr.push(Cookies.get('cart').split('-'));
+
+          // Ici on déclare les points les quantité etc..
+          for (let i = 0; i <= this.listCartId.length - 1; i++) {
+            var id = 0;
+            var nomBoisson = 0;
+            var millesimeBoisson = 0;
+            var imageBoisson = 0;
+            var prixBoisson = 0;
+            var typeBoisson = '';
+            var contenanceBoisson = '';
+
+            id = this.listCartId[i].idBoisson;
+            nomBoisson = this.listCartId[i].nomBoisson;
+            millesimeBoisson = this.listCartId[i].millesimeBoisson;
+            imageBoisson = this.listCartId[i].imageBoisson;
+            prixBoisson = this.listCartId[i].prixBoisson;
+            typeBoisson = this.listCartId[i].typeBoisson;
+            contenanceBoisson = this.listCartId[i].contenanceBoisson;
+
+            if (cookie.indexOf(input + '-') == -1) {
+
+              this.carts.pop();
+
+              var quantitys = parseInt(Cookies.get('cart').split('-').filter((e) => e == id).length) + 1;
+
+              quantitys--;
+
+              var quantitys = parseInt(Cookies.get('cart').split('-').filter((e) => e == id).length) + 1;
+
+              quantitys--;
+
+              this.carts.push({
+                idBoisson: id,
+                nomBoisson: nomBoisson,
+                millesimeBoisson: millesimeBoisson,
+                imageBoisson: imageBoisson,
+                prixBoisson: prixBoisson,
+                typeBoisson: typeBoisson,
+                quantityBoisson: quantitys,
+                contenanceBoisson: contenanceBoisson,
+              });
+
+            } else {
+
+              var quantitys = parseInt(Cookies.get('cart').split('-').filter((e) => e == id).length) + 1;
+
+              quantitys--;
+
+              this.carts[i].quantityBoisson = quantitys;
+
+            }
+            this.total = 0;
+
+            this.total += round(
+              this.listCartId[i].prixBoisson *
+              Cookies.get('cart').split('-').filter((e) => e == id).length
+            );
+
+            var point = 0;
+
+            for (var a = 0; a <= parseInt(this.total); a += 5) {
+              point += 1;
+            }
+
+            this.points = point;
+
+          }
+
+          this.total = checkNumberDigits(round(this.total));
+
+          //Frais port
+          if (Cookies.has('port') && Cookies.get('port') == '1') {
+
+            this.port = 0.00;
+            this.port_definitif = 14.00;
+
+          } else {
+
+            this.port_definitif = 14.00;
+
+            var quantity = Cookies.get('cart').split('-').filter((e) => e == id).length;
+
+            if (quantity <= 12) {
+              this.port = 14.00;
+              this.port_definitif = 14.00;
+            } else if (quantity >= 13 && quantity <= 24) {
+              this.port = 23.00;
+              this.port_definitif = 23.00;
+            } else if (quantity >= 25 && quantity <= 36) {
+              this.port = 29.00;
+              this.port_definitif = 29.00;
+            } else if (quantity >= 37 && quantity <= 48) {
+              this.port = 34.00;
+              this.port_definitif = 34.00;
+            } else if (quantity >= 49 && quantity <= 60) {
+              this.port = 40.00;
+              this.port_definitif = 40.00;
+            }
+
+          }
+
+          // Calcul du total + des FDPS
+          if (Cookies.has('port') && Cookies.get('port') == '2') {
+            this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port_definitif));
+          } else {
+            this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port));
+          }
+
+          if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
+          else var cashback = 0.00;
+
+          this.totalFDP = (this.totalFDP - cashback);
+
+          this.versionTable++;
+
+        }
+
       }
     },
     ...mapActions('users', ['loginUser']),
@@ -2454,23 +2714,27 @@ export default {
       if (Cookies.has('port')) {
         Cookies.set('port', id, {
           secure: true,
+          sameSite: 'None'
         });
-        location.reload();
+        this.$router.go();
       } else {
         Cookies.set('port', id, {
           secure: true,
+          sameSite: 'None'
         });
-        location.reload();
+        this.$router.go();
       }
     },
     addGiftMessage() {
       if (Cookies.has('giftMessage')) {
         Cookies.set('giftMessage', this.formLivraison.giftMessage, {
           secure: true,
+          sameSite: 'None'
         });
       } else {
         Cookies.set('giftMessage', this.formLivraison.giftMessage, {
           secure: true,
+          sameSite: 'None'
         });
       }
     },
@@ -2486,17 +2750,28 @@ export default {
       setTimeout(this.reloadGift, 200);
     },
     useCashBack() {
-      Cookies.set('cashBackActive', 1);
+      Cookies.set('cashBackActive', 1, {
+        secure: true,
+        sameSite: 'None'
+      });
       this.user.cashBackActive = Cookies.get('cashBackActive');
-      location.reload();
+      this.$router.go();
     },
     removeCashBack() {
-      Cookies.set('cashBackActive', 0);
+      Cookies.set('cashBackActive', 0, {
+        secure: true,
+        sameSite: 'None'
+      });
       this.user.cashBackActive = Cookies.get('cashBackActive');
-      location.reload();
+      this.$router.go();
     }
   },
   mounted() {
+
+    if (this.$route.params.etape == 1 || this.$route.params.etape == 2 || this.$route.params.etape == 3) {
+      Cookies.remove('paiementToken');
+    }
+
     this.user.cashBackActive = Cookies.get('cashBackActive');
     this.verifPointCash(this.user.id);
     this.reloadGift();
@@ -2511,6 +2786,7 @@ export default {
     if (!Cookies.has('port')) {
       Cookies.set('port', 2, {
         secure: true,
+        sameSite: 'None'
       });
     } else {
       this.formLivraison.livraisonMode1 = Cookies.get('port');
@@ -2520,7 +2796,10 @@ export default {
     }
 
     if (!Cookies.has('cashBackActive')) {
-      Cookies.set('cashBackActive', 0);
+      Cookies.set('cashBackActive', 0, {
+        secure: true,
+        sameSite: 'None'
+      });
       this.user.cashBackActive = Cookies.get('cashBackActive');
     }
   },

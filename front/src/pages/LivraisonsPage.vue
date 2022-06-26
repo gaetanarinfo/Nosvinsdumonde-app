@@ -1,32 +1,24 @@
 <template>
   <!-- BreadCrump -->
-  <div class="q-pa-md q-mt-lg q-gutter-sm">
+  <div class="q-pa-none q-mt-lg q-gutter-sm">
     <q-breadcrumbs class="text-brown">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="white" />
       </template>
 
-      <q-breadcrumbs-el
-        clickable
-        to="/"
-        label="Accueil"
-        style="color: #ffc107"
-      />
+      <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
       <q-breadcrumbs-el clickable label="Livraison" style="color: white" />
     </q-breadcrumbs>
   </div>
 
   <div class="container-md q-mt-lg q-mb-lg" style="padding: 0 5vw">
-    <div
-      class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg"
-      style="
+    <div class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg" style="
         font-size: 500;
         justify-content: center;
         display: flex;
         width: 100%;
         margin: 24px 0;
-      "
-    >
+      ">
       <q-item class="title">Livraison</q-item>
     </div>
   </div>

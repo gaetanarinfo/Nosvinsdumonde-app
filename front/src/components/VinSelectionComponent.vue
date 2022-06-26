@@ -1,5 +1,5 @@
 <template>
-  <q-intersection class="text-center" id="vin_jour" v-for="vinsOne in listVinsOne" :key="vinsOne.idBoisson">
+  <q-item class="text-center" id="vin_jour" v-for="vinsOne in listVinsOne" :key="vinsOne.idBoisson">
     <div class="q-mt-sm vin_jour_img">
       <img role="button" data-fancybox="" :src="
         'https://nosvinsdumonde.com/assets/img/' +
@@ -38,7 +38,7 @@
       </q-item-section>
       Découvrir
     </q-btn>
-  </q-intersection>
+  </q-item>
 </template>
 
 <script>

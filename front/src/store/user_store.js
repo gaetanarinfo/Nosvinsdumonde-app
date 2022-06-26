@@ -16,10 +16,15 @@ const state = {
   token: null,
   points: 0,
   cashback: 0,
+  listCommandesHistorique: [],
+  listColisHistorique: [],
 }
 
 if (!Cookies.has('setLoggedIn')) {
-  Cookies.set('setLoggedIn', false)
+  Cookies.set('setLoggedIn', false, {
+    secure: true,
+    sameSite: 'None'
+  })
 }
 
 var compteur = 1;
@@ -42,6 +47,12 @@ const mutations = {
   },
   setCashBack(state, value) {
     state.cashback = value
+  },
+  setListCommandes(state, value) {
+    state.listCommandesHistorique = value
+  },
+  setListColis(state, value) {
+    state.listColisHistorique = value
   },
 }
 
@@ -101,7 +112,10 @@ const actions = {
               message: `Bonjour ${res.data.sess.firstname} ${res.data.sess.lastname}`
             })
 
-            Cookies.set('setLoggedIn', true);
+            Cookies.set('setLoggedIn', true, {
+              secure: true,
+              sameSite: 'None'
+            });
 
             setTimeout(function () {
               commit('setLoggedIn', true);
@@ -137,7 +151,6 @@ const actions = {
           const sess = localStorage.getItem('active')
 
           if (sess === 1) {
-            Cookies.set('setLoggedIn', true);
             commit('setLoggedIn', true)
           }
 
@@ -164,7 +177,6 @@ const actions = {
           const sess = localStorage.getItem('active')
 
           if (sess === 1) {
-            Cookies.set('setLoggedIn', true);
             commit('setLoggedIn', true)
           } else {
             commit('setLoggedIn', false)
@@ -213,7 +225,6 @@ const actions = {
         if (sess == 1) {
 
           commit('setLoggedIn', true)
-          Cookies.set('setLoggedIn', true);
 
         } else {
 
@@ -236,6 +247,11 @@ const actions = {
           message: `Merci de votre visite ${payload} à bientôt !`
         })
 
+        Cookies.set('setLoggedIn', false, {
+          secure: true,
+          sameSite: 'None'
+        });
+
         setTimeout(function () {
           localStorage.removeItem('sess', null)
           localStorage.removeItem('token', null)
@@ -243,7 +259,7 @@ const actions = {
           localStorage.removeItem('admin', null)
           localStorage.removeItem('userId', null)
           commit('setLoggedIn', false);
-          Cookies.set('setLoggedIn', false);
+
           document.location.href = '/';
         }, 2000);
       })
@@ -495,9 +511,42 @@ const actions = {
         const point = res.data.point;
         const cashback = res.data.cashback;
 
-        Cookies.set('cashback', cashback);
-        Cookies.set('point', point);
+        Cookies.set('cashback', cashback, {
+          secure: true,
+          sameSite: 'None'
+        });
+        Cookies.set('point', point, {
+          secure: true,
+          sameSite: 'None'
+        });
 
+      })
+  },
+  getHistoriqueCommandes({
+    commit
+  }, payload) {
+
+    axios
+      .get('/commandesHistorique/' + payload)
+      .then(res => {
+        commit('setListCommandes', {
+          data1: res.data.listCommandesHistorique,
+          data2: res.data.listCommandesHistoriquePort,
+          data3: res.data.listCommandesHistoriquePrix,
+          data4: res.data.listCommandesHistorique.length,
+        })
+      })
+  },
+  getHistoriqueColis({
+    commit
+  }, payload) {
+
+    axios
+      .get('/colisHistorique/' + payload)
+      .then(res => {
+        commit('setListColis',
+          res.data.listcolisHistorique,
+        )
       })
   },
 }
@@ -517,6 +566,12 @@ const getters = {
   },
   setCashBack(state) {
     return state.cashback
+  },
+  setListCommandes(state) {
+    return state.listCommandesHistorique
+  },
+  setListColis(state) {
+    return state.listColisHistorique
   },
 }
 

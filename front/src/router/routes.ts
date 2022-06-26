@@ -121,6 +121,16 @@ const routes: RouteRecordRaw[] = [
         name: 'GestionUser',
         component: () => import('src/pages/user/GestionUser.vue'),
       },
+      {
+        path: '/historique-commandes',
+        name: 'HistoriqueCommandes',
+        component: () => import('src/pages/user/HistoriqueCommandes.vue'),
+      },
+      {
+        path: '/gestion-colis',
+        name: 'GestionColis',
+        component: () => import('src/pages/user/GestionColis.vue'),
+      },
     ],
   },
 

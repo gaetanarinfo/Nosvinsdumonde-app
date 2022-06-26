@@ -91,7 +91,7 @@ module.exports = configure(function (ctx) {
       https: false,
       port: 8080,
       open: true,
-      historyApiFallback: true,
+      historyApiFallback: false,
       allowedHosts: [
         'http://nosvinsdumonde.com/',
         'http://app.nosvinsdumonde.com/',

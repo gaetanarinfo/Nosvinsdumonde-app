@@ -10,7 +10,7 @@
 
         <q-space />
 
-        <q-btn v-if="this.user.id && this.user.email && this.user.carte == 1" round dense size="md"
+        <q-btn v-if="this.user.id && this.user.email && this.user.carte == 1" flat round dense size="md"
           @click="giftmodal = true" text-color="pink-6" icon="fa-solid fa-gift" class="q-mr-sm q-ml-sm q-py-sm q-px-sm"
           style="border-radius: 12px">
         </q-btn>
@@ -107,14 +107,21 @@
                   <q-item-section>Gestion de mon compte</q-item-section>
                 </q-item>
 
-                <q-item>
+                <q-item clickable to="/historique-commandes">
                   <q-item-section avatar style="min-width: 30px">
                     <q-icon size="15px" name="fa-solid fa-cart-shopping" />
                   </q-item-section>
                   <q-item-section>Historique des commandes</q-item-section>
                 </q-item>
 
-                <q-item>
+                <q-item clickable to="/gestion-colis">
+                  <q-item-section avatar style="min-width: 30px">
+                    <q-icon size="15px" name="fa-solid fa-truck" />
+                  </q-item-section>
+                  <q-item-section>Gestion de mes livraison</q-item-section>
+                </q-item>
+
+                <q-item clickable @click="giftmodal = true">
                   <q-item-section avatar style="min-width: 30px">
                     <q-icon size="15px" name="fa-solid fa-gift" />
                   </q-item-section>
@@ -240,6 +247,16 @@
         </q-btn>
       </q-toolbar>
     </q-header>
+
+    <!-- Bare bones example -->
+    <q-page-sticky style="z-index: 1;" position="top-right" :offset="[15, 15]">
+      <q-fab icon="add" direction="left" color="info" push glossy>
+        <q-fab-action clickable v-if="verifCartHead" to="/cart/1" color="warning" push glossy
+          icon="fa-solid fa-cart-shopping" />
+        <q-fab-action clickable to="/historique-commandes" color="warning" push glossy
+          icon="fa-solid fa-clock-rotate-left" />
+      </q-fab>
+    </q-page-sticky>
 
     <q-page-container style="padding-top: 66px; padding-bottom: 20px">
       <router-view />
@@ -449,12 +466,31 @@
         </q-card-section>
 
         <q-form @submit="submitForm" class="q-mb-lg" style="padding: 0 5vw">
-          <q-input v-model="form.email" label="E-mail"
+
+          <q-input class="q-mb-lg" v-model="form.email" label="E-mail"
             :rules="[(val) => validateEmail(val) || 'Adresse email invalide']" lazy-rules
             hint="Nous ne divulguons jamais votre adresse e-mail." />
 
-          <q-input type="password" v-model="form.password" label="Mot de passe" lazy-rules
-            hint="Nous ne divulguons jamais votre mot de passe." />
+          <q-input v-if="showPassword" type="password" bottom-slots v-model="form.password" label="Mot de passe"
+            :dense="dense">
+            <template v-slot:hint>
+              Nous ne divulguons jamais votre mot de passe.
+            </template>
+
+            <q-btn @click="toggleShow" round :dense="dense" flat><i style="font-size: 18px;" class="fas"
+                :class="{ 'fa-eye-slash': showPassword, 'fa-eye': !showPassword }"></i></q-btn>
+          </q-input>
+
+          <q-input v-else type="text" bottom-slots v-model="form.password" label="Mot de passe" :dense="dense">
+            <template v-slot:hint>
+              Nous ne divulguons jamais votre mot de passe.
+            </template>
+
+            <q-btn @click="toggleShow" round :dense="dense" flat>
+              <i class="fas" style="font-size: 18px;"
+                :class="{ 'fa-eye-slash': showPassword, 'fa-eye': !showPassword }"></i>
+            </q-btn>
+          </q-input>
 
           <q-item class="q-pa-none q-mb-none q-mt-lg text-center" clickable to="">Mot de passe oublié ?</q-item>
 
@@ -490,15 +526,36 @@
 
           <q-input v-show="societeValue" v-model="form2.societeName" label="Société" />
 
-          <q-input v-model="form2.email2" :dense="dense" type="email" label="E-mail*"
+          <q-input class="q-mb-lg" v-model="form2.email2" :dense="dense" type="email" label="E-mail*"
             :rules="[(val) => validateEmail(val) || 'Adresse email invalide']" lazy-rules
             hint="Nous ne divulguons jamais votre adresse e-mail." />
 
-          <q-input type="password" :dense="dense" v-model="form2.password2" label="Mot de passe*" lazy-rules
-            hint="Nous ne divulguons jamais votre mot de passe." :rules="[
-              (val) =>
-                (val && val.length >= 8) || 'Veuillez taper quelque chose',
-            ]" />
+          <q-input lazy-rules :rules="[
+            (val) =>
+              (val && val.length >= 8) || 'Veuillez taper quelque chose',
+          ]" v-if="showPassword" type="password" bottom-slots v-model="form2.password2" label="Mot de passe"
+            :dense="dense">
+            <template v-slot:hint>
+              Nous ne divulguons jamais votre mot de passe.
+            </template>
+
+            <q-btn @click="toggleShow" round :dense="dense" flat><i style="font-size: 18px;" class="fas"
+                :class="{ 'fa-eye-slash': showPassword, 'fa-eye': !showPassword }"></i></q-btn>
+          </q-input>
+
+          <q-input lazy-rules :rules="[
+            (val) =>
+              (val && val.length >= 8) || 'Veuillez taper quelque chose',
+          ]" v-else type="text" bottom-slots v-model="form2.password2" label="Mot de passe" :dense="dense">
+            <template v-slot:hint>
+              Nous ne divulguons jamais votre mot de passe.
+            </template>
+
+            <q-btn @click="toggleShow" round :dense="dense" flat>
+              <i class="fas" style="font-size: 18px;"
+                :class="{ 'fa-eye-slash': showPassword, 'fa-eye': !showPassword }"></i>
+            </q-btn>
+          </q-input>
 
           <q-card-section class="text-bold q-mt-md" style="font-size: 18px; text-align: center">
             MES INFORMATIONS PERSONNELLES
@@ -636,6 +693,7 @@
       </q-card>
     </q-dialog>
   </q-layout>
+
 </template>
 
 <script>
@@ -1627,7 +1685,6 @@ export default defineComponent({
 
     return {
       platform: $q.platform.is,
-
       stringOptions,
       dense: ref(null),
       login: ref(false),
@@ -1687,12 +1744,13 @@ export default defineComponent({
   },
   data() {
     return {
+      showPassword: true,
       logged: Cookies.get('setLoggedIn'),
       livraisonValue: false,
       societeValue: false,
       params: {
-        appVersion: '3.0.4',
-        appVersionOnline: '3.0.4',
+        appVersion: '3.0.10',
+        appVersionOnline: '3.0.10',
       },
       user: {
         id: null,
@@ -1741,18 +1799,26 @@ export default defineComponent({
     };
   },
   computed: {
+    buttonLabel() {
+      return (this.showPassword) ? 'Hide' : 'Show';
+    },
     ...mapGetters('users', ['setListUser']),
     ...mapGetters('users', ['setListParams']),
     ...mapState('users', ['loggedIn']),
   },
   methods: {
+    toggleShow() {
+      this.showPassword = !this.showPassword;
+    },
     ...mapActions('users', ['handleAuthStateChange']),
     ...mapActions('users', ['paramsVerif']),
     ...mapMutations('users', ['setLoggedIn']),
     checkAuth() {
-      this.handleAuthStateChange();
-      this.mountedData();
-      setTimeout(this.checkAuth, 100);
+      if (Cookies.get('setLoggedIn') == 'true') {
+        this.handleAuthStateChange();
+        this.mountedData();
+        setTimeout(this.checkAuth, 1000);
+      }
     },
     check() {
       this.params.appVersionOnline = this.setListParams.version;
@@ -1853,10 +1919,12 @@ export default defineComponent({
       this.convertPointCash({ id: this.user.id, email: this.user.email });
     },
     reloadGift() {
-      this.verifPointCash(this.user.id);
-      this.user.point = Cookies.get('point');
-      this.user.cashback = Cookies.get('cashback');
-      setTimeout(this.reloadGift, 200);
+      if (Cookies.get('setLoggedIn') == 'true') {
+        this.verifPointCash(this.user.id);
+        this.user.point = Cookies.get('point');
+        this.user.cashback = Cookies.get('cashback');
+        setTimeout(this.reloadGift, 1000);
+      }
     }
   },
   mounted() {

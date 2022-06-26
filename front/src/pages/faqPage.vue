@@ -1,36 +1,24 @@
 <template>
   <!-- BreadCrump -->
-  <div class="q-pa-md q-mt-lg q-gutter-sm">
+  <div class="q-pa-none q-mt-lg q-gutter-sm">
     <q-breadcrumbs class="text-brown">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="white" />
       </template>
 
-      <q-breadcrumbs-el
-        clickable
-        to="/"
-        label="Accueil"
-        style="color: #ffc107"
-      />
-      <q-breadcrumbs-el
-        clickable
-        label="Foire aux questions"
-        style="color: white"
-      />
+      <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+      <q-breadcrumbs-el clickable label="Foire aux questions" style="color: white" />
     </q-breadcrumbs>
   </div>
 
   <div class="container-md q-mt-lg q-mb-lg" style="padding: 0 5vw">
-    <div
-      class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg"
-      style="
+    <div class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg" style="
         font-size: 500;
         justify-content: center;
         display: flex;
         width: 100%;
         margin: 24px 0;
-      "
-    >
+      ">
       <q-item class="title">Foire aux questions</q-item>
     </div>
   </div>
@@ -42,10 +30,8 @@
         l'espérons répondront à vos attentes !
       </p>
       <p>
-        <strong
-          >Puis-je joindre un message/carte d'accompagnement à ma commande
-          ?</strong
-        >
+        <strong>Puis-je joindre un message/carte d'accompagnement à ma commande
+          ?</strong>
       </p>
       <p>
         Oui bien sûr. Vous avez la possibilité de joindre à votre colis une
@@ -55,9 +41,7 @@
         choix de l'envoi en standard ou express).
       </p>
       <p>
-        <strong
-          >Comment puis-je obtenir une facture suite à ma commande ?</strong
-        >
+        <strong>Comment puis-je obtenir une facture suite à ma commande ?</strong>
       </p>
       <p>
         Les factures sont disponibles en ligne sur le site ; environ 4/5 jours
@@ -65,10 +49,8 @@
         facture souhaitée dans l'espace « Mon Compte ».
       </p>
       <p>
-        <strong
-          >Je souhaite faire une commande cadeau ; la facture sera-t-elle
-          insérée dans le colis ?</strong
-        >
+        <strong>Je souhaite faire une commande cadeau ; la facture sera-t-elle
+          insérée dans le colis ?</strong>
       </p>
       <p>
         80% de nos envois sont des cadeaux, donc tous nos colis partent en étuis
@@ -84,10 +66,8 @@
         jours fériés.
       </p>
       <p>
-        <strong
-          >Je souhaite être livré un jour précis (anniversaire), pourquoi
-          dois-je payer le tarif express ?</strong
-        >
+        <strong>Je souhaite être livré un jour précis (anniversaire), pourquoi
+          dois-je payer le tarif express ?</strong>
       </p>
       <p>
         Dans le cas d'une livraison un jour J, précis, le colis est confié à
@@ -95,10 +75,8 @@
         livraison standard. Ce service est disponible uniquement sur la France.
       </p>
       <p>
-        <strong
-          >Pour saisir une adresse en France, je ne peux pas entrer le nom de la
-          ville, le champ est bloqué ; comment faire ?</strong
-        >
+        <strong>Pour saisir une adresse en France, je ne peux pas entrer le nom de la
+          ville, le champ est bloqué ; comment faire ?</strong>
       </p>
       <p>
         La Saisie des adresses pour la France est dotée d'un système de
@@ -121,10 +99,8 @@
         15/12 au 15/01) ; sinon vous pouvez contacter le SAV au 06.15.75.93.02
       </p>
       <p>
-        <strong
-          >Que se passe-t-il si le destinataire de ma commande est absent lors
-          de la présentation du colis par le livreur ?</strong
-        >
+        <strong>Que se passe-t-il si le destinataire de ma commande est absent lors
+          de la présentation du colis par le livreur ?</strong>
       </p>
       <p>
         Tous vos envois sont acheminés par des transporteurs et non des
@@ -134,18 +110,14 @@
         bureau de Poste le plus proche
       </p>
       <p>
-        <strong
-          >Puis-je effectuer une seule commande avec plusieurs destinataires
-          ?</strong
-        >
+        <strong>Puis-je effectuer une seule commande avec plusieurs destinataires
+          ?</strong>
       </p>
       <p>Non, il faut passer autant de commandes que de destinataires</p>
       <p>
-        <strong
-          >Je souhaite envoyer des bouteilles à plusieurs personnes sur un même
+        <strong>Je souhaite envoyer des bouteilles à plusieurs personnes sur un même
           lieu ; pourquoi dois-je payer autant de forfaits de livraison que de
-          destinataires ?</strong
-        >
+          destinataires ?</strong>
       </p>
       <p>
         Chaque envoi est personnalisé : étui cadeau, carte d'accompagnement...
@@ -153,20 +125,16 @@
         plusieurs personnes
       </p>
       <p>
-        <strong
-          >Je souhaite être livré dans un pays qui n'apparaît pas dans votre
-          grille de livraison, est-ce possible ?</strong
-        >
+        <strong>Je souhaite être livré dans un pays qui n'apparaît pas dans votre
+          grille de livraison, est-ce possible ?</strong>
       </p>
       <p>
         Non, toutes nos destinations sont présentes dans cette grille ; nous ne
         pouvons donc pas, par exemple, livrer aux USA ou en Amérique du Sud
       </p>
       <p>
-        <strong
-          >On m'indique que mon colis fait retour à vos entrepôts
-          Nosvinsdumonde, à Le Mans, que puis-je faire ?</strong
-        >
+        <strong>On m'indique que mon colis fait retour à vos entrepôts
+          Nosvinsdumonde, à Le Mans, que puis-je faire ?</strong>
       </p>
       <p>
         Si le colis fait retour dans nos entrepôts, soit par refus du
@@ -176,10 +144,8 @@
         06.15.75.93.02
       </p>
       <p>
-        <strong
-          >Mon colis est arrivé en mauvais état (carton tâché, bouteille
-          cassée...) que dois-je faire ?</strong
-        >
+        <strong>Mon colis est arrivé en mauvais état (carton tâché, bouteille
+          cassée...) que dois-je faire ?</strong>
       </p>
       <p>
         Vous devez refuser le colis pour casse, ou émettre une réserve
@@ -190,11 +156,9 @@
         demander le remboursement de la marchandise.
       </p>
       <p>
-        <strong
-          >J'ai en ma possession une Carte Cadeau Nosvinsdumonde, puis-je
+        <strong>J'ai en ma possession une Carte Cadeau Nosvinsdumonde, puis-je
           l'utiliser pour régler une commande effectuée sur le site
-          Nosvinsdumonde.com ?</strong
-        >
+          Nosvinsdumonde.com ?</strong>
       </p>
       <p>
         Non, les Cartes Cadeaux Nosvinsdumonde ne sont utilisables qu'en ligne

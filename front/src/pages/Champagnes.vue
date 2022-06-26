@@ -1,15 +1,12 @@
 <template>
   <div class="row items-start" style="padding: 0 5vw; flex-direction: column">
-    <div
-      class="text-h4 text-white bloc_vin_title"
-      style="
+    <div class="text-h4 text-white bloc_vin_title" style="
         font-size: 500;
         justify-content: center;
         display: flex;
         width: 100%;
         margin: 24px 0;
-      "
-    >
+      ">
       <q-item class="title">CHAMPAGNES</q-item>
     </div>
 
@@ -26,26 +23,17 @@
           <q-icon size="1.5em" name="chevron_right" color="white" />
         </template>
 
-        <q-breadcrumbs-el
-          clickable
-          to="/"
-          label="Accueil"
-          style="color: #ffc107"
-        />
+        <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
         <q-breadcrumbs-el label="Champagnes" style="color: white" />
       </q-breadcrumbs>
     </div>
 
-    <div
-      class="q-mb-lg q-mt-lg"
-      v-show="showSimulatedReturnData"
-      style="
+    <div class="q-mb-lg q-mt-lg" v-show="showSimulatedReturnData" style="
         justify-content: center;
         display: flex;
         width: 100%;
         flex-direction: column;
-      "
-    >
+      ">
       <div class="col-md-12">
         <div>
           <h3 class="text-white">FILTRER PAR</h3>
@@ -55,87 +43,47 @@
           <form>
             <div style="justify-content: center">
               <div class="q-mb-md col-md-2">
-                <label
-                  @click="millesimeShowing = !millesimeShowing"
-                  class="form-label text-white millesime"
-                  ><i
-                    class="fa-solid q-mr-sm"
-                    v-bind:class="
+                <label @click="millesimeShowing = !millesimeShowing" class="form-label text-white millesime"><i
+                    class="fa-solid q-mr-sm" v-bind:class="
                       millesimeShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "
-                  ></i
-                  >Millésime</label
-                >
+                    "></i>Millésime</label>
 
                 <div v-show="millesimeShowing">
-                  <q-select
-                    :options="stringOptions"
-                    transition-show="flip-up"
-                    transition-hide="flip-down"
-                    v-model="form.millesime"
-                    :dense="dense"
-                    emit-value
-                    map-options
-                    dark
-                    text-color="white"
-                    style="max-height: 100px"
-                    behavior="menu"
-                    @update:model-value="changeForm()"
-                  >
+                  <q-select :options="stringOptions" transition-show="flip-up" transition-hide="flip-down"
+                    v-model="form.millesime" :dense="dense" emit-value map-options dark text-color="white"
+                    style="max-height: 100px" behavior="menu" @update:model-value="changeForm()">
                   </q-select>
                 </div>
               </div>
 
               <div class="q-mb-md col-md-2">
-                <label
-                  class="form-label text-white couleur"
-                  @click="couleurShowing = !couleurShowing"
-                  ><i
-                    class="fa-solid q-mr-sm"
-                    v-bind:class="
+                <label class="form-label text-white couleur" @click="couleurShowing = !couleurShowing"><i
+                    class="fa-solid q-mr-sm" v-bind:class="
                       couleurShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "
-                  ></i
-                  >Couleur</label
-                >
+                    "></i>Couleur</label>
                 <div v-show="couleurShowing">
                   <ul class="list-group">
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.couleur"
-                        class="bottle"
-                        @click="changeFormCouleur(1), changeForm()"
-                      >
-                        <span class="bottle_wine" style="background: #f2d785"
-                          ><i class="fas fa-wine-bottle" aria-hidden="true"></i
-                        ></span>
+                      <q-item clickable v-model="form.couleur" class="bottle"
+                        @click="changeFormCouleur(1), changeForm()">
+                        <span class="bottle_wine" style="background: #f2d785"><i class="fas fa-wine-bottle"
+                            aria-hidden="true"></i></span>
                         <span class="bottle_wine_text">Blanc</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        class="bottle"
-                        clickable
-                        v-model="form.couleur"
-                        @click="changeFormCouleur(2), changeForm()"
-                      >
-                        <span class="bottle_wine" style="background: #fe7162"
-                          ><i class="fas fa-wine-bottle" aria-hidden="true"></i
-                        ></span>
+                      <q-item class="bottle" clickable v-model="form.couleur"
+                        @click="changeFormCouleur(2), changeForm()">
+                        <span class="bottle_wine" style="background: #fe7162"><i class="fas fa-wine-bottle"
+                            aria-hidden="true"></i></span>
                         <span class="bottle_wine_text">Rosé</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.couleur"
-                        class="bottle"
-                        @click="changeFormCouleur(3), changeForm()"
-                      >
-                        <span class="bottle_wine" style="background: #7a0201"
-                          ><i class="fas fa-wine-bottle" aria-hidden="true"></i
-                        ></span>
+                      <q-item clickable v-model="form.couleur" class="bottle"
+                        @click="changeFormCouleur(3), changeForm()">
+                        <span class="bottle_wine" style="background: #7a0201"><i class="fas fa-wine-bottle"
+                            aria-hidden="true"></i></span>
                         <span class="bottle_wine_text">Rouge</span>
                       </q-item>
                     </li>
@@ -144,220 +92,102 @@
               </div>
 
               <div class="q-mb-md col-md-2">
-                <label
-                  class="form-label text-white prix"
-                  @click="prixShowing = !prixShowing"
-                  ><i
-                    class="fa-solid q-mr-sm"
-                    v-bind:class="
+                <label class="form-label text-white prix" @click="prixShowing = !prixShowing"><i
+                    class="fa-solid q-mr-sm" v-bind:class="
                       prixShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "
-                  ></i
-                  >Prix <span class="ms-1 text-warning">(</span
-                  ><span class="text-warning rangePrix"
-                    >{{ form.prix.min }} à {{ form.prix.max }}</span
-                  ><span class="text-warning"> €)</span></label
-                >
+                    "></i>Prix <span class="ms-1 text-warning">(</span><span class="text-warning rangePrix">{{
+    form.prix.min
+}} à {{ form.prix.max }}</span><span class="text-warning"> €)</span></label>
                 <div v-show="prixShowing">
-                  <q-range
-                    v-model="form.prix"
-                    :step="15"
-                    label
-                    :min="0"
-                    :max="2200"
-                    dark
-                    color="deep-orange"
-                    @update:model-value="changeForm()"
-                  />
+                  <q-range v-model="form.prix" :step="15" label :min="0" :max="2200" dark color="deep-orange"
+                    @update:model-value="changeForm()" />
                 </div>
               </div>
 
               <div class="q-mb-md col-md-2">
-                <label
-                  class="form-label text-white pays"
-                  @click="paysShowing = !paysShowing"
-                  ><i
-                    class="fa-solid q-mr-sm"
-                    v-bind:class="
+                <label class="form-label text-white pays" @click="paysShowing = !paysShowing"><i
+                    class="fa-solid q-mr-sm" v-bind:class="
                       paysShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "
-                  ></i
-                  >Pays</label
-                >
-                <q-select
-                  :options="stringOptions2"
-                  transition-show="flip-up"
-                  transition-hide="flip-down"
-                  v-model="form.pays"
-                  :dense="dense"
-                  dark
-                  emit-value
-                  map-options
-                  text-color="white"
-                  style="max-height: 100px"
-                  behavior="menu"
-                  v-show="paysShowing"
-                  @update:model-value="changeForm()"
-                />
+                    "></i>Pays</label>
+                <q-select :options="stringOptions2" transition-show="flip-up" transition-hide="flip-down"
+                  v-model="form.pays" :dense="dense" dark emit-value map-options text-color="white"
+                  style="max-height: 100px" behavior="menu" v-show="paysShowing" @update:model-value="changeForm()" />
               </div>
 
               <div class="q-mb-md col-md-2">
-                <label
-                  @click="regionShowing = !regionShowing"
-                  class="form-label text-white region"
-                  ><i
-                    class="fa-solid q-mr-sm"
-                    v-bind:class="
+                <label @click="regionShowing = !regionShowing" class="form-label text-white region"><i
+                    class="fa-solid q-mr-sm" v-bind:class="
                       regionShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "
-                  ></i
-                  >Region</label
-                >
-                <q-select
-                  v-show="regionShowing"
-                  :options="stringOptions4"
-                  transition-show="flip-up"
-                  transition-hide="flip-down"
-                  v-model="form.region"
-                  :dense="dense"
-                  dark
-                  emit-value
-                  map-options
-                  text-color="white"
-                  style="max-height: 100px"
-                  behavior="menu"
-                  @update:model-value="changeForm()"
-                >
+                    "></i>Region</label>
+                <q-select v-show="regionShowing" :options="stringOptions4" transition-show="flip-up"
+                  transition-hide="flip-down" v-model="form.region" :dense="dense" dark emit-value map-options
+                  text-color="white" style="max-height: 100px" behavior="menu" @update:model-value="changeForm()">
                 </q-select>
               </div>
 
               <div class="q-mb-md col-md-2">
-                <label
-                  class="form-label text-white appellation"
-                  @click="apellationShowing = !apellationShowing"
-                  ><i
-                    class="fa-solid q-mr-sm"
-                    v-bind:class="
+                <label class="form-label text-white appellation" @click="apellationShowing = !apellationShowing"><i
+                    class="fa-solid q-mr-sm" v-bind:class="
                       apellationShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "
-                  ></i
-                  >Appellation</label
-                >
-                <q-select
-                  v-show="apellationShowing"
-                  :options="stringOptions3"
-                  transition-show="flip-up"
-                  transition-hide="flip-down"
-                  v-model="form.appellation"
-                  :dense="dense"
-                  dark
-                  emit-value
-                  map-options
-                  text-color="white"
-                  style="max-height: 100px"
-                  behavior="menu"
-                  @update:model-value="changeForm()"
-                >
+                    "></i>Appellation</label>
+                <q-select v-show="apellationShowing" :options="stringOptions3" transition-show="flip-up"
+                  transition-hide="flip-down" v-model="form.appellation" :dense="dense" dark emit-value map-options
+                  text-color="white" style="max-height: 100px" behavior="menu" @update:model-value="changeForm()">
                 </q-select>
               </div>
 
               <div class="q-mb-md col-md-3">
-                <label
-                  class="form-label text-white gout"
-                  @click="goutShowing = !goutShowing"
-                  ><i
-                    class="fa-solid q-mr-sm"
-                    v-bind:class="
+                <label class="form-label text-white gout" @click="goutShowing = !goutShowing"><i
+                    class="fa-solid q-mr-sm" v-bind:class="
                       goutShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "
-                  ></i
-                  >Goût</label
-                >
+                    "></i>Goût</label>
                 <div v-show="goutShowing">
                   <ul class="list-group">
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.couleur"
-                        class="gout_item"
-                        @click="changeFormGout(1), changeForm()"
-                      >
-                        <span class="gout_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/gout/gout_1.png"
-                        /></span>
+                      <q-item clickable v-model="form.couleur" class="gout_item"
+                        @click="changeFormGout(1), changeForm()">
+                        <span class="gout_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/gout/gout_1.png" /></span>
                         <span class="gout_text">Fruité et charnu</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.couleur"
-                        class="gout_item"
-                        @click="changeFormGout(2), changeForm()"
-                      >
-                        <span class="gout_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/gout/gout_2.png"
-                        /></span>
+                      <q-item clickable v-model="form.couleur" class="gout_item"
+                        @click="changeFormGout(2), changeForm()">
+                        <span class="gout_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/gout/gout_2.png" /></span>
                         <span class="gout_text">Fruité et frais</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.couleur"
-                        class="gout_item"
-                        @click="changeFormGout(3), changeForm()"
-                      >
-                        <span class="gout_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/gout/gout_3.png"
-                        /></span>
+                      <q-item clickable v-model="form.couleur" class="gout_item"
+                        @click="changeFormGout(3), changeForm()">
+                        <span class="gout_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/gout/gout_3.png" /></span>
                         <span class="gout_text">Fruité et léger</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.couleur"
-                        class="gout_item"
-                        @click="changeFormGout(4), changeForm()"
-                      >
-                        <span class="gout_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/gout/gout_4.png"
-                        /></span>
-                        <span class="gout_text"
-                          >Puissant avec du potentiel</span
-                        >
+                      <q-item clickable v-model="form.couleur" class="gout_item"
+                        @click="changeFormGout(4), changeForm()">
+                        <span class="gout_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/gout/gout_4.png" /></span>
+                        <span class="gout_text">Puissant avec du potentiel</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.couleur"
-                        class="gout_item"
-                        @click="changeFormGout(5), changeForm()"
-                      >
-                        <span class="gout_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/gout/gout_5.png"
-                        /></span>
+                      <q-item clickable v-model="form.couleur" class="gout_item"
+                        @click="changeFormGout(5), changeForm()">
+                        <span class="gout_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/gout/gout_5.png" /></span>
                         <span class="gout_text">Riche et puissant</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.couleur"
-                        class="gout_item"
-                        @click="changeFormGout(6), changeForm()"
-                      >
-                        <span class="gout_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/gout/gout_6.png"
-                        /></span>
+                      <q-item clickable v-model="form.couleur" class="gout_item"
+                        @click="changeFormGout(6), changeForm()">
+                        <span class="gout_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/gout/gout_6.png" /></span>
                         <span class="gout_text">Riche et rond</span>
                       </q-item>
                     </li>
@@ -366,214 +196,121 @@
               </div>
 
               <div class="q-mb-md col-md-2">
-                <label
-                  class="form-label text-white alliance"
-                  @click="allianceShowing = !allianceShowing"
-                  ><i
-                    class="fa-solid q-mr-sm"
-                    v-bind:class="
+                <label class="form-label text-white alliance" @click="allianceShowing = !allianceShowing"><i
+                    class="fa-solid q-mr-sm" v-bind:class="
                       allianceShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "
-                  ></i
-                  >Alliance</label
-                >
+                    "></i>Alliance</label>
                 <div v-show="allianceShowing">
                   <ul class="list-group">
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(1), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_1.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(1), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_1.png" /></span>
                         <span class="alliance_text">Agneau</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(2), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_2.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(2), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_2.png" /></span>
                         <span class="alliance_text">Charcuterie</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(3), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_3.png"
-                        /></span>
-                        <span class="alliance_text"
-                          >Coquillages et crustacés</span
-                        >
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(3), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_3.png" /></span>
+                        <span class="alliance_text">Coquillages et crustacés</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(4), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_4.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(4), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_4.png" /></span>
                         <span class="alliance_text">Foie gras</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(5), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_5.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(5), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_5.png" /></span>
                         <span class="alliance_text">Fromage corsé</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(6), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_5.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(6), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_5.png" /></span>
                         <span class="alliance_text">Fromage doux</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(7), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_7.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(7), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_7.png" /></span>
                         <span class="alliance_text">Gibier</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(8), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_8.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(8), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_8.png" /></span>
                         <span class="alliance_text">Glace et sorbet</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(9), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_9.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(9), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_9.png" /></span>
                         <span class="alliance_text">Gâteau</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(10), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_10.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(10), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_10.png" /></span>
                         <span class="alliance_text">Poisson en sauce</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(11), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_11.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(11), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_11.png" /></span>
                         <span class="alliance_text">Poisson grillé</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(12), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_12.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(12), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_12.png" /></span>
                         <span class="alliance_text">Tarte</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(13), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_13.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(13), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_13.png" /></span>
                         <span class="alliance_text">Viande blanche</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
-                      <q-item
-                        clickable
-                        v-model="form.alliance"
-                        class="alliance_item"
-                        @click="changeFormAlliance(14), changeForm()"
-                      >
-                        <span class="alliance_icon"
-                          ><img
-                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_14.png"
-                        /></span>
+                      <q-item clickable v-model="form.alliance" class="alliance_item"
+                        @click="changeFormAlliance(14), changeForm()">
+                        <span class="alliance_icon"><img
+                            src="https://nosvinsdumonde.com/assets/img/alliances/alliance_14.png" /></span>
                         <span class="alliance_text">Viande rouge</span>
                       </q-item>
                     </li>
@@ -582,10 +319,7 @@
               </div>
 
               <div class="q-mb-md col-md-2 filter" style="display: none">
-                <q-btn push color="warning"
-                  ><i class="fa-solid fa-eraser q-mr-sm"></i
-                  ><b>Effacer les filtres</b></q-btn
-                >
+                <q-btn push color="warning"><i class="fa-solid fa-eraser q-mr-sm"></i><b>Effacer les filtres</b></q-btn>
               </div>
             </div>
           </form>
@@ -593,72 +327,39 @@
       </div>
 
       <div style="justify-content: center; display: flex">
-        <q-pagination
-          v-model="current"
-          :max="maxs"
-          :max-pages="7"
-          @click="chargeChampagnes()"
-          direction-links
-          outline
-          color="orange"
-          :boundary-numbers="false"
-          active-color="primary"
-          v-ripple
-          class="q-mt-md"
-        />
+        <q-pagination v-model="current" :max="maxs" :max-pages="7" @click="chargeChampagnes()" direction-links outline
+          color="orange" :boundary-numbers="false" active-color="primary" v-ripple class="q-mt-md" />
       </div>
     </div>
 
-    <div
-      class="items-start q-gutter-md justify-center"
-      style="margin-bottom: 0; padding: 0 0; width: 100%"
-      v-show="showSimulatedReturnData"
-    >
-      <q-card
-        class="card_vin q-mb-lg"
-        flat
-        v-for="champagnes in listChampagnesAll"
-        :key="champagnes.idBoisson"
-      >
+    <div class="items-start q-gutter-md justify-center" style="margin-bottom: 0; padding: 0 0; width: 100%"
+      v-show="showSimulatedReturnData">
+      <q-card class="card_vin q-mb-lg" flat v-for="champagnes in listChampagnesAll" :key="champagnes.idBoisson">
         <q-item class="card_imgs_vin">
-          <q-img
-            class="card_image_vin q-ma-sm"
-            :src="
-              'https://nosvinsdumonde.com/assets/img/' +
-              champagnes.typeBoisson +
-              '/' +
-              champagnes.imageBoisson +
-              ''
-            "
-          >
+          <q-img class="card_image_vin q-ma-sm" :src="
+            'https://nosvinsdumonde.com/assets/img/' +
+            champagnes.typeBoisson +
+            '/' +
+            champagnes.imageBoisson +
+            ''
+          ">
           </q-img>
         </q-item>
 
         <q-card-section>
-          <q-item
-            clickable
-            :to="'/' + champagnes.typeBoisson + '/' + champagnes.idBoisson"
-            class="text-h6 q-mt-sm q-mb-xs text-bold text-black"
-            style="padding: 0 0"
-          >
+          <q-item clickable :to="'/' + champagnes.typeBoisson + '/' + champagnes.idBoisson"
+            class="text-h6 q-mt-sm q-mb-xs text-bold text-black" style="padding: 0 0">
             {{ decode(champagnes.nomBoisson) }}
             {{ champagnes.millesimeBoisson }}
           </q-item>
           <div class="q-mt-lg">
             <span class="badge_region" style="margin: 0 auto">{{
-              champagnes.regionBoisson
+                champagnes.regionBoisson
             }}</span>
           </div>
 
-          <q-item
-            class="q-my-md q-mx-none"
-            style="justify-content: start; padding: 1em 0"
-          >
-            <q-btn
-              :to="'/' + champagnes.typeBoisson + '/' + champagnes.idBoisson"
-              push
-              color="warning"
-            >
+          <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
+            <q-btn :to="'/' + champagnes.typeBoisson + '/' + champagnes.idBoisson" push color="warning">
               Découvrir
             </q-btn>
           </q-item>
@@ -667,12 +368,10 @@
             <span class="text-caption">{{ champagnes.apellationBoisson }}</span>
           </div>
           <div class="q-mt-sm prix">
-            <span
-              ><span class="chiffre">{{
+            <span><span class="chiffre">{{
                 replaceVirgule(champagnes.prixBoisson)
-              }}</span>
-              €</span
-            >
+            }}</span>
+              €</span>
           </div>
           <div class="contenance text-subtitle1">
             <span>Bouteille de {{ champagnes.contenanceBoisson }}</span>
@@ -681,33 +380,15 @@
       </q-card>
     </div>
 
-    <div
-      class="q-mb-lg q-mt-lg"
-      style="justify-content: center; display: flex; width: 100%"
-      v-show="showSimulatedReturnData"
-    >
-      <q-pagination
-        v-model="current"
-        :max="maxs"
-        :max-pages="7"
-        @click="chargeChampagnes()"
-        direction-links
-        outline
-        color="orange"
-        :boundary-numbers="false"
-        active-color="primary"
-        v-ripple
-      />
+    <div class="q-mb-lg q-mt-lg" style="justify-content: center; display: flex; width: 100%"
+      v-show="showSimulatedReturnData">
+      <q-pagination v-model="current" :max="maxs" :max-pages="7" @click="chargeChampagnes()" direction-links outline
+        color="orange" :boundary-numbers="false" active-color="primary" v-ripple />
     </div>
 
     <!-- Loader -->
     <div style="position: relative; min-height: 5vw; width: 100%">
-      <div
-        :showing="visible"
-        v-show="visible"
-        class="container-md q-mt-lg q-mb-lg"
-        style="padding: 0 5vw"
-      >
+      <div :showing="visible" v-show="visible" class="container-md q-mt-lg q-mb-lg" style="padding: 0 5vw">
         <div id="load" class="col text-center">
           <div id="loaderComment" class="lds-ripple">
             <div></div>

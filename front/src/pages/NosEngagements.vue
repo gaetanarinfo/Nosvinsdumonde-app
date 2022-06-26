@@ -1,64 +1,44 @@
 <template>
   <!-- BreadCrump -->
-  <div class="q-pa-md q-mt-lg q-gutter-sm">
+  <div class="q-pa-none q-mt-lg q-gutter-sm">
     <q-breadcrumbs class="text-brown">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="white" />
       </template>
 
-      <q-breadcrumbs-el
-        clickable
-        to="/"
-        label="Accueil"
-        style="color: #ffc107"
-      />
-      <q-breadcrumbs-el
-        clickable
-        label="Nos enguagement"
-        style="color: white"
-      />
+      <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+      <q-breadcrumbs-el clickable label="Nos enguagement" style="color: white" />
     </q-breadcrumbs>
   </div>
 
   <div class="container-md q-mt-lg q-mb-lg" style="padding: 0 5vw">
-    <div
-      class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg"
-      style="
+    <div class="text-h4 text-white bloc_vin_title q-mb-lg q-mt-lg" style="
         font-size: 500;
         justify-content: center;
         display: flex;
         width: 100%;
         margin: 24px 0;
-      "
-    >
+      ">
       <q-item class="title">Nos engagements ?</q-item>
     </div>
 
     <div class="container-md q-mt-lg q-mb-lg text-white">
       <div class="ps-5 pe-5 mobile">
         <div class="mb-5">
-          <h6
-            class="text-center text-white q-pa-none"
-            style="
+          <h6 class="text-center text-white q-pa-none" style="
               border-bottom: 3px solid #ffc107;
               padding-bottom: 13px;
               font-size: 19px;
-            "
-          >
+            ">
             SÉLECTIONNER LA MEILLEURE QUALITÉ DE VINS ET SPIRITUEUX EST NOTRE
             PREMIÈRE PRÉOCCUPATION.
           </h6>
         </div>
 
         <div class="">
-          <div
-            class="col-md-4 mb-5 item_img q-mb-lg"
-            style="display: flex; align-items: center; justify-content: center"
-          >
-            <img
-              src="https://nosvinsdumonde.com/assets/img/transport.png"
-              alt=""
-            />
+          <div class="col-md-4 mb-5 item_img q-mb-lg"
+            style="display: flex; align-items: center; justify-content: center">
+            <img src="https://nosvinsdumonde.com/assets/img/transport.png" alt="" />
           </div>
 
           <div class="col-md-8">
@@ -106,28 +86,22 @@
       </div>
 
       <div class="q-mt-lg q-mb-lg">
-        <h6
-          class="text-center text-white q-pa-none"
-          style="
+        <h6 class="text-center text-white q-pa-none" style="
             border-bottom: 3px solid #ffc107;
             padding-bottom: 13px;
             font-size: 23px;
-          "
-        >
+          ">
           SATISFACTION CLIENT
         </h6>
       </div>
 
       <div class="ps-5 pe-5 mobile">
         <div class="mb-5">
-          <h6
-            class="text-center text-white q-pa-none"
-            style="
+          <h6 class="text-center text-white q-pa-none" style="
               border-bottom: 3px solid #ffc107;
               padding-bottom: 13px;
               font-size: 19px;
-            "
-          >
+            ">
             LES CAVISTES NOSVINSDUMONDE SONT DE VÉRITABLES PROFESSIONNELS DU VIN
             PASSIONNÉS PAR LE PRODUIT, SOUCIEUX DE LA SATISFACTION DE LEURS
             CLIENTS.
@@ -162,46 +136,34 @@
             </p>
           </div>
 
-          <div
-            class="col-md-4 q-mt-lg item_img"
-            style="
+          <div class="col-md-4 q-mt-lg item_img" style="
               display: flex;
               align-items: center;
               justify-content: center;
               width: 100%;
-            "
-          >
-            <img
-              src="https://nosvinsdumonde.com/assets/img/satisfaction.png"
-              alt=""
-            />
+            ">
+            <img src="https://nosvinsdumonde.com/assets/img/satisfaction.png" alt="" />
           </div>
         </div>
       </div>
 
       <div class="q-mb-lg">
-        <h6
-          class="text-center text-white q-pa-none"
-          style="
+        <h6 class="text-center text-white q-pa-none" style="
             border-bottom: 3px solid #ffc107;
             padding-bottom: 13px;
             font-size: 23px;
-          "
-        >
+          ">
           DÉVELOPPEMENT DURABLE
         </h6>
       </div>
 
       <div class="ps-5 pe-5 mobile">
         <div class="mb-5">
-          <h6
-            class="text-center text-white q-pa-none"
-            style="
+          <h6 class="text-center text-white q-pa-none" style="
               border-bottom: 3px solid #ffc107;
               padding-bottom: 13px;
               font-size: 19px;
-            "
-          >
+            ">
             CHEZ NOSVINSDUMONDE, NOUS PRATIQUONS UNE APPROCHE RESPONSABLE ET
             DURABLE DE NOTRE MÉTIER :
           </h6>
@@ -240,15 +202,12 @@
             </p>
           </div>
 
-          <div
-            class="col-md-4 q-mt-lg q-mb-lg item_img"
-            style="
+          <div class="col-md-4 q-mt-lg q-mb-lg item_img" style="
               display: flex;
               align-items: center;
               justify-content: center;
               width: 100%;
-            "
-          >
+            ">
             <img src="https://nosvinsdumonde.com/assets/img/vert.png" alt="" />
           </div>
         </div>
@@ -256,15 +215,12 @@
         <hr />
 
         <div class="row">
-          <div
-            class="col-md-4 q-mt-lg q-mb-lg item_img"
-            style="
+          <div class="col-md-4 q-mt-lg q-mb-lg item_img" style="
               display: flex;
               align-items: center;
               justify-content: center;
               width: 100%;
-            "
-          >
+            ">
             <img src="https://nosvinsdumonde.com/assets/img/vert2.png" alt="" />
           </div>
 
@@ -354,15 +310,12 @@
             </p>
           </div>
 
-          <div
-            class="col-md-4 q-mt-lg item_img"
-            style="
+          <div class="col-md-4 q-mt-lg item_img" style="
               display: flex;
               align-items: center;
               justify-content: center;
               width: 100%;
-            "
-          >
+            ">
             <img src="https://nosvinsdumonde.com/assets/img/vert3.png" alt="" />
           </div>
         </div>
