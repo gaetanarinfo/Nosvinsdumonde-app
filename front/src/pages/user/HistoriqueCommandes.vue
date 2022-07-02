@@ -7,11 +7,12 @@
         width: 100%;
         margin: 24px 0;
       ">
-      <q-item class="title">Historique de mes commandes</q-item>
+      <q-item class="title">{{ $t('TITLE_PAGE_HISTORIQUE') }}</q-item>
     </div>
 
-    <h6 class="text-center text-white q-pa-none q-ma-none" style="display:block; margin: 0 auto;">Retrouvez le détail de
-      toutes vos commandes.</h6>
+    <h6 class="text-center text-white q-pa-none q-ma-none" style="display:block; margin: 0 auto;">{{
+        $t('SUBTITLE_PAGE_HISTORIQUE')
+    }}</h6>
 
     <!-- BreadCrump -->
     <div class="q-pa-none q-gutter-sm q-mt-sm">
@@ -20,9 +21,9 @@
           <q-icon size="1.5em" name="chevron_right" color="white" />
         </template>
 
-        <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+        <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
 
-        <q-breadcrumbs-el label="Historique commandes" style="color: white" />
+        <q-breadcrumbs-el :label="$t('LINK_17')" style="color: white" />
       </q-breadcrumbs>
     </div>
 
@@ -36,9 +37,7 @@
     <div class="q-mt-md" style="margin-bottom: 0; padding: 0 0; width: 100%;" v-show="showSimulatedReturnData">
       <q-item class="q-ma-none q-pa-none" v-if="!hide">
         <h6 class="text-white q-ma-none q-mt-none"><i class="fa-solid fa-triangle-exclamation q-mr-sm"
-            style="color: #ffec02;"></i> Aucune
-          commande n'a été passer au
-          cours des 12 derniers mois.</h6>
+            style="color: #ffec02;"></i> {{ $t('EMPTY_COMMANDE') }}</h6>
       </q-item>
 
       <q-item class="q-ma-none q-pa-none" style="display: block;" v-else>
@@ -50,7 +49,7 @@
             <div class="col-md-3 item shadow q-mt-md q-ml-sm q-mb-md q-mr-sm" style="width: 100%;">
 
               <div class="text-center">
-                <h6 class="q-pa-none q-ma-none"><b>Total de mes commandes :</b></h6>
+                <h6 class="q-pa-none q-ma-none"><b>{{ $t('COMMANDE_ITEM_1') }} :</b></h6>
               </div>
 
               <div class="text-center q-mt-md q-mb-md">
@@ -68,7 +67,7 @@
             <div class="col-md-3 item shadow q-mt-md q-ml-sm q-mb-md q-mr-sm" style="width: 100%;">
 
               <div class="text-center">
-                <h6 class="q-pa-none q-ma-none"><b>Total de mes frais de port :</b></h6>
+                <h6 class="q-pa-none q-ma-none"><b>{{ $t('COMMANDE_ITEM_2') }} :</b></h6>
               </div>
 
               <div class="text-center q-mt-md q-mb-md">
@@ -85,7 +84,7 @@
             <div class="col-md-3 item shadow q-mt-md q-ml-sm q-mr-sm" style="width: 100%;">
 
               <div class="text-center">
-                <h6 class="q-pa-none q-ma-none"><b>Total des points cumulé :</b></h6>
+                <h6 class="q-pa-none q-ma-none"><b>{{ $t('COMMANDE_ITEM_3') }} :</b></h6>
               </div>
 
               <div class="text-center q-mt-md q-mb-md">
@@ -211,16 +210,6 @@ import moment from 'moment';
 var counter = 1;
 let decoder;
 
-const columns = [
-  { name: 'id', align: 'left', label: 'Numéro de commande', field: 'id', sortable: true },
-  { name: 'list_product', align: 'left', label: 'Liste des produits', field: 'list_product', sortable: true },
-  { name: 'transaction', align: 'left', label: 'Numéro de transaction', field: 'transaction', sortable: true },
-  { name: 'status', align: 'left', label: 'Statut de la commande', field: 'status' },
-  { name: 'total', align: 'left', label: 'Total', field: 'total' },
-  { name: 'port', align: 'left', label: 'Frais de port', field: 'port', sortable: true },
-  { name: 'date_paiement', align: 'right', label: 'Date du paiement', field: 'date_paiement', sortable: true }
-]
-
 moment.locale('fr');
 
 export default defineComponent({
@@ -256,6 +245,17 @@ export default defineComponent({
     };
   },
   data() {
+
+    const columns = [
+      { name: 'id', align: 'left', label: this.$t('NUMERO_COMMANDE'), field: 'id', sortable: true },
+      { name: 'list_product', align: 'left', label: this.$t('LISTE_PRODUITS'), field: 'list_product', sortable: true },
+      { name: 'transaction', align: 'left', label: this.$t('NUMERO_TRANSACTION'), field: 'transaction', sortable: true },
+      { name: 'status', align: 'left', label: this.$t('STATUS_TRANSACTION'), field: 'status' },
+      { name: 'total', align: 'left', label: this.$t('TOTALS'), field: 'total' },
+      { name: 'port', align: 'left', label: this.$t('FDP'), field: 'port', sortable: true },
+      { name: 'date_paiement', align: 'right', label: this.$t('DATE_PAIMENT'), field: 'date_paiement', sortable: true }
+    ]
+
     return {
       columns,
       hide: false,
@@ -332,19 +332,19 @@ export default defineComponent({
 
           switch (e.id_status_commande) {
             case 1:
-              transaction = 'Paiement en attente'
+              transaction = $t('TRANSACTION1')
               break;
 
             case 2:
-              transaction = 'Paiement réussi'
+              transaction = $t('TRANSACTION2')
               break;
 
             case 3:
-              transaction = 'Paiement Annuler'
+              transaction = $t('TRANSACTION3')
               break;
 
             case 4:
-              transaction = 'Paiement remboursé'
+              transaction = $t('TRANSACTION4')
               break;
           }
 

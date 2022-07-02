@@ -1,12 +1,12 @@
 <template>
   <!-- BreadCrump -->
-  <div class="q-pa-none q-mt-lg q-gutter-sm">
+  <div class="q-pa-none q-mt-lg q-gutter-sm" style="padding: 0 5vw;">
     <q-breadcrumbs class="text-brown">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="white" />
       </template>
 
-      <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+      <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
       <q-breadcrumbs-el clickable href="/#/actualites" label="Actualités" style="color: #ffc107" />
       <q-breadcrumbs-el :label="decode(listNewsId.title)" style="color: white" />
     </q-breadcrumbs>

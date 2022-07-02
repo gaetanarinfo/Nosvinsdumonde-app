@@ -1,6 +1,6 @@
 <template>
 
-  <div class="row items-start" style="padding: 0 5vw; flex-direction: column">
+  <div class=" items-start" style="padding: 0 5vw; flex-direction: column">
 
     <!-- BreadCrump -->
     <div class="q-pa-none q-mt-lg q-gutter-sm">
@@ -9,8 +9,8 @@
           <q-icon size="1.5em" name="chevron_right" color="white" />
         </template>
 
-        <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
-        <q-breadcrumbs-el clickable href="/#/vins" label="Vins" style="color: #ffc107" />
+        <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
+        <q-breadcrumbs-el clickable href="/#/vins" :label="$t('LINK_7')" style="color: #ffc107" />
         <q-breadcrumbs-el :label="decode(listVinsId.nomBoisson)" style="color: white" />
       </q-breadcrumbs>
     </div>
@@ -18,7 +18,8 @@
     <div class="container-md q-mt-lg q-mb-lg" id="bloc_vin_jour" v-show="showSimulatedReturnData">
       <div class="align-items-start">
         <div id="presentation_vin" class="col-md-3">
-          <div class="text-center">
+          <div class="text-center"
+            :style="(listVinsId.stickerBoisson != '' && listVinsId.stickerBoisson != null) ? 'display: flex;' : ''">
             <div>
               <img :src="
                 'https://nosvinsdumonde.com/assets/img/' +
@@ -28,16 +29,24 @@
                 ''
               " class="img-fluid rounded-start" :alt="decode(listVinsId.nomBoisson)" />
             </div>
+
+            <div v-if="listVinsId.stickerBoisson != '' && listVinsId.stickerBoisson != null">
+              <img :src="
+                'https://nosvinsdumonde.com/assets/img/stickers/' +
+                listVinsId.stickerBoisson +
+                ''
+              " class="img-fluid rounded-start" />
+            </div>
           </div>
 
           <div class="text-center q-mt-lg">
             <q-btn :to="'/contact/claim/' + listVinsId.idBoisson + ''" push size="20px" text-color="white"
-              style="text-transform: initial; background: #d8707d">Ce vin est à moi ?</q-btn>
+              style="text-transform: initial; background: #d8707d">{{ $t('VIN_ME') }}</q-btn>
           </div>
 
           <div class="text-center q-mt-lg">
             <h5 class="text-white" style="font-size: 1.25rem; font-weight: 400">
-              Partager ce produit
+              {{ $t('PARTAGER') }}
             </h5>
 
             <section class="q-mt-lg">
@@ -87,9 +96,9 @@
                 }}</span><span>°</span>
               </div>
 
-              <hr />
+              <hr v-if="listVinsId.niveauCepagesBoisson" />
 
-              <div class="note_cepages q-mt-md q-mb-md">
+              <div v-if="listVinsId.niveauCepagesBoisson" class="note_cepages q-mt-md q-mb-md">
                 <i v-for="note in 5" :key="note" class="fa-solid fa-leaf" v-bind:class="
                   note > listVinsId.niveauCepagesBoisson ? 'empty' : ''
                 "></i>
@@ -100,16 +109,15 @@
               <div class="q-mt-md q-mb-md">
                 <div>
                   <a class="text-white" @click="modal = true"><i
-                      class="fa-brands fa-affiliatetheme q-mr-sm"></i><span>Donner votre avis</span></a>
+                      class="fa-brands fa-affiliatetheme q-mr-sm"></i><span>{{ $t('AVIS') }}</span></a>
                 </div>
                 <div v-show="verifCookie" @click="removeLike()" role="button"
                   class="q-mb-md q-mt-md add_favoris_unclick remove_favoris text-white favoris_i">
-                  <i class="fa-solid fa-heart-circle-minus q-mr-sm"></i>Retirer de
-                  mes favoris
+                  <i class="fa-solid fa-heart-circle-minus q-mr-sm"></i>{{ $t('REMOVE_FAVORIS') }}
                 </div>
                 <div v-show="!verifCookie" role="button" @click="addLike(), verifCookieBtn()"
                   class="q-mb-md q-mt-md add_favoris text-white favoris_i">
-                  <i class="fa-solid fa-heart q-mr-sm"></i>Ajouter aux favoris
+                  <i class="fa-solid fa-heart q-mr-sm"></i>{{ $t('ADD_FAVORIS') }}
                 </div>
               </div>
 
@@ -126,40 +134,42 @@
               </h3>
 
               <div class="text-end">
-                <span class="text-white no_border" style="font-size: 1rem">Bouteille de {{ listVinsId.contenanceBoisson
+                <span class="text-white no_border" style="font-size: 1rem">{{ $t('CONTENANCE') }} {{
+                    listVinsId.contenanceBoisson
                 }}</span><br />
-                <span class="text-white" style="font-size: 1rem">soit {{ replaceVirgule(listVinsId.soitBoisson) }} € /
-                  litre</span>
+                <span class="text-white" style="font-size: 1rem">{{ $t('SOIT') }} {{
+                    replaceVirgule(listVinsId.soitBoisson)
+                }} € /
+                  {{ $t('LITRE') }}</span>
               </div>
 
               <div class="text-end q-mt-md">
-                <q-btn v-if="listVinsId.stockBoisson == '1'" color="warning" style="text-transform: initial" size="lg"
-                  class="add_cart" @click="addCart()"><i class="fa-solid fa-bag-shopping q-mr-sm"></i>Ajouter au
-                  panier</q-btn>
+                <q-btn v-if="listVinsId.stockBoisson == '1'" color="warning" style="text-transform: uppercase" size="lg"
+                  class="add_cart" @click="addCart()"><i class="fa-solid fa-bag-shopping q-mr-sm"></i>{{ $t('ADD_CART')
+                  }}</q-btn>
                 <q-btn size="lg" color="info" outline v-if="listVinsId.stockBoisson != '1'"
                   class="btn btn-outline-info btn-lg disabled q-mb-md"><i
-                    class="fa-solid fa-bag-shopping q-mr-sm"></i>BIENTÔT EN
-                  STOCK !</q-btn>
+                    class="fa-solid fa-bag-shopping q-mr-sm"></i>{{ $t('ERROR_CART') }}</q-btn>
                 <p v-if="listVinsId.stockBoisson != '1'" style="color: #ffc107">
-                  Produit provisoirement indisponible sur nosvinsdumonde.com
+                  {{ $t('EMPTY_PRODUIT') }}
                 </p>
                 <p class="text-white q-mt-md">
-                  {{ listIdVente.idCount }} produit(s) vendu(s) depuis hier
+                  {{ listIdVente.idCount }} {{ $t('COUNT_PRODUITS') }}
                 </p>
               </div>
 
               <div class="text-end q-mt-lg mini_bloc">
-                <h5 class="text-white fw-bold">NIVEAU DE GARDE</h5>
+                <h5 class="text-white fw-bold">{{ $t('GARDE') }}</h5>
                 <span class="text-white">{{ listVinsId.gardeBoisson }}</span>
               </div>
 
               <div class="text-end q-mt-lg mini_bloc">
-                <h5 class="text-white fw-bold">TEMPÉRATURE DE SERVICE</h5>
+                <h5 class="text-white fw-bold">{{ $t('SERVICE') }}</h5>
                 <span class="text-white">{{ listVinsId.temperatureBoisson }}</span><span class="text-white">°</span>
               </div>
 
               <div class="text-end q-mt-lg mini_bloc" v-show="listVinsId.contentCepagesBoisson != undefined">
-                <h5 class="text-white fw-bold">CÉPAGES</h5>
+                <h5 class="text-white fw-bold">{{ $t('GRAPES') }}</h5>
                 <span class="text-white" v-html="listVinsId.contentCepagesBoisson"></span>
               </div>
             </div>
@@ -170,7 +180,7 @@
       <div class="text-center q-mt-lg q-mt-lg" v-if="listIdAlliance.length != 0">
         <div class="q-mb-lg">
           <h2 class="text-white title_alliances title_domaine">
-            NOS ALLIANCES METS & VINS
+            {{ $t('ALLIANCE_METS') }}
           </h2>
         </div>
       </div>
@@ -186,8 +196,10 @@
                   ''
                 " alt="" />
               </span>
+
               <div class="q-mt-md">
-                <span class="alliance_mini_text">{{ alliance.fr }}</span>
+                <span class="alliance_mini_text" v-if="locale == 'en-US'">{{ alliance.en }}</span>
+                <span class="alliance_mini_text" v-else-if="locale == 'fr-FR'">{{ alliance.fr }}</span>
               </div>
             </li>
           </ul>
@@ -197,7 +209,7 @@
       <div class="text-center q-mt-lg q-mt-lg" v-if="listVinsId.vinSaviezVousBoisson">
         <div class="q-mb-lg">
           <h2 class="text-white title_alliances title_domaine">
-            LE SAVIEZ-VOUS ?
+            {{ $t('SAVEZ_VOUS') }}
           </h2>
         </div>
       </div>
@@ -212,8 +224,8 @@
 
       <div class="text-center q-mt-lg q-mt-lg">
         <div class="q-mb-lg">
-          <h2 class="text-white title_alliances title_domaine">
-            CARACTÉRISTIQUES
+          <h2 style="text-transform: uppercase;" class="text-white title_alliances title_domaine">
+            {{ $t('CARACTERISTIQUES') }}
           </h2>
         </div>
 
@@ -229,15 +241,23 @@
                           'https://nosvinsdumonde.com/assets/img/gout/' +
                           listVinsId.imageGoutBoisson +
                           ''
-                        " alt="{{listVinsId.nomGoutBoisson}}" />
+                        " :autocapitalize="listVinsId.nomGoutBoisson2" />
                       </div>
                       <div>
-                        <h3 class="card-title text-white">
+                        <h3 class="card-title text-white" v-if="listVinsId.nomGoutBoisson2">
+                          {{ $t(listVinsId.nomGoutBoisson2) }}
+                        </h3>
+                        <h3 v-else class="card-title text-white">
                           {{ listVinsId.nomGoutBoisson }}
                         </h3>
                       </div>
+
                       <div>
-                        <p class="text-white">
+                        <p class="text-white" v-if="listVinsId.contentCaracteristiqueBoisson2 && locale == 'en-US'">
+                          {{ $t(listVinsId.contentCaracteristiqueBoisson2) }}
+                        </p>
+
+                        <p class="text-white" v-else>
                           {{ listVinsId.contentCaracteristiqueBoisson }}
                         </p>
                       </div>
@@ -251,8 +271,13 @@
               <div class="card card2 mb-4 shadow">
                 <div class="g-0">
                   <div class="col-md-12">
-                    <div class="card-body text-center">
-                      <h3 class="card-title text-dark">
+                    <div class="card-body q-px-md text-center">
+                      <h3 class="card-title text-dark"
+                        v-if="listVinsId.titreCaracteristiqueBoisson2 && locale == 'en-US'">
+                        {{ $t(listVinsId.titreCaracteristiqueBoisson2) }}
+                      </h3>
+
+                      <h3 class="card-title text-dark" v-else>
                         {{ listVinsId.titreCaracteristiqueBoisson }}
                       </h3>
                     </div>
@@ -266,8 +291,8 @@
 
       <div class="text-center q-mb-lg q-mt-lg">
         <div class="q-mb-lg">
-          <h2 class="text-white title_alliances title_domaine title_domaine_mobile">
-            LE DOMAINE ET L'APPELLATION
+          <h2 style="text-transform: uppercase;" class="text-white title_alliances title_domaine title_domaine_mobile">
+            {{ $t('DOMAINE') }}
           </h2>
         </div>
 
@@ -297,16 +322,24 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-          " v-show="listVinsId.contentCepagesBoisson != undefined">
-            <h3 class="text-white no-border">CÉPAGES</h3>
+          " v-show="listVinsId.contentCepagesBoisson != undefined"
+            v-if="listVinsId.contentCepagesBoisson != undefined">
+            <h3 class="text-white no-border">{{ $t('GRAPES') }}</h3>
 
             <p class="text-white q-mt-md fw-bold" v-html="listVinsId.contentCepagesBoisson"></p>
+          </div>
+
+          <div v-if="listVinsId.contentCepagesBoisson != undefined" class="q-mt-lg"
+            style="width: 100%;justify-content: center; align-items: center;">
+            <DoughnutChart :chartId="'vins_' + listVinsId.idBoisson" v-if="showSimulatedReturnData"
+              :listChampagnesId="listVinsId.chartContentCepagesBoisson"
+              :listChampagnesId2="listVinsId.chartNumberCepagesBoisson" />
           </div>
         </div>
 
         <div id="produits" class="container-md q-mt-lg q-mb-lg">
           <h2 class="text-white title_alliances title_domaine title_domaine_mobile">
-            <span>LES SUGGESTIONS DE VOTRE CAVISTE</span>
+            <span>{{ $t('RELATION_VIN') }}</span>
           </h2>
         </div>
 
@@ -332,10 +365,11 @@
                 <span class="badge_region">{{ vins.apellationBoisson }}</span>
               </div>
 
-              <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
+              <q-item class="q-my-md q-mx-none"
+                style="justify-content: start; padding: 1em 0; text-transform: uppercase;">
                 <q-btn :to="'/' + vins.typeBoisson + '/' + vins.idBoisson" @click="actuBtn(vins.idBoisson)"
                   color="warning" push>
-                  Découvrir
+                  {{ $t('DECOUVRIR_BTN') }}
                 </q-btn>
               </q-item>
 
@@ -350,7 +384,7 @@
                   €</span>
               </div>
               <div class="contenance text-subtitle1 text-left">
-                <span>Bouteille de {{ vins.contenanceBoisson }}</span>
+                <span>{{ $t('CONTENANCE') }} {{ vins.contenanceBoisson }}</span>
               </div>
             </q-card-section>
           </q-card>
@@ -363,13 +397,13 @@
       <q-dialog v-model="modal" id="avisModal" persistent transition-show="rotate" transition-hide="rotate">
         <q-card style="max-height: 50vh" class="scroll">
           <q-card-section class="row items-center q-pb-none">
-            <div class="text-h6" style="font-size: 17px">DONNER VOTRE AVIS</div>
+            <div class="text-h6" style="font-size: 17px">{{ $t('AVIS') }}</div>
             <q-space />
             <q-btn icon="close" size="sm" flat round dense v-close-popup />
           </q-card-section>
 
           <q-card-section>
-            <p>Cliquez sur un verre pour ajouter une note</p>
+            <p>{{ $t('MODAL_AVIS_SUBTITLE') }}</p>
 
             <div class="text-center">
               <q-rating v-model="ratingModel" icon="wine_bar" size="3em" color="#d29f05" @click="changeRating()">
@@ -377,24 +411,24 @@
             </div>
 
             <q-form ref="myForm" class="q-gutter-md q-mt-md">
-              <q-input v-model="form.avis_prenom" label="Veuillez saisir votre prénom *" lazy-rules type="text" :rules="[
+              <q-input v-model="form.avis_prenom" :label="$t('COND_PRENOM')" lazy-rules type="text" :rules="[
                 (val) =>
-                  (val && val.length > 2) || 'Veuillez taper quelque chose',
+                  (val && val.length > 2) || $('VEUILLEZ_TAPEZ'),
               ]" />
 
-              <q-input v-model="form.avis_email" label="Veuillez saisir votre votre adresse email *" lazy-rules
-                type="email" :rules="[
-                  (val) =>
-                    (val && val.length > 2) || 'Veuillez taper quelque chose',
-                ]" />
-
-              <q-input v-model="form.avis_content" lazy-rules type="text" label="Partagez votre expérience *" :rules="[
+              <q-input v-model="form.avis_email" :label="$t('COND_EMAIL')" lazy-rules type="email" :rules="[
                 (val) =>
-                  (val && val.length > 2) || 'Veuillez taper quelque chose',
+                  (val && val.length > 2) || $('VEUILLEZ_TAPEZ'),
+              ]" />
+
+              <q-input v-model="form.avis_content" lazy-rules type="text" :label="$t('COND_AVIS')" :rules="[
+                (val) =>
+                  (val && val.length > 2) || $('VEUILLEZ_TAPEZ'),
               ]" />
 
               <div>
-                <q-btn label="Valider" @click="onSubmit()" type="submit" color="positive" :disabled="submitted" />
+                <q-btn :label="$t('VALIDER')" @click="onSubmit()" type="submit" color="positive"
+                  :disabled="submitted" />
               </div>
             </q-form>
           </q-card-section>
@@ -426,6 +460,9 @@ import moment from 'moment';
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { Cookies } from 'quasar';
+import { useI18n } from 'vue-i18n'
+
+import DoughnutChart from '../components/doughnutChart'
 
 moment.locale('fr');
 
@@ -434,16 +471,21 @@ var counter = 1;
 
 export default {
   name: 'articleId',
+  components: { DoughnutChart },
   setup() {
     const $q = useQuasar();
     const visible = ref(false);
     const showSimulatedReturnData = ref(false);
+
+    const { locale } = useI18n({ useScope: 'global' })
+
     return {
+      locale,
       showNotif() {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Votre avis nous à bien été envoyer.',
+          message: this.$t('MESSAGE_1'),
           timeout: 2500,
         });
       },
@@ -451,7 +493,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Votre vin a bien été ajouté au favoris.',
+          message: this.$t('MESSAGE_FAV'),
           timeout: 2500,
         });
       },
@@ -459,7 +501,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'negative',
-          message: 'Une erreur est survenue !',
+          message: this.$t('MESSAGE_2'),
           timeout: 2500,
         });
       },
@@ -467,7 +509,15 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'warning',
-          message: 'Votre vin a déjà été ajouté au favoris !',
+          message: this.$t('MESSAGE_FAV2'),
+          timeout: 2500,
+        });
+      },
+      showNotifRemoveCookie() {
+        $q.notify({
+          position: 'top-left',
+          type: 'positive',
+          message: this.$t('MESSAGE_FAV_REMOVE'),
           timeout: 2500,
         });
       },
@@ -486,7 +536,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Votre vin a bien été ajouté au panier.',
+          message: this.$t('VIN_ADD_CART'),
           timeout: 2500,
         });
       },
@@ -517,7 +567,6 @@ export default {
       modal: ref(false),
     };
   },
-  components: {},
   computed: {
     ...mapState('vins', ['listVinsId']),
     ...mapState('vins', ['listIdAlliance']),
@@ -606,7 +655,7 @@ export default {
         }
 
         this.verifCookie = false;
-        this.showNotifCookie();
+        this.showNotifRemoveCookie();
       }
     },
     verifCookieBtn() {
@@ -664,7 +713,6 @@ export default {
       this.alliance();
     },
   },
-  components: {},
   mounted() {
     const value = Cookies.get('favoris');
     if (Cookies.has('favoris') && value.indexOf(this.$route.params.id) !== -1) {

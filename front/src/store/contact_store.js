@@ -55,7 +55,6 @@ const actions = {
     axios
       .get('/vins/' + payload)
       .then(res => {
-        console.log(res.data.vinsId[0]);
         if (res.data.vinsId != 0) {
           commit('setListVinsId', res.data.vinsId[0])
         } else {

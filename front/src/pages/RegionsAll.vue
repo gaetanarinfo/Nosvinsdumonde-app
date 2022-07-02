@@ -17,7 +17,7 @@
           <q-icon size="1.5em" name="chevron_right" color="white" />
         </template>
 
-        <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+        <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
 
         <q-breadcrumbs-el clickable :to="'/' + typeBoisson + ''" :label="typeBoisson"
           style="color: #ffc107; text-transform: capitalize" />
@@ -57,7 +57,7 @@
           </q-item>
           <div class="q-mt-lg">
             <span class="badge_region" style="margin: 0 auto">{{
-                champagnes_vins.regionBoisson
+            champagnes_vins.regionBoisson
             }}</span>
           </div>
 
@@ -74,12 +74,12 @@
 
           <div>
             <span class="text-caption">{{
-                champagnes_vins.apellationBoisson
+            champagnes_vins.apellationBoisson
             }}</span>
           </div>
           <div class="q-mt-sm prix">
             <span><span class="chiffre">{{
-                replaceVirgule(champagnes_vins.prixBoisson)
+            replaceVirgule(champagnes_vins.prixBoisson)
             }}</span>
               €</span>
           </div>

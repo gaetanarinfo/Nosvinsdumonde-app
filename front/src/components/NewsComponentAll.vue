@@ -6,7 +6,7 @@
       width: 100%;
       margin: 24px 0;
     ">
-    <q-item class="title">Nos actualités</q-item>
+    <q-item class="title">{{ $t('TITLE_PAGE_ACTUALITES') }}</q-item>
   </div>
 
   <!-- BreadCrump -->
@@ -16,7 +16,7 @@
         <q-icon size="1.5em" name="chevron_right" color="white" />
       </template>
 
-      <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+      <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
       <q-breadcrumbs-el label="Actualités" style="color: white" />
     </q-breadcrumbs>
   </div>
@@ -61,7 +61,7 @@
             align-items: center;
           ">
           <q-btn :href="'#/actualite/' + news.url" color="info" push>
-            Lire la suite
+            {{ $t('SUITE') }}
           </q-btn>
 
           <div>{{ news.date }}</div>

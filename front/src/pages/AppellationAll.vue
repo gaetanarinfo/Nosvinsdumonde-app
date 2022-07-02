@@ -17,7 +17,7 @@
           <q-icon size="1.5em" name="chevron_right" color="white" />
         </template>
 
-        <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+        <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
 
         <q-breadcrumbs-el clickable :to="'/' + typeBoisson + ''" :label="typeBoisson"
           style="color: #ffc107; text-transform: capitalize" />

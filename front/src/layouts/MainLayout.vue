@@ -10,46 +10,31 @@
 
         <q-space />
 
+        <q-select v-model="locale" class="q-py-sm q-px-sm" :options="localeOptions" :options-html="optionsHtml" dark
+          dense borderless emit-value map-options>
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section class="q-pa-none" avatar>
+                <img width="29" :src="scope.opt.icon" />
+              </q-item-section>
+              <q-item-section style="left: -23px;position: relative;">
+                <q-item-label v-html="scope.opt.label2"></q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <q-btn v-if="params.appVersionOnline != params.appVersion" round dense size="md" @click="showNotifUpdate()"
+          icon="notifications" class="q-py-sm q-px-sm" style="border-radius: 12px">
+          <q-badge floating color="info" rounded size="md" />
+        </q-btn>
+
         <q-btn v-if="this.user.id && this.user.email && this.user.carte == 1" flat round dense size="md"
           @click="giftmodal = true" text-color="pink-6" icon="fa-solid fa-gift" class="q-mr-sm q-ml-sm q-py-sm q-px-sm"
           style="border-radius: 12px">
         </q-btn>
 
-        <q-btn v-if="params.appVersionOnline != params.appVersion" round dense size="md" @click="showNotifUpdate()"
-          icon="notifications" class="q-mr-sm q-ml-sm q-py-sm q-px-sm" style="border-radius: 12px">
-          <q-badge floating color="info" rounded size="md" />
-        </q-btn>
-
-        <q-btn flat round dense size="lg" class="q-mr-sm q-ml-sm q-py-sm q-px-sm" style="border-radius: 12px">
-          <img class="langs" src="../assets/img/langs/fr.png" />
-
-          <q-menu class="bg-dark text-white" style="min-width: 170px">
-            <q-list>
-              <q-item active clickable>
-                <q-item-section class="relative-position" style="
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: flex-start;
-                  "><img class="langs" src="../assets/img/langs/fr.png" />
-                  <div class="q-ml-sm text-bold">Français</div>
-                </q-item-section>
-              </q-item>
-              <q-item disabled clickable>
-                <q-item-section style="
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: flex-start;
-                  "><img class="langs" src="../assets/img/langs/en.png" />
-                  <div class="q-ml-sm text-bold">English</div>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
-
-        <q-btn flat dense v-ripple size="lg" class="q-mr-sm q-ml-sm q-py-sm q-px-sm" style="border-radius: 12px">
+        <q-btn flat dense v-ripple size="lg" class="q-py-sm q-px-sm" style="border-radius: 12px">
 
           <img class="users" src="https://nosvinsdumonde.com/assets/img/user_empty.png"
             v-if="!this.user.id && !this.user.email" />
@@ -67,14 +52,14 @@
                 <q-item-section avatar style="min-width: 20px;padding: 0 10px 0 0;">
                   <q-icon size="15px" name="fa-solid fa-right-to-bracket" />
                 </q-item-section>
-                <q-item-section class="text-bold">Se connecter</q-item-section>
+                <q-item-section class="text-bold">{{ $t('SIGNIN') }}</q-item-section>
               </q-item>
 
               <q-item clickable @click="register = true">
                 <q-item-section avatar style="min-width: 20px;padding: 0 10px 0 0;">
                   <q-icon size="15px" name="fa-solid fa-circle-plus" />
                 </q-item-section>
-                <q-item-section class="text-bold">Créez votre compte</q-item-section>
+                <q-item-section class="text-bold">{{ $t('REGISTER') }}</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -94,7 +79,7 @@
                   {{ user.prenom }} {{ user.nom }}
                 </div>
 
-                <q-btn color="red-5" label="Déconnexion" push @click="logout()" size="md" v-close-popup />
+                <q-btn color="red-5" :label="$t('LOGOUT')" push @click="logout()" size="md" v-close-popup />
               </div>
 
               <q-separator horizontal inset class="q-mx-md q-mt-lg q-mb-sm" style="background: #949494" />
@@ -104,28 +89,28 @@
                   <q-item-section avatar style="min-width: 30px">
                     <q-icon size="15px" name="fa-solid fa-user-gear" />
                   </q-item-section>
-                  <q-item-section>Gestion de mon compte</q-item-section>
+                  <q-item-section>{{ $t('GESTION_COMPTE') }}</q-item-section>
                 </q-item>
 
                 <q-item clickable to="/historique-commandes">
                   <q-item-section avatar style="min-width: 30px">
                     <q-icon size="15px" name="fa-solid fa-cart-shopping" />
                   </q-item-section>
-                  <q-item-section>Historique des commandes</q-item-section>
+                  <q-item-section>{{ $t('GESTION_COMMANDE') }}</q-item-section>
                 </q-item>
 
                 <q-item clickable to="/gestion-colis">
                   <q-item-section avatar style="min-width: 30px">
                     <q-icon size="15px" name="fa-solid fa-truck" />
                   </q-item-section>
-                  <q-item-section>Gestion de mes livraison</q-item-section>
+                  <q-item-section>{{ $t('GESTION_LIVRAISON') }}</q-item-section>
                 </q-item>
 
                 <q-item clickable @click="giftmodal = true">
                   <q-item-section avatar style="min-width: 30px">
                     <q-icon size="15px" name="fa-solid fa-gift" />
                   </q-item-section>
-                  <q-item-section>Ma carte privilège</q-item-section>
+                  <q-item-section>{{ $t('TITLE_PAGE_PRIVILEGE') }}</q-item-section>
                 </q-item>
               </div>
 
@@ -134,34 +119,36 @@
               <q-item class="q-pa-none q-ma-none text-center q-mb-sm" style="display: block;min-height: auto;">
                 {{
                     replaceGuillemet(params.appVersion)
-                }} - <span>FR</span> - <span style="text-transform:capitalize;">{{ platform.platform }}</span></q-item>
+                }} - <span style="text-transform: uppercase;">{{ locale }}</span> - <span
+                  style="text-transform:capitalize;">{{ platform.platform }}</span>
+              </q-item>
             </div>
           </q-menu>
         </q-btn>
 
         <q-btn @click="verifCookieHeads(), verifCartHeads()" flat dense v-ripple icon="menu" size="lg"
-          class="q-ml-sm q-py-sm q-px-sm show-mobile" style="border-radius: 12px">
+          class=" q-py-sm q-px-sm" style="border-radius: 12px">
           <q-menu class="bg-dark text-white" style="min-width: 190px">
             <q-list>
               <q-item clickable to="/vins">
                 <q-item-section avatar style="min-width: 30px">
                   <q-icon size="15px" name="fa-solid fa-wine-glass" />
                 </q-item-section>
-                <q-item-section class="text-bold">Vins</q-item-section>
+                <q-item-section class="text-bold">{{ $t('LINK_7') }}</q-item-section>
               </q-item>
 
               <q-item clickable to="/champagnes">
                 <q-item-section avatar style="min-width: 30px">
                   <q-icon size="15px" name="fa-solid fa-wine-glass-empty" />
                 </q-item-section>
-                <q-item-section class="text-bold">Champagnes</q-item-section>
+                <q-item-section class="text-bold">{{ $t('LINK_8') }}</q-item-section>
               </q-item>
 
               <q-item clickable to="/contact/suggest">
                 <q-item-section avatar style="min-width: 30px">
                   <q-icon size="15px" name="fa-solid fa-location-arrow" />
                 </q-item-section>
-                <q-item-section class="text-bold">Ajouter un produit</q-item-section>
+                <q-item-section class="text-bold">{{ $t('AJOUT_PRODUIT_MENU') }}</q-item-section>
               </q-item>
 
               <q-item clickable>
@@ -169,20 +156,20 @@
                   <q-icon size="15px" name="fa-solid fa-suitcase" />
                 </q-item-section>
 
-                <q-item-section class="text-bold">Nos offres</q-item-section>
+                <q-item-section class="text-bold">{{ $t('OFFERS') }}</q-item-section>
                 <q-menu class="bg-dark text-white" auto-close>
                   <q-list>
-                    <q-item clickable href="/">
+                    <q-item clickable to="/offres-emplois">
                       <q-item-section avatar style="min-width: 25px; padding: 0 5px 0 0">
                         <q-icon size="15px" name="fa-solid fa-arrow-right" />
                       </q-item-section>
-                      <q-item-section class="text-bold">Offres d'emploi</q-item-section>
+                      <q-item-section class="text-bold">{{ $t('LI_NAV_1') }}</q-item-section>
                     </q-item>
-                    <q-item clickable href="/">
+                    <q-item clickable to="/offres-stage">
                       <q-item-section avatar style="min-width: 25px; padding: 0 5px 0 0">
                         <q-icon size="15px" name="fa-solid fa-arrow-right" />
                       </q-item-section>
-                      <q-item-section class="text-bold">Offres de stage</q-item-section>
+                      <q-item-section class="text-bold">{{ $t('LI_NAV_2') }}</q-item-section>
                     </q-item>
                   </q-list>
                 </q-menu>
@@ -196,7 +183,7 @@
                   ">
                   <q-icon size="15px" name="fa-solid fa-bag-shopping" />
                 </q-item-section>
-                <q-item-section class="text-bold">Panier</q-item-section>
+                <q-item-section class="text-bold">{{ $t('LINK_16') }}</q-item-section>
                 <q-item-section name="tab4" v-ripple size="12px" disabled class="q-py-md q-mr-sm" />
                 <q-badge v-show="verifCartHead" style="
                     padding: 6px 9px;
@@ -218,7 +205,7 @@
                   ">
                   <q-icon size="15px" name="fa-solid fa-bag-shopping" />
                 </q-item-section>
-                <q-item-section class="text-bold">Panier</q-item-section>
+                <q-item-section class="text-bold">{{ $t('LINK_16') }}</q-item-section>
                 <q-item-section name="tab4" v-ripple size="12px" disabled class="q-py-md q-mr-sm" />
               </q-item>
 
@@ -227,7 +214,7 @@
                   <q-icon size="15px" name="fa-solid fa-heart" />
                 </q-item-section>
 
-                <q-item-section class="text-bold" style="color: white">Favoris </q-item-section>
+                <q-item-section class="text-bold" style="color: white">{{ $t('FAVORIS') }} </q-item-section>
                 <q-item-section name="tab5" v-ripple size="12px" disabled class="q-py-md q-mr-sm" />
                 <q-badge v-show="verifCookieHead"
                   style="padding: 6px 9px;height: 23px;font-weight: 500;line-height: 13px;position: relative;top: 0px;"
@@ -239,7 +226,7 @@
                   <q-icon size="15px" name="fa-solid fa-heart" />
                 </q-item-section>
 
-                <q-item-section class="text-bold" style="color: white">Favoris </q-item-section>
+                <q-item-section class="text-bold" style="color: white">{{ $t('FAVORIS') }} </q-item-section>
                 <q-item-section name="tab5" v-ripple size="12px" disabled class="q-py-md q-mr-sm" />
               </q-item>
             </q-list>
@@ -248,42 +235,29 @@
       </q-toolbar>
     </q-header>
 
-    <!-- Bare bones example -->
-    <q-page-sticky style="z-index: 1;" position="top-right" :offset="[15, 15]">
-      <q-fab icon="add" direction="left" color="info" push glossy>
-        <q-fab-action clickable v-if="verifCartHead" to="/cart/1" color="warning" push glossy
-          icon="fa-solid fa-cart-shopping" />
-        <q-fab-action clickable to="/historique-commandes" color="warning" push glossy
-          icon="fa-solid fa-clock-rotate-left" />
-      </q-fab>
-    </q-page-sticky>
-
-    <q-page-container style="padding-top: 66px; padding-bottom: 20px">
+    <q-page-container style="padding-top: 66px; padding-bottom: 20px;">
       <router-view />
     </q-page-container>
 
-    <q-footer>
+    <q-footer style="position: relative;">
 
       <q-item class="q-pa-none q-ma-none" style="display: block; padding: 1em;"><span
-          style="font-size: 18px;text-align: center;margin: 0 auto;display: block;font-weight: 500;">Inscrivez-vous
-          à notre
-          newsletter</span>
+          style="font-size: 18px;text-align: center;margin: 0 auto;display: block;font-weight: 500;">{{
+              $t('NEWSLETTER_TITLE')
+          }}</span>
         <q-form @submit="submitNewsLetter()">
-          <q-input v-model="formNewsLetter.email" :rules="[(val) => validateEmail(val) || 'Adresse email invalide']"
-            dark lazy-rules hint="Nous ne divulguons jamais votre adresse e-mail." label="Adresse email" stack-label
-            :dense="dense" />
-          <q-btn class="q-mt-md" type="submit" size="md" push color="info">S'abonner</q-btn>
+          <q-input v-model="formNewsLetter.email" :rules="[(val) => validateEmail(val) || $('EMAIL_VALIDE')]" dark
+            lazy-rules :hint="$t('LABEL_1')" :label="$t('EMAIL_INPUT')" stack-label :dense="dense" />
+          <q-btn class="q-mt-md" type="submit" size="md" push color="info">{{ $t('SUSCRIBE') }}</q-btn>
         </q-form>
       </q-item>
 
       <q-item class="text-white text-center" style="flex-direction: column">
         <div style="font-size: 0.9rem" class="q-py-sm">
-          Nosvinsdumonde, N°1 de la mise en relation en France est élu marque
-          préférée des français.
+          {{ $t('SLOGAN_FOOTER') }}
         </div>
         <div style="font-size: 0.8rem">
-          L'ABUS D'ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC
-          MODÉRATION.
+          {{ $t('ABUS') }}
         </div>
       </q-item>
 
@@ -297,7 +271,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Qui sommes nous ?</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_1') }}</q-btn>
           </div>
           <div class="q-mb-sm">
             <q-btn to="/contact" flat dense style="
@@ -306,25 +280,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Nous contacter</q-btn>
-          </div>
-          <div class="q-mb-sm">
-            <q-btn to="/" flat dense style="
-                font-size: 14px;
-                font-weight: normal;
-                padding: 0 0;
-                margin: 0 0;
-                text-transform: initial;
-              " class="transparentbtn_home">Nos services</q-btn>
-          </div>
-          <div class="q-mb-sm">
-            <q-btn to="/" flat dense style="
-                font-size: 14px;
-                font-weight: normal;
-                padding: 0 0;
-                margin: 0 0;
-                text-transform: initial;
-              " class="transparentbtn_home">Nos valeurs</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_2') }}</q-btn>
           </div>
           <div>
             <q-btn to="/nos-engagements" flat dense style="
@@ -333,12 +289,12 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Nos engagements</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_5') }}</q-btn>
           </div>
         </q-item-section>
 
         <q-item-section>
-          <q-item class="q-mb-md links">NOS PRODUITS</q-item>
+          <q-item class="q-mb-md links">{{ $t('LINK_TILE_2') }}</q-item>
           <div class="q-mb-sm">
             <q-btn to="/vins" flat dense style="
                 font-size: 14px;
@@ -346,7 +302,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Vins</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_7') }}</q-btn>
           </div>
           <div class="q-mb-sm">
             <q-btn to="/champagnes" flat dense style="
@@ -355,7 +311,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Champagnes</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_8') }}</q-btn>
           </div>
           <div class="q-mb-sm">
             <q-btn to="/" flat dense style="
@@ -364,7 +320,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Plan site</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_9') }}</q-btn>
           </div>
           <div class="q-mb-sm">
             <q-btn to="/livraison" flat dense style="
@@ -382,12 +338,12 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Api</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_6') }}</q-btn>
           </div>
         </q-item-section>
 
         <q-item-section>
-          <q-item class="q-mb-md links">AIDES</q-item>
+          <q-item class="q-mb-md links">{{ $t('LINK_TILE_3') }}</q-item>
           <div class="q-mb-sm">
             <q-btn to="/faq" flat dense style="
                 font-size: 14px;
@@ -395,7 +351,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">FAQ</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_10') }}</q-btn>
           </div>
           <div class="q-mb-sm">
             <q-btn to="/programme-privilege" flat dense style="
@@ -404,7 +360,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Programme privilège</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_11') }}</q-btn>
           </div>
           <div class="q-mb-sm">
             <q-btn to="/cgv" flat dense style="
@@ -413,7 +369,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">CGV</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_12') }}</q-btn>
           </div>
           <div class="q-mb-sm">
             <q-btn to="/cgu" flat dense style="
@@ -422,7 +378,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">CGU</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_13') }}</q-btn>
           </div>
           <div class="q-mb-sm">
             <q-btn to="/politique-confidentialite" flat dense style="
@@ -431,7 +387,7 @@
                 padding: 0 0;
                 margin: 0 0;
                 text-transform: initial;
-              " class="transparentbtn_home">Politique de confidentialité</q-btn>
+              " class="transparentbtn_home">{{ $t('LINK_14') }}</q-btn>
           </div>
         </q-item-section>
       </q-item>
@@ -455,35 +411,34 @@
             <img src="https://nosvinsdumonde.com/assets/img/logo.png" />
           </q-avatar>
 
-          <q-toolbar-title><span class="text-weight-bold">Connexion</span>
+          <q-toolbar-title><span class="text-weight-bold">{{ $t('TITLE_PAGE_LOGIN') }}</span>
           </q-toolbar-title>
 
           <q-btn flat round dense icon="close" v-close-popup />
         </q-toolbar>
 
         <q-card-section class="text-bold" style="font-size: 18px; text-align: center">
-          Accéder à votre compte Nosvinsdumonde
+          {{ $t('SUBTITLE_PAGE_LOGIN') }}
         </q-card-section>
 
         <q-form @submit="submitForm" class="q-mb-lg" style="padding: 0 5vw">
 
           <q-input class="q-mb-lg" v-model="form.email" label="E-mail"
-            :rules="[(val) => validateEmail(val) || 'Adresse email invalide']" lazy-rules
-            hint="Nous ne divulguons jamais votre adresse e-mail." />
+            :rules="[(val) => validateEmail(val) || $('EMAIL_VALIDE')]" lazy-rules :hint="$t('LABEL_1')" />
 
           <q-input v-if="showPassword" type="password" bottom-slots v-model="form.password" label="Mot de passe"
             :dense="dense">
             <template v-slot:hint>
-              Nous ne divulguons jamais votre mot de passe.
+              {{ $t('LABEL_2') }}
             </template>
 
             <q-btn @click="toggleShow" round :dense="dense" flat><i style="font-size: 18px;" class="fas"
                 :class="{ 'fa-eye-slash': showPassword, 'fa-eye': !showPassword }"></i></q-btn>
           </q-input>
 
-          <q-input v-else type="text" bottom-slots v-model="form.password" label="Mot de passe" :dense="dense">
+          <q-input v-else type="text" bottom-slots v-model="form.password" :label="$t('PASSWORD_INPUT')" :dense="dense">
             <template v-slot:hint>
-              Nous ne divulguons jamais votre mot de passe.
+              {{ $t('LABEL_2') }}
             </template>
 
             <q-btn @click="toggleShow" round :dense="dense" flat>
@@ -492,9 +447,9 @@
             </q-btn>
           </q-input>
 
-          <q-item class="q-pa-none q-mb-none q-mt-lg text-center" clickable to="">Mot de passe oublié ?</q-item>
+          <q-item class="q-pa-none q-mb-none q-mt-lg text-center" clickable to="">{{ $t('FORGOT_PASSWORD') }}</q-item>
 
-          <q-btn type="submit" color="warning" push label="Se connecter" />
+          <q-btn type="submit" color="warning" push :label="$t('SIGNIN')" />
         </q-form>
       </q-card>
     </q-dialog>
@@ -507,36 +462,35 @@
             <img src="https://nosvinsdumonde.com/assets/img/logo.png" />
           </q-avatar>
 
-          <q-toolbar-title><span class="text-weight-bold">Création de compte</span>
+          <q-toolbar-title><span class="text-weight-bold">{{ $t('TITLE_PAGE_REGISTER') }}</span>
           </q-toolbar-title>
 
           <q-btn flat round dense icon="close" v-close-popup />
         </q-toolbar>
 
         <q-card-section class="text-bold" style="font-size: 18px; text-align: center">
-          Crée votre compte Nosvinsdumonde
+          {{ $t('SUBTITLE_PAGE_REGISTER') }}
         </q-card-section>
 
         <q-form @submit="submitForm2" class="q-mb-lg scroll" style="padding: 0 5vw; max-height: 40vh">
           <q-radio @click="hideSociete()" name="societe" v-model="form2.societe" :dense="dense" val="1" color="orange"
-            label="Un particulier" />
+            :label="$t('SOCIETE_1')" />
 
           <q-radio @click="showSociete()" name="societe" v-model="form2.societe" :dense="dense" val="2" color="orange"
-            label="Une société" />
+            :label="$t('SOCIETE_2')" />
 
-          <q-input v-show="societeValue" v-model="form2.societeName" label="Société" />
+          <q-input v-show="societeValue" v-model="form2.societeName" :label="$t('TYPE_COMPTE_SOCIETE')" />
 
           <q-input class="q-mb-lg" v-model="form2.email2" :dense="dense" type="email" label="E-mail*"
-            :rules="[(val) => validateEmail(val) || 'Adresse email invalide']" lazy-rules
-            hint="Nous ne divulguons jamais votre adresse e-mail." />
+            :rules="[(val) => validateEmail(val) || $t('EMAIL_VALIDE')]" lazy-rules :hint="$t('LABEL_1')" />
 
           <q-input lazy-rules :rules="[
             (val) =>
-              (val && val.length >= 8) || 'Veuillez taper quelque chose',
-          ]" v-if="showPassword" type="password" bottom-slots v-model="form2.password2" label="Mot de passe"
+              (val && val.length >= 8) || $t('VEUILLEZ_TAPEZ'),
+          ]" v-if="showPassword" type="password" bottom-slots v-model="form2.password2" :label="$t('PASSWORD_INPUT')"
             :dense="dense">
             <template v-slot:hint>
-              Nous ne divulguons jamais votre mot de passe.
+              {{ $t('LABEL_2') }}
             </template>
 
             <q-btn @click="toggleShow" round :dense="dense" flat><i style="font-size: 18px;" class="fas"
@@ -545,10 +499,11 @@
 
           <q-input lazy-rules :rules="[
             (val) =>
-              (val && val.length >= 8) || 'Veuillez taper quelque chose',
-          ]" v-else type="text" bottom-slots v-model="form2.password2" label="Mot de passe" :dense="dense">
+              (val && val.length >= 8) || $t('VEUILLEZ_TAPEZ'),
+          ]" v-else type="text" bottom-slots v-model="form2.password2" label="{{ $t('PASSWORD_INPUT') }}"
+            :dense="dense">
             <template v-slot:hint>
-              Nous ne divulguons jamais votre mot de passe.
+              {{ $t('LABEL_2') }}
             </template>
 
             <q-btn @click="toggleShow" round :dense="dense" flat>
@@ -558,85 +513,89 @@
           </q-input>
 
           <q-card-section class="text-bold q-mt-md" style="font-size: 18px; text-align: center">
-            MES INFORMATIONS PERSONNELLES
+            {{ $t('INFO_PERSO') }}
           </q-card-section>
 
-          <q-radio :dense="dense" name="civilite" v-model="form2.civilite" val="1" color="orange" label="Mme" />
+          <q-radio :dense="dense" name="civilite" v-model="form2.civilite" val="1" color="orange"
+            :label="$t('CIVILITE_1')" />
 
-          <q-radio :dense="dense" name="civilite" v-model="form2.civilite" val="2" color="orange" label="Mr" />
+          <q-radio :dense="dense" name="civilite" v-model="form2.civilite" val="2" color="orange"
+            :label="$t('CIVILITE_2')" />
 
-          <q-input type="text" v-model="form2.prenom" :dense="dense" label="Prénom*" lazy-rules :rules="[
+          <q-input type="text" v-model="form2.prenom" :dense="dense" :label="$t('INPUT_PRENOM') + '*'" lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
+            ]" />
+
+          <q-input type="text" v-model="form2.nom" :dense="dense" :label="$t('NOM') + '*'" lazy-rules :rules="[
             (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
+              (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
           ]" />
 
-          <q-input type="text" v-model="form2.nom" :dense="dense" label="Nom*" lazy-rules :rules="[
-            (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
-          ]" />
+          <q-input type="text" v-model="form2.adresse" :dense="dense" :label="$t('ADRESSE_INPUT') + '*'" lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
+            ]" />
 
-          <q-input type="text" v-model="form2.adresse" :dense="dense" label="Adresse*" lazy-rules :rules="[
-            (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
-          ]" />
-
-          <q-select :options="stringOptions" transition-show="flip-up" transition-hide="flip-down" v-model="form2.pays"
-            :dense="dense" emit-value map-options text-color="white" style="max-height: 100px" behavior="menu">
+          <q-select :label="$t('PAYS')" :options="stringOptions" transition-show="flip-up" transition-hide="flip-down"
+            v-model="form2.pays" :dense="dense" emit-value map-options text-color="white" style="max-height: 100px"
+            behavior="menu">
           </q-select>
 
-          <q-input :dense="dense" type="number" v-model="form2.code_postal" label="Code postal*" lazy-rules :rules="[
+          <q-input :dense="dense" type="number" v-model="form2.code_postal" :label="$t('CODEPOSTAL_INPUT') + '*'"
+            lazy-rules :rules="[
+              (val) =>
+                (val && val.length > 4) ||
+                $t('SAISIR_CODE'),
+            ]" />
+
+          <q-input :dense="dense" type="text" v-model="form2.ville" :label="$t('VILLE_INPUT') + '*'" lazy-rules :rules="[
             (val) =>
-              (val && val.length > 4) ||
-              'Veuillez saisir un code postal valide',
+              (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
           ]" />
 
-          <q-input :dense="dense" type="text" v-model="form2.ville" label="Ville*" lazy-rules :rules="[
+          <q-input type="phone" :dense="dense" v-model="form2.phone" :label="$t('PHONE_INPUT') + '*'" lazy-rules :rules="[
             (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
-          ]" />
-
-          <q-input type="phone" :dense="dense" v-model="form2.phone" label="Téléphone*" lazy-rules :rules="[
-            (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
+              (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
           ]" />
 
           <q-checkbox name="livraison" :dense="dense" @click="showLivraison()" class="q-mb-sm" v-model="form2.livraison"
-            node-value="0" color="orange" label="Mon adresse de livraison est différente ?" true-value="1"
-            false-value="0" />
+            node-value="0" color="orange" :label="$t('FORM_INPUT_LIVRAISON') + '*'" true-value="1" false-value="0" />
 
           <div v-show="livraisonValue">
             <q-card-section class="text-bold q-mt-sm" style="font-size: 18px; text-align: center">
-              MES INFORMATIONS DE LIVRAISON
+              {{ $t('INFO_LIVRAISON') }}
             </q-card-section>
 
-            <q-input type="text" :dense="dense" v-model="form2.prenom_livraison" label="Prénom*" />
+            <q-input type="text" :dense="dense" v-model="form2.prenom_livraison" :label="$t('INPUT_PRENOM')" />
 
-            <q-input type="text" :dense="dense" v-model="form2.nom_livraison" label="Nom*" />
+            <q-input type="text" :dense="dense" v-model="form2.nom_livraison" :label="$t('NOM')" />
 
-            <q-input type="text" :dense="dense" v-model="form2.adresse_livraison" label="Adresse*" />
+            <q-input type="text" :dense="dense" v-model="form2.adresse_livraison" :label="$t('ADRESSE_INPUT')" />
 
-            <q-select :options="stringOptions" transition-show="flip-up" transition-hide="flip-down"
+            <q-select :label="$t('PAYS')" :options="stringOptions" transition-show="flip-up" transition-hide="flip-down"
               v-model="form2.pays_livraison" :dense="dense" emit-value map-options text-color="white"
               style="max-height: 100px" behavior="menu">
             </q-select>
 
-            <q-input :dense="dense" type="number" v-model="form2.code_postal_livraison" label="Code postal*" />
+            <q-input :dense="dense" type="number" v-model="form2.code_postal_livraison"
+              :label="$t('CODEPOSTAL_INPUT')" />
 
-            <q-input :dense="dense" type="text" v-model="form2.ville_livraison" label="Ville*" />
+            <q-input :dense="dense" type="text" v-model="form2.ville_livraison" :label="$t('VILLE_INPUT') + '*'" />
           </div>
 
           <q-card-section class="text-bold q-mt-sm" style="font-size: 18px; text-align: center">
-            MA CARTE PRIVILÈGE
+            {{ $t('CARTE_PERSO') }}
           </q-card-section>
 
-          <q-radio name="carte" :dense="dense" v-model="form2.carte" val="1" color="orange"
-            label="Je n'ai pas de carte, je souhaite la créer en ligne" />
+          <q-radio name="carte" :dense="dense" v-model="form2.carte" val="1" color="orange" :label="$t('CARTE_1')" />
 
-          <q-radio name="carte" :dense="dense" v-model="form2.carte" val="2" color="orange"
-            label="Je ne veux pas de carte privilège" />
+          <q-radio name="carte" :dense="dense" v-model="form2.carte" val="2" color="orange" :label="$t('CARTE_2')" />
 
           <q-item style="justify-content: center" class="q-mt-sm">
-            <q-btn type="submit" color="warning" push label="Continuer" />
+            <q-btn type="submit" color="warning" push :label="$t('SUIVANT')" />
           </q-item>
         </q-form>
       </q-card>
@@ -658,15 +617,16 @@
         </q-toolbar>
 
         <q-card-section class="text-bold" style="font-size: 18px; text-align: center">
-          MA CARTE PRIVILÈGE
+          {{ $t('CARTE_PERSO') }}
         </q-card-section>
 
         <div class="carte">
           <p class="text-center text-white fw-bold no-border q-mt-md"><i class="fa-solid fa-gift"
               style="font-size: 50px;"></i>
           </p>
-          <h3 class="text-center text-white fw-bold no-border">N° de carte {{ this.user.numero_carte }} </h3>
-          <h4 class="text-center text-white fw-bold no-border">{{ this.user.point }} point(s)</h4>
+          <h3 class="text-center text-white fw-bold no-border">{{ $t('CARTE_NUMBER') }} {{ this.user.numero_carte }}
+          </h3>
+          <h4 class="text-center text-white fw-bold no-border">{{ this.user.point }} {{ $t('CARTE_POINT') }}</h4>
           <div class="mt-3">
             <img alt="testing"
               :src="'https://nosvinsdumonde.com/modules/barcode.php?codetype=code39&amp;size=50&amp;text=' + this.user.numero_carte + '&amp;print=true'">
@@ -677,14 +637,12 @@
         <div class="text-center q-mb-md q-mt-md postition-relative">
 
           <q-btn @click="convertPoint()" v-if="this.user.point >= 15" size="md" push color="info"><i
-              class="fa-solid fa-money-bill-transfer q-mr-sm"></i>Convertir
-            mes points</q-btn>
+              class="fa-solid fa-money-bill-transfer q-mr-sm"></i>{{ $t('CONVERT_POINT') }}</q-btn>
 
           <q-btn v-if="this.user.point < 14" class="disabled" size="md" push color="info"><i
-              class="fa-solid fa-money-bill-transfer q-mr-sm"></i>Convertir
-            mes points</q-btn>
+              class="fa-solid fa-money-bill-transfer q-mr-sm"></i>{{ $t('CONVERT_POINT') }}</q-btn>
 
-          <h6 class="q-mt-md q-mb-sm text-bold">Mon solde actuel : </h6><span class="text-info"
+          <h6 class="q-mt-md q-mb-sm text-bold">{{ $t('SOLDE') }} : </h6><span class="text-info"
             style="font-size: 20px;">{{ replaceVirgule(this.user.cashback) }}
             €</span>
 
@@ -702,6 +660,7 @@ import { useQuasar } from 'quasar';
 import { defineComponent } from 'vue';
 import { Cookies } from 'quasar';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n'
 
 var stringOptions = [
   {
@@ -1674,6 +1633,7 @@ export default defineComponent({
   name: 'MainLayout',
   setup() {
     const $q = useQuasar();
+    const { locale } = useI18n({ useScope: 'global' })
 
     $q.notify.registerType('update', {
       icon: 'announcement',
@@ -1684,6 +1644,12 @@ export default defineComponent({
     })
 
     return {
+      locale,
+      optionsHtml: ref(false),
+      localeOptions: [
+        { value: 'en-US', label: '<div class="relative-position" style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;"><img class="langs" src="https://nosvinsdumonde.com/assets/img/langs/en.png" /></div>', icon: 'https://nosvinsdumonde.com/assets/img/langs/en.png', label2: '<div class="q-ml-sm text-bold">English</div>', html: true },
+        { value: 'fr-FR', label: '<div class="relative-position" style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;"><img class="langs" src="https://nosvinsdumonde.com/assets/img/langs/fr.png" /></div>', icon: 'https://nosvinsdumonde.com/assets/img/langs/fr.png', label2: '<div class="q-ml-sm text-bold">Français</div>', html: true }
+      ],
       platform: $q.platform.is,
       stringOptions,
       dense: ref(null),
@@ -1694,7 +1660,7 @@ export default defineComponent({
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Connexion réussi à Nosvinsdumonde !',
+          message: this.$t('MESSAGE_LOGIN_1'),
           timeout: 2500,
         });
       },
@@ -1707,8 +1673,8 @@ export default defineComponent({
             type: 'update',
             position: 'top-left',
             icon: 'contactless',
-            message: 'Mise à jour disponible !',
-            caption: 'Merci de vous rendre <a style="color: white;" href="https://play.google.com/store/apps/details?id=org.nosvinsdumonde.app">ici</a> sur pour la télécharger',
+            message: this.$t('MAJ'),
+            caption: this.$t('CAPTION'),
             color: 'primary',
             html: true,
             timeout: 3500
@@ -1720,7 +1686,7 @@ export default defineComponent({
         $q.notify({
           position: 'top-left',
           type: 'negative',
-          message: 'Mauvais email ou mot de passe !',
+          message: this.$t('MESSAGE_LOGIN_4'),
           timeout: 2500,
         });
       },
@@ -1728,7 +1694,7 @@ export default defineComponent({
         $q.notify({
           position: 'top-left',
           type: 'negative',
-          message: 'Une erreur est survenue !',
+          message: this.$t('MESSAGE_LOGIN_3'),
           timeout: 2500,
         });
       },
@@ -1736,7 +1702,7 @@ export default defineComponent({
         $q.notify({
           position: 'top-left',
           type: 'negative',
-          message: 'Le mot de passe ne comporte pas 8 caractères !',
+          message: this.$t('HUIT_CARA'),
           timeout: 2500,
         });
       },
@@ -1749,8 +1715,8 @@ export default defineComponent({
       livraisonValue: false,
       societeValue: false,
       params: {
-        appVersion: '3.0.10',
-        appVersionOnline: '3.0.10',
+        appVersion: '3.1.4',
+        appVersionOnline: '3.1.4',
       },
       user: {
         id: null,
@@ -1928,6 +1894,11 @@ export default defineComponent({
     }
   },
   mounted() {
+
+    if (window.screen.width >= 780) {
+      location.href = 'https://nosvinsdumonde.com/fr/'
+    }
+
     this.verifPointCash(this.user.id);
     this.reloadGift();
     this.checkAuth();

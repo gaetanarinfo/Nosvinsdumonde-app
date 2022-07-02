@@ -17,7 +17,7 @@
           <q-icon size="1.5em" name="chevron_right" color="white" />
         </template>
 
-        <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+        <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
         <q-breadcrumbs-el label="Favoris" style="color: white" />
       </q-breadcrumbs>
     </div>
@@ -60,7 +60,7 @@
 
           <div class="q-mt-sm prix text-left">
             <span><span class="chiffre">{{
-                replaceVirgule(vins.prixBoisson)
+            replaceVirgule(vins.prixBoisson)
             }}</span>
               €</span>
           </div>

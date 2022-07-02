@@ -29,14 +29,14 @@
         €</span>
     </div>
     <div class="q-mb-lg contenance">
-      <span class="text-white">Bouteille de {{ vinsOne.contenanceBoisson }}</span>
+      <span class="text-white">{{ $t('CONTENANCE') }} {{ vinsOne.contenanceBoisson }}</span>
     </div>
 
     <q-btn :to="'/' + vinsOne.typeBoisson + '/' + vinsOne.idBoisson" push color="warning">
-      <q-item-section avatar style="min-width: 20px; padding-right: 0">
+      <q-item-section avatar style="min-width: 20px; padding-right: 0; text-transform: uppercase;">
         <q-icon size="15px" name="fa-solid fa-chevron-right" />
       </q-item-section>
-      Découvrir
+      {{ $t('DECOUVRIR_BTN') }}
     </q-btn>
   </q-item>
 </template>

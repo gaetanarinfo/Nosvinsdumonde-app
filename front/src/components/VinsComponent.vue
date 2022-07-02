@@ -23,7 +23,7 @@
 
         <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
           <q-btn :to="'/' + vins.typeBoisson + '/' + vins.idBoisson" push color="warning">
-            Découvrir
+            {{ $t('DECOUVRIR_BTN') }}
           </q-btn>
         </q-item>
 
@@ -35,7 +35,7 @@
             €</span>
         </div>
         <div class="contenance text-subtitle1">
-          <span>Bouteille de {{ vins.contenanceBoisson }}</span>
+          <span>{{ $t('CONTENANCE') }} {{ vins.contenanceBoisson }}</span>
         </div>
       </q-card-section>
     </q-card>

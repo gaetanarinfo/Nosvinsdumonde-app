@@ -7,7 +7,7 @@
         width: 100%;
         margin: 24px 0;
       ">
-      <q-item class="title">Gestion de mes informations personnel</q-item>
+      <q-item class="title">{{ $t('TITLE_PAGE_GESTION_COMPTE') }}</q-item>
     </div>
 
     <!-- BreadCrump -->
@@ -17,9 +17,9 @@
           <q-icon size="1.5em" name="chevron_right" color="white" />
         </template>
 
-        <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+        <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
 
-        <q-breadcrumbs-el label="Gestion du compte" style="color: white" />
+        <q-breadcrumbs-el :label="$t('LINK_20')" style="color: white" />
       </q-breadcrumbs>
     </div>
 
@@ -27,106 +27,106 @@
 
       <q-form @submit="submitFormUpdate" style="padding: 0 0;">
         <q-radio dark class="text-white" @click="hideSociete()" name="societe" v-model="formUpdates.societe"
-          :dense="dense" val="1" color="orange" label="Un particulier" />
+          :dense="dense" val="1" color="orange" :label="$t('SOCIETE_1')" />
 
         <q-radio dark class="text-white" @click="showSociete()" name="societe" v-model="formUpdates.societe"
-          :dense="dense" val="2" color="orange" label="Une société" />
+          :dense="dense" val="2" color="orange" :label="$t('SOCIETE_2')" />
 
         <q-input dark class="text-white q-mb-md" v-show="societeValue" v-model="formUpdates.societeName"
-          label="Société" />
+          :label="$t('TYPE_COMPTE_SOCIETE')" />
 
         <q-input dark class="text-white" disable v-model="formUpdates.email2" :dense="dense" type="email"
-          label="E-mail*" />
+          :label="$t('FORM_INPUT_4')" />
 
         <q-card-section class="text-bold q-mt-md text-white" style="font-size: 18px; text-align: center">
-          MES INFORMATIONS PERSONNELLES
+          {{ $t('INFO_PERSO') }}
         </q-card-section>
 
         <q-radio name="civilite" @click="updateCivilite()" dark :dense="dense" class="q-mb-sm text-white"
-          v-model="user.civilite" val="1" color="orange" label="Mme" />
+          v-model="user.civilite" val="1" color="orange" :label="$t('CIVILITE_1')" />
 
         <q-radio name="civilite" @click="updateCivilite()" dark :dense="dense" class="q-mb-sm text-white"
-          v-model="user.civilite" val="2" color="orange" label="Mr" />
+          v-model="user.civilite" val="2" color="orange" :label="$t('CIVILITE_2')" />
 
-        <q-input dark class="text-white" type="text" v-model="formUpdates.prenom" :dense="dense" label="Prénom*"
+        <q-input dark class="text-white" type="text" v-model="formUpdates.prenom" :dense="dense"
+          :label="$t('INPUT_PRENOM')" lazy-rules :rules="[
+            (val) =>
+              (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
+          ]" />
+
+        <q-input dark class="text-white" type="text" v-model="formUpdates.nom" :dense="dense" :label="$t('NOM_INPUT')"
           lazy-rules :rules="[
             (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
+              (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
           ]" />
 
-        <q-input dark class="text-white" type="text" v-model="formUpdates.nom" :dense="dense" label="Nom*" lazy-rules
-          :rules="[
+        <q-input dark class="text-white" type="text" v-model="formUpdates.adresse" :dense="dense"
+          :label="$t('ADRESSE_INPUT')" lazy-rules :rules="[
             (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
+              (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
           ]" />
 
-        <q-input dark class="text-white" type="text" v-model="formUpdates.adresse" :dense="dense" label="Adresse*"
-          lazy-rules :rules="[
-            (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
-          ]" />
-
-        <q-select dark class="text-white" :options="stringOptions" transition-show="flip-up" transition-hide="flip-down"
-          v-model="formUpdates.pays" :dense="dense" emit-value map-options text-color="white" style="max-height: 100px"
-          behavior="menu">
+        <q-select :label="$t('PAYS')" dark class="text-white" :options="stringOptions" transition-show="flip-up"
+          transition-hide="flip-down" v-model="formUpdates.pays" :dense="dense" emit-value map-options
+          text-color="white" style="max-height: 100px" behavior="menu">
         </q-select>
 
-        <q-input dark class="text-white" :dense="dense" type="number" v-model="formUpdates.code_postal"
-          label="Code postal*" lazy-rules :rules="[
+        <q-input dark class="text-white q-mt-lg" :dense="dense" type="number" v-model="formUpdates.code_postal"
+          :label="$t('CODEPOSTAL_INPUT')" lazy-rules :rules="[
             (val) =>
               (val && val.length > 4) ||
-              'Veuillez saisir un code postal valide',
+              $t('SAISIR_CODE'),
           ]" />
 
-        <q-input dark class="text-white" :dense="dense" type="text" v-model="formUpdates.ville" label="Ville*"
-          lazy-rules :rules="[
+        <q-input dark class="text-white" :dense="dense" type="text" v-model="formUpdates.ville"
+          :label="$t('VILLE_INPUT')" lazy-rules :rules="[
             (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
+              (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
           ]" />
 
-        <q-input dark class="text-white" type="phone" :dense="dense" v-model="formUpdates.phone" label="Téléphone*"
-          lazy-rules :rules="[
+        <q-input dark class="text-white" type="phone" :dense="dense" v-model="formUpdates.phone"
+          :label="$t('PHONE_INPUT')" lazy-rules :rules="[
             (val) =>
-              (val && val.length > 2) || 'Veuillez taper quelque chose',
+              (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
           ]" />
 
         <q-checkbox name="livraison" dark v-if="this.user.livraison == 0" :dense="dense" @click="showLivraison()"
           class="q-mb-sm text-white" v-model="formUpdates.livraison" node-value="1" color="orange"
-          label="Mon adresse de livraison est différente ?" true-value="1" false-value="0" />
+          :label="$t('FORM_INPUT_LIVRAISON')" true-value="1" false-value="0" />
 
         <q-checkbox name="livraison" dark v-if="this.user.livraison == 1" checked :dense="dense"
           @click="showLivraison()" class="q-mb-sm text-white" v-model="formUpdates.livraison" node-value="0"
-          color="orange" label="Mon adresse de livraison est différente ?" true-value="1" false-value="0" />
+          color="orange" :label="$t('FORM_INPUT_LIVRAISON')" true-value="1" false-value="0" />
 
         <div v-show="livraisonValue">
           <q-card-section class="text-white text-bold q-mt-sm" style="font-size: 18px; text-align: center">
-            MES INFORMATIONS DE LIVRAISON
+            {{ $t('INFO_LIVRAISON') }}
           </q-card-section>
 
           <q-input dark class="text-white" type="text" :dense="dense" v-model="formUpdates.prenom_livraison"
-            label="Prénom*" />
+            :label="$t('INPUT_PRENOM')" />
 
           <q-input dark class="text-white" type="text" :dense="dense" v-model="formUpdates.nom_livraison"
-            label="Nom*" />
+            :label="$t('NOM_INPUT')" />
 
           <q-input dark class="text-white" type="text" :dense="dense" v-model="formUpdates.adresse_livraison"
-            label="Adresse*" />
+            :label="$t('ADRESSE_INPUT')" />
 
-          <q-select dark class="text-white" :options="stringOptions" transition-show="flip-up"
+          <q-select :label="$t('PAYS')" dark class="text-white" :options="stringOptions" transition-show="flip-up"
             transition-hide="flip-down" v-model="formUpdates.pays_livraison" :dense="dense" emit-value map-options
             text-color="white" style="max-height: 100px" behavior="menu">
           </q-select>
 
           <q-input dark class="text-white" :dense="dense" type="number" v-model="formUpdates.code_postal_livraison"
-            label="Code postal*" />
+            :label="$t('CODEPOSTAL_INPUT')" />
 
           <q-input dark class="text-white" :dense="dense" type="text" v-model="formUpdates.ville_livraison"
-            label="Ville*" />
+            :label="$t('VILLE_INPUT')" />
 
         </div>
 
         <q-item style="justify-content: center" class="q-mt-lg">
-          <q-btn type="submit" color="warning" push label="Continuer" />
+          <q-btn type="submit" color="warning" push :label="$t('SUIVANT')" />
         </q-item>
 
       </q-form>

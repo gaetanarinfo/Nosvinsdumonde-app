@@ -9,7 +9,7 @@
         width: 100%;
         margin: 24px 0;
       ">
-      <q-item class="title">Gestion de mes livraisons</q-item>
+      <q-item class="title">{{ $t('GESTION_LIVRAISON') }}</q-item>
     </div>
 
     <!-- BreadCrump -->
@@ -19,9 +19,9 @@
           <q-icon size="1.5em" name="chevron_right" color="white" />
         </template>
 
-        <q-breadcrumbs-el clickable to="/" label="Accueil" style="color: #ffc107" />
+        <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
 
-        <q-breadcrumbs-el label="Gestion des livraisons" style="color: white" />
+        <q-breadcrumbs-el :label="$t('GESTION_LIVRAISON_LINK')" style="color: white" />
       </q-breadcrumbs>
     </div>
 
@@ -35,9 +35,7 @@
 
       <q-item class="q-ma-none q-pa-none" v-if="listColisHistorique.length < 1">
         <h6 class="text-white q-ma-none q-mt-none"><i class="fa-solid fa-triangle-exclamation q-mr-sm"
-            style="color: #ffec02;"></i> Aucune
-          commande n'a été passer au
-          cours des 12 derniers mois.</h6>
+            style="color: #ffec02;"></i> {{ $t('EMPTY_COMMANDE') }}</h6>
       </q-item>
 
       <q-item class="q-ma-none q-pa-none" style="display: block;" v-else>
@@ -116,12 +114,6 @@ import moment from 'moment';
 var counter = 1;
 let decoder;
 
-const columns = [
-  { name: 'id', align: 'left', label: 'Numéro de commande ', field: 'id', sortable: true },
-  { name: 'status', align: 'left', label: 'Status du colis', field: 'status', sortable: true },
-  { name: 'transaction', align: 'left', label: 'Numéro de transaction', field: 'transaction', sortable: true },
-]
-
 moment.locale('fr');
 
 export default defineComponent({
@@ -158,6 +150,13 @@ export default defineComponent({
     };
   },
   data() {
+
+    const columns = [
+      { name: 'id', align: 'left', label: this.$t('NUMERO_COMMANDE'), field: 'id', sortable: true },
+      { name: 'status', align: 'left', label: this.$t('STATUS_COLIS'), field: 'status', sortable: true },
+      { name: 'transaction', align: 'left', label: this.$t('NUMERO_TRANSACTION'), field: 'transaction', sortable: true },
+    ]
+
     return {
       columns,
       rows: [],
@@ -220,26 +219,6 @@ export default defineComponent({
       if (this.listColisHistorique.length !== false) {
 
         this.listColisHistorique.forEach(e => {
-
-          // var transaction;
-
-          // switch (e.id_status_commande) {
-          //   case 1:
-          //     transaction = 'Paiement en attente'
-          //     break;
-
-          //   case 2:
-          //     transaction = 'Paiement réussi'
-          //     break;
-
-          //   case 3:
-          //     transaction = 'Paiement Annuler'
-          //     break;
-
-          //   case 4:
-          //     transaction = 'Paiement remboursé'
-          //     break;
-          // }
 
           this.rows.push({
             id: e.id,

@@ -75,7 +75,6 @@ const actions = {
   }, payload) {
 
     const vins = {
-      page: payload.page,
       prix: payload.prix,
       millesime: payload.millesime,
       couleur: payload.couleur,
@@ -89,8 +88,10 @@ const actions = {
     axios
       .post('/vinsAll/', vins)
       .then(res => {
-        if (res.data.listVinsAll != 0) {
+        if (res.data.listVinsAll !== 0) {
           commit('setListVinsAll', res.data.listVinsAll)
+        } else {
+          commit('setListVinsAll', [])
         }
       })
   },

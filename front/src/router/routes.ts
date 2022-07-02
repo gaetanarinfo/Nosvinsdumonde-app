@@ -131,6 +131,21 @@ const routes: RouteRecordRaw[] = [
         name: 'GestionColis',
         component: () => import('src/pages/user/GestionColis.vue'),
       },
+      {
+        path: '/bon-plans',
+        name: 'BonPlans',
+        component: () => import('src/pages/BonPlans.vue'),
+      },
+      {
+        path: '/offres-emplois',
+        name: 'OffresEmplois',
+        component: () => import('src/pages/OffresEmplois.vue'),
+      },
+      {
+        path: '/offres-stage',
+        name: 'OffresStage',
+        component: () => import('src/pages/OffresStage.vue'),
+      },
     ],
   },
 

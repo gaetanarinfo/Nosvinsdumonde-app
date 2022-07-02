@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "590436554742",
+    "project_id": "nosvinsdumonde",
+    "storage_bucket": "nosvinsdumonde.appspot.com"
+  },
+  "client": [{
+    "client_info": {
+      "mobilesdk_app_id": "1:590436554742:android:80f6ad4ed762ff2ef999d7",
+      "android_client_info": {
+        "package_name": "org.nosvinsdumonde.app"
+      }
+    },
+    "oauth_client": [{
+        "client_id": "590436554742-s8911lu878mk53kofdq1t9dd537carvf.apps.googleusercontent.com",
+        "client_type": 1,
+        "android_info": {
+          "package_name": "org.nosvinsdumonde.app",
+          "certificate_hash": "e5b9b9d1f75b5db76eb5890b1653c1a2a7171219"
+        }
+      },
+      {
+        "client_id": "590436554742-6895k8olbtri3art44o48k2go7q8u96s.apps.googleusercontent.com",
+        "client_type": 3
+      }
+    ],
+    "api_key": [{
+      "current_key": "AIzaSyCj3GjF6VKPAsdRq0o8aJ5OXmALvPuIvIA"
+    }],
+    "services": {
+      "appinvite_service": {
+        "other_platform_oauth_client": [{
+          "client_id": "590436554742-6895k8olbtri3art44o48k2go7q8u96s.apps.googleusercontent.com",
+          "client_type": 3
+        }]
+      }
+    }
+  }],
+  "configuration_version": "1"
+}
