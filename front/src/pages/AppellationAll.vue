@@ -58,34 +58,34 @@
           </q-item>
           <div class="q-mt-lg">
             <span class="badge_region" style="margin: 0 auto">{{
-            champagnes_vins.regionBoisson
+                champagnes_vins.regionBoisson
             }}</span>
           </div>
 
           <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
-            <q-btn :to="
+            <q-btn style="text-transform: uppercase;" :to="
               '/' +
               champagnes_vins.typeBoisson +
               '/' +
               champagnes_vins.idBoisson
             " push color="warning">
-              Découvrir
+              {{ $t('DECOUVRIR_BTN') }}
             </q-btn>
           </q-item>
 
           <div>
             <span class="text-caption">{{
-            champagnes_vins.apellationBoisson
+                champagnes_vins.apellationBoisson
             }}</span>
           </div>
           <div class="q-mt-sm prix">
             <span><span class="chiffre">{{
-            replaceVirgule(champagnes_vins.prixBoisson)
+                replaceVirgule(champagnes_vins.prixBoisson)
             }}</span>
               €</span>
           </div>
           <div class="contenance text-subtitle1">
-            <span>Bouteille de {{ champagnes_vins.contenanceBoisson }}</span>
+            <span>{{ $t('CONTENANCE') }} {{ champagnes_vins.contenanceBoisson }}</span>
           </div>
         </q-card-section>
       </q-card>

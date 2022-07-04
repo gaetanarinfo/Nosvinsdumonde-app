@@ -393,7 +393,7 @@ export default {
   FDP: 'FRAIS DE PORT',
   ADRESSE_1: 'Adresse de facturation',
   ADRESSE_2: 'Adresse de livraison',
-  CUMULE_POINTS: 'Avec un <a class="text-white" href="/fr/register">compte et une carte privilège</a> cumulé des points sur votre commande !',
+  CUMULE_POINTS: 'Avec un compte et une carte privilège cumulé des points sur votre commande !',
 
   BACK_PAIEMENT: 'Précédent',
   CONTINUER_PAIEMENT: 'Continuer',
@@ -697,5 +697,34 @@ export default {
   MESSAGE_FAVCHAMP: 'Votre champagne a bien été ajouté au favoris.',
   MESSAGE_FAV2CHAMP: 'Votre champagne a déjà été ajouté au favoris !',
   CHAMP_ADD_CART: 'Votre champagne a bien été ajouté au panier.',
+
+  REMOVE_CART: 'Votre vin a bien été supprimer de votre panier.',
+  ERROR_REMOVE_CART: 'Votre vin n\'a pas été supprimer de votre panier !',
+
+  LE: 'Le',
+  TAGS: 'Tags',
+
+  EMAIL_VOTRE: 'Votre email *',
+  EMAIL_NOM: 'Votre nom/pseudo *',
+  EMAIL_CONTENT: 'Votre commentaire *',
+
+  FRANCE_UNIQUEMENT: '(En France uniquement)',
+  CARA_360: 'Veuillez écrire un maximum de 360 caractères',
+  PAY_NOW: 'Payer maintenant',
+  VALIDE_PAY: 'Validation de paiement',
+  VALIDE_PAIEMENT: 'Merci de valider votre paiement en',
+  CLICK_ICI: 'cliquant ici',
+
+  INFO_ENTREPRISE: '<span>Besoin d\'aide ?</span><br /><span>06 15 75 93 02 Service &amp; appel gratuit</span><br /><span>Lundi au Vendredi 9h/19h</span><br /><span>Samedi 10h/13h et 14h/17h</span><br />',
+
+  REDIRECTION: 'Vous allez être redirigés dans quelques secondes...',
+
+  MESSAGE_LOGIN_6: 'Votre adresse email n\'existe pas sur Nosvinsdumonde',
+
+  TITLE_ABONNEMENT: 'Je prend un abonnement et je profite des réductions sur Novinsdumonde',
+
+  BTN_ABONNEMENT: 'S\'abonner',
+
+  PREMIUM: 'Abonnement premium',
 
 }

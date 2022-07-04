@@ -7,7 +7,7 @@
         width: 100%;
         margin: 24px 0;
       ">
-      <q-item class="title">BONS PLANS</q-item>
+      <q-item class="title">{{ $t('TITLE_PAGE_PLANS') }}</q-item>
     </div>
 
     <!-- BreadCrump -->
@@ -18,8 +18,8 @@
         </template>
 
         <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
-        <q-breadcrumbs-el label="Notre sélection" style="color: white" />
-        <q-breadcrumbs-el label="Bons Plans" style="color: white" />
+        <q-breadcrumbs-el :label="$t('LINK_PAGE_SELECTION')" style="color: white" />
+        <q-breadcrumbs-el :label="$t('LINK_PAGE_PLANS')" style="color: white" />
       </q-breadcrumbs>
     </div>
 
@@ -31,7 +31,7 @@
       ">
       <div class="col-md-12">
         <div>
-          <h3 class="text-white">FILTRER PAR</h3>
+          <h3 class="text-white">{{ $t('FILTER_BY') }}</h3>
         </div>
 
         <div class="q-mt-md w-100">
@@ -41,7 +41,7 @@
                 <label @click="millesimeShowing = !millesimeShowing" class="form-label text-white millesime"><i
                     class="fa-solid q-mr-sm" v-bind:class="
                       millesimeShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "></i>Millésime</label>
+                    "></i>{{ $t('MILLESIME') }}</label>
 
                 <div v-show="millesimeShowing">
                   <q-select :options="stringOptions" transition-show="flip-up" transition-hide="flip-down"
@@ -55,7 +55,7 @@
                 <label class="form-label text-white couleur" @click="couleurShowing = !couleurShowing"><i
                     class="fa-solid q-mr-sm" v-bind:class="
                       couleurShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "></i>Couleur</label>
+                    "></i>{{ $t('COULEUR') }}</label>
                 <div v-show="couleurShowing">
                   <ul class="list-group">
                     <li class="list-group-item">
@@ -63,7 +63,7 @@
                         @click="changeFormCouleur(1), changeForm()">
                         <span class="bottle_wine" style="background: #f2d785"><i class="fas fa-wine-bottle"
                             aria-hidden="true"></i></span>
-                        <span class="bottle_wine_text">Blanc</span>
+                        <span class="bottle_wine_text">{{ $t('BLANC') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -71,7 +71,7 @@
                         @click="changeFormCouleur(2), changeForm()">
                         <span class="bottle_wine" style="background: #fe7162"><i class="fas fa-wine-bottle"
                             aria-hidden="true"></i></span>
-                        <span class="bottle_wine_text">Rosé</span>
+                        <span class="bottle_wine_text">{{ $t('ROSE') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -79,7 +79,7 @@
                         @click="changeFormCouleur(3), changeForm()">
                         <span class="bottle_wine" style="background: #7a0201"><i class="fas fa-wine-bottle"
                             aria-hidden="true"></i></span>
-                        <span class="bottle_wine_text">Rouge</span>
+                        <span class="bottle_wine_text">{{ $t('ROUGE') }}</span>
                       </q-item>
                     </li>
                   </ul>
@@ -90,8 +90,9 @@
                 <label class="form-label text-white prix" @click="prixShowing = !prixShowing"><i
                     class="fa-solid q-mr-sm" v-bind:class="
                       prixShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "></i>Prix <span class="ms-1 text-warning">(</span><span class="text-warning rangePrix">{{
-                    form.prix.min
+                    "></i>{{ $t('PRIX') }} <span class="ms-1 text-warning">(</span><span
+                    class="text-warning rangePrix">{{
+                        form.prix.min
                     }} à {{ form.prix.max }}</span><span class="text-warning"> €)</span></label>
                 <div v-show="prixShowing">
                   <q-range v-model="form.prix" :step="15" label :min="0" :max="2200" dark color="deep-orange"
@@ -103,7 +104,7 @@
                 <label class="form-label text-white pays" @click="paysShowing = !paysShowing"><i
                     class="fa-solid q-mr-sm" v-bind:class="
                       paysShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "></i>Pays</label>
+                    "></i>{{ $t('PAYS') }}</label>
                 <q-select :options="stringOptions2" transition-show="flip-up" transition-hide="flip-down"
                   v-model="form.pays" :dense="dense" dark emit-value map-options text-color="white"
                   style="max-height: 100px" behavior="menu" v-show="paysShowing" @update:model-value="changeForm()" />
@@ -113,7 +114,7 @@
                 <label @click="regionShowing = !regionShowing" class="form-label text-white region"><i
                     class="fa-solid q-mr-sm" v-bind:class="
                       regionShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "></i>Region</label>
+                    "></i>{{ $t('REGION') }}</label>
                 <q-select v-show="regionShowing" :options="stringOptions4" transition-show="flip-up"
                   transition-hide="flip-down" v-model="form.region" :dense="dense" dark emit-value map-options
                   text-color="white" style="max-height: 100px" behavior="menu" @update:model-value="changeForm()">
@@ -124,7 +125,7 @@
                 <label class="form-label text-white appellation" @click="apellationShowing = !apellationShowing"><i
                     class="fa-solid q-mr-sm" v-bind:class="
                       apellationShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "></i>Appellation</label>
+                    "></i>{{ $t('APPELLATION') }}</label>
                 <q-select v-show="apellationShowing" :options="stringOptions3" transition-show="flip-up"
                   transition-hide="flip-down" v-model="form.appellation" :dense="dense" dark emit-value map-options
                   text-color="white" style="max-height: 100px" behavior="menu" @update:model-value="changeForm()">
@@ -135,7 +136,7 @@
                 <label class="form-label text-white gout" @click="goutShowing = !goutShowing"><i
                     class="fa-solid q-mr-sm" v-bind:class="
                       goutShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "></i>Goût</label>
+                    "></i>{{ $t('GOUT') }}</label>
                 <div v-show="goutShowing">
                   <ul class="list-group">
                     <li class="list-group-item">
@@ -143,7 +144,7 @@
                         @click="changeFormGout(1), changeForm()">
                         <span class="gout_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/gout/gout_1.png" /></span>
-                        <span class="gout_text">Fruité et charnu</span>
+                        <span class="gout_text">{{ $t('GOUT_1') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -151,7 +152,7 @@
                         @click="changeFormGout(2), changeForm()">
                         <span class="gout_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/gout/gout_2.png" /></span>
-                        <span class="gout_text">Fruité et frais</span>
+                        <span class="gout_text">{{ $t('GOUT_2') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -159,7 +160,7 @@
                         @click="changeFormGout(3), changeForm()">
                         <span class="gout_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/gout/gout_3.png" /></span>
-                        <span class="gout_text">Fruité et léger</span>
+                        <span class="gout_text">{{ $t('GOUT_3') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -167,7 +168,7 @@
                         @click="changeFormGout(4), changeForm()">
                         <span class="gout_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/gout/gout_4.png" /></span>
-                        <span class="gout_text">Puissant avec du potentiel</span>
+                        <span class="gout_text">{{ $t('GOUT_4') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -175,7 +176,7 @@
                         @click="changeFormGout(5), changeForm()">
                         <span class="gout_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/gout/gout_5.png" /></span>
-                        <span class="gout_text">Riche et puissant</span>
+                        <span class="gout_text">{{ $t('GOUT_5') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -183,7 +184,7 @@
                         @click="changeFormGout(6), changeForm()">
                         <span class="gout_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/gout/gout_6.png" /></span>
-                        <span class="gout_text">Riche et rond</span>
+                        <span class="gout_text">{{ $t('GOUT_6') }}</span>
                       </q-item>
                     </li>
                   </ul>
@@ -194,7 +195,7 @@
                 <label class="form-label text-white alliance" @click="allianceShowing = !allianceShowing"><i
                     class="fa-solid q-mr-sm" v-bind:class="
                       allianceShowing ? 'fa-chevron-down' : 'fa-chevron-right'
-                    "></i>Alliance</label>
+                    "></i>{{ $t('ALLIANCE') }}</label>
                 <div v-show="allianceShowing">
                   <ul class="list-group">
                     <li class="list-group-item">
@@ -202,7 +203,7 @@
                         @click="changeFormAlliance(1), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_1.png" /></span>
-                        <span class="alliance_text">Agneau</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_1') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -210,7 +211,7 @@
                         @click="changeFormAlliance(2), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_2.png" /></span>
-                        <span class="alliance_text">Charcuterie</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_2') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -218,7 +219,7 @@
                         @click="changeFormAlliance(3), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_3.png" /></span>
-                        <span class="alliance_text">Coquillages et crustacés</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_3') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -226,7 +227,7 @@
                         @click="changeFormAlliance(4), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_4.png" /></span>
-                        <span class="alliance_text">Foie gras</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_4') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -234,7 +235,7 @@
                         @click="changeFormAlliance(5), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_5.png" /></span>
-                        <span class="alliance_text">Fromage corsé</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_5') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -242,7 +243,7 @@
                         @click="changeFormAlliance(6), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_5.png" /></span>
-                        <span class="alliance_text">Fromage doux</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_6') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -250,7 +251,7 @@
                         @click="changeFormAlliance(7), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_7.png" /></span>
-                        <span class="alliance_text">Gibier</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_7') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -258,7 +259,7 @@
                         @click="changeFormAlliance(8), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_8.png" /></span>
-                        <span class="alliance_text">Glace et sorbet</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_8') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -266,7 +267,7 @@
                         @click="changeFormAlliance(9), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_9.png" /></span>
-                        <span class="alliance_text">Gâteau</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_9') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -274,7 +275,7 @@
                         @click="changeFormAlliance(10), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_10.png" /></span>
-                        <span class="alliance_text">Poisson en sauce</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_10') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -282,7 +283,7 @@
                         @click="changeFormAlliance(11), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_11.png" /></span>
-                        <span class="alliance_text">Poisson grillé</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_11') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -290,7 +291,7 @@
                         @click="changeFormAlliance(12), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_12.png" /></span>
-                        <span class="alliance_text">Tarte</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_12') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -298,7 +299,7 @@
                         @click="changeFormAlliance(13), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_13.png" /></span>
-                        <span class="alliance_text">Viande blanche</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_13') }}</span>
                       </q-item>
                     </li>
                     <li class="list-group-item">
@@ -306,7 +307,7 @@
                         @click="changeFormAlliance(14), changeForm()">
                         <span class="alliance_icon"><img
                             src="https://nosvinsdumonde.com/assets/img/alliances/alliance_14.png" /></span>
-                        <span class="alliance_text">Viande rouge</span>
+                        <span class="alliance_text">{{ $t('ALLIANCE_14') }}</span>
                       </q-item>
                     </li>
                   </ul>
@@ -332,7 +333,7 @@
 
     <q-item v-if="listBonPlansAll.length === 0" v-show="showSimulatedReturnData" class="q-ma-none q-pa-none text-white"
       style="text-align: center;margin: 0px auto;display: flex;justify-content: center;flex-direction: column;align-content: center;">
-      <span style="font-size: 18px;" v-show="showSimulatedReturnData">Votre recherche n'a donné aucun résultat.</span>
+      <span style="font-size: 18px;" v-show="showSimulatedReturnData">{{ $t('EMPTY_search') }}</span>
       <img v-show="showSimulatedReturnData" style="margin: 0 auto;max-width: 180px;"
         src="https://nosvinsdumonde.fr/assets/img/empty_search.png" alt="" />
     </q-item>
@@ -359,13 +360,13 @@
           </q-item>
           <div class="q-mt-lg">
             <span class="badge_region" style="margin: 0 auto">{{
-            bon_plans.regionBoisson
+                bon_plans.regionBoisson
             }}</span>
           </div>
 
-          <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
+          <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0; text-transform: uppercase;">
             <q-btn :to="'/' + bon_plans.typeBoisson + '/' + bon_plans.idBoisson" push color="warning">
-              Découvrir
+              {{ $t('DECOUVRIR_BTN') }}
             </q-btn>
           </q-item>
 
@@ -374,12 +375,12 @@
           </div>
           <div class="q-mt-sm prix">
             <span><span class="chiffre">{{
-            replaceVirgule(bon_plans.prixBoisson)
+                replaceVirgule(bon_plans.prixBoisson)
             }}</span>
               €</span>
           </div>
           <div class="contenance text-subtitle1">
-            <span>Bouteille de {{ bon_plans.contenanceBoisson }}</span>
+            <span>{{ $t('CONTENANCE') }} {{ bon_plans.contenanceBoisson }}</span>
           </div>
         </q-card-section>
       </q-card>

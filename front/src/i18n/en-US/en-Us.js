@@ -363,7 +363,7 @@ export default {
   TITLE_PAGE_CARTE: 'Cart',
   ADD_CART: 'Add to Cart',
   REGLE_CART: 'Pay for my purchases',
-  TITLE_PAGE_CART: 'Mon panier',
+  TITLE_PAGE_CART: 'My cart',
   STEP_1: 'Identification',
   STEP_2: 'Delivery method',
   STEP_3: 'Payment',
@@ -383,7 +383,7 @@ export default {
   MODE_LIVRAISON: 'Your delivery method',
   RETRAIT: 'Withdrawal from your wine merchant *',
   RETRAIT_2: 'only on Le Mans 72100 located in France',
-  DOMICILE: 'standard home delivery',
+  DOMICILE: 'Standard home delivery',
   FRANCE: 'In France only',
   COLIS: 'Add a message card to my package',
   CHAR: 'max 360 characters',
@@ -696,4 +696,35 @@ export default {
   MESSAGE_FAVCHAMP: 'Your champagne has been added to the favourites.',
   MESSAGE_FAV2CHAMP: 'Your champagne has already been added to the favourites!',
   CHAMP_ADD_CART: 'Your champagne has been added to the cart.',
+
+  LE: 'The',
+  TAGS: 'Tags',
+
+  EMAIL_VOTRE: 'Your email *',
+  EMAIL_NOM: 'Your name/nickname*',
+  EMAIL_CONTENT: 'Your comment *',
+
+  FRANCE_UNIQUEMENT: '(In France only)',
+  CARA_360: 'Please write a maximum of 360 characters',
+  PAY_NOW: 'Pay now',
+  VALIDE_PAY: 'Payment validation',
+  VALIDE_PAIEMENT: 'Please validate your payment in',
+  CLICK_HERE: 'clicking here',
+
+  INFO_ENTREPRISE: '<span>Need help?</span><br /><span>06 15 75 93 02 Service &amp; free call</span><br /><span>Monday to Friday 9 a.m. to 7 p.m.</span><br /><span>Saturday 10 a.m. to 1 p.m. and 2 p.m. to 5 p.m.</span><br />',
+
+  REMOVE_CART: 'Your wine has been successfully removed from your cart.',
+
+  ERROR_REMOVE_CART: 'Your wine has not been removed from your cart!',
+
+  REDIRECTION: 'You will be redirected in a few seconds...',
+
+  MESSAGE_LOGIN_6: 'Your email address does not exist on Nosvinsdumonde',
+
+  TITLE_ABONNEMENT: 'I take a subscription and I take advantage of the discounts on novinsdumonde',
+
+  BTN_ABONNEMENT: 'Subscribe',
+
+  PREMIUM: 'Premium subscription',
+
 }

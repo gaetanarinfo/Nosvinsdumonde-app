@@ -18,10 +18,10 @@ const mutations = {
 const actions = {
   getProduitsAll({
     commit
-  }, payload) {
+  }) {
 
     axios
-      .get('/produitsAll/' + payload)
+      .get('/produitsAll')
       .then(res => {
         if (res.data.listProduitsAll != 0) {
           commit('setListProduitsAll', res.data.listProduitsAll)

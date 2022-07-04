@@ -6,6 +6,7 @@
 import { defineComponent } from 'vue';
 import { QSpinnerBall } from 'quasar';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { mapActions, mapState } from 'vuex';
 
 export default defineComponent({
   name: 'App',
@@ -17,51 +18,60 @@ export default defineComponent({
   },
 
   methods: {
-    getCurrentPosition() {
-      // 2.
-      LocalNotifications.requestPermissions();
+    ...mapActions('news', ['getNewsAllNotification']),
+    getCurrentPosition(newsNotification: [{ id: 0, ids: '', title: '', subtitle: '', image: '', groupeName: '', url: '' }]) {
 
-      // 3.
-      LocalNotifications.registerActionTypes({
-        types: [
-          {
-            id: '1',
-            actions: [
-              {
-                id: 'dismiss',
-                title: 'Dismiss',
-                destructive: true
-              },
-              {
-                id: 'open',
-                title: 'Open app'
-              },
-              {
-                id: 'respond',
-                title: 'Respond',
-                input: true
-              }
-            ]
-          }
-        ]
+      newsNotification.forEach(e => {
+
+        var ids = e.id.toString();
+
+        LocalNotifications.requestPermissions();
+
+        LocalNotifications.registerActionTypes({
+          types: [
+            {
+              id: 'CHAT_MSG',
+              actions: [
+                {
+                  id: 'Oui',
+                  title: 'Oui',
+                  destructive: false,
+                  input: true,
+                  inputButtonTitle: 'Ouvrir',
+                  inputPlaceholder: 'Ouvrir'
+                },
+              ]
+            }
+          ]
+        });
+
+        LocalNotifications.schedule({
+          notifications: [
+            {
+              id: e.id,
+              title: e.title,
+              body: e.subtitle,
+              smallIcon: 'res/drawable/ic_stat_logo_764a4fe2',
+              largeIcon: 'res/drawable/ic_launcher_foreground',
+              sound: 'res/raw/beep.wav',
+              actionTypeId: 'CHAT_MSG',
+              channelId: ids,
+              group: e.groupeName,
+              attachments: [
+                { id: ids, url: 'https://nosvinsdumonde.com/assets/img/contents/' + e.image }
+              ],
+            }
+          ]
+        });
+
+        // 5.
+        LocalNotifications.addListener('localNotificationActionPerformed', () => {
+          this.$router.push('/actualite/' + e.url);
+        });
+
       });
 
-      // 4.
-      LocalNotifications.schedule({
-        notifications: [
-          {
-            id: 1,
-            title: 'Sample title',
-            body: 'Sample body',
-            actionTypeId: 'your_choice'
-          }
-        ]
-      });
 
-      // 5.
-      LocalNotifications.addListener('localNotificationActionPerformed', (notification) => {
-        console.log(`Notification ${notification.notification.title} was ${notification.actionId}ed.`);
-      });
     },
     showLoading() {
       this.$q.loading.show({
@@ -74,6 +84,8 @@ export default defineComponent({
       setTimeout(() => {
         this.$q.loading.hide();
         this.show = true;
+        this.getNewsAllNotification();
+        this.getCurrentPosition(this.listNewsAllNotification);
       }, 2000);
     },
   },
@@ -82,10 +94,14 @@ export default defineComponent({
       this.$q.loading.hide();
     }, 2000);
   },
-  computed: {},
+  computed: {
+    ...mapState('news', ['listNewsAllNotification']),
+  },
   mounted() {
-    this.getCurrentPosition();
+
     this.showLoading();
+    this.getNewsAllNotification();
+
   },
 });
 </script>

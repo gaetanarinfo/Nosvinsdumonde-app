@@ -7,7 +7,7 @@
         width: 100%;
         margin: 24px 0;
       ">
-      <q-item class="title">Mes favoris</q-item>
+      <q-item class="title">{{ $t('TITLE_FAVORIS') }}</q-item>
     </div>
 
     <!-- BreadCrump -->
@@ -18,7 +18,7 @@
         </template>
 
         <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
-        <q-breadcrumbs-el label="Favoris" style="color: white" />
+        <q-breadcrumbs-el :label="$t('FAVORIS')" style="color: white" />
       </q-breadcrumbs>
     </div>
 
@@ -44,9 +44,9 @@
             <span class="badge_region">{{ vins.apellationBoisson }}</span>
           </div>
 
-          <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
+          <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0;text-transform: uppercase;">
             <q-btn :to="'/' + vins.typeBoisson + '/' + vins.idBoisson" color="warning" push>
-              Découvrir
+              {{ $t('DECOUVRIR_BTN') }}
             </q-btn>
 
             <q-btn @click="removeFavoris(vins.idBoisson)" push color="red" class="q-ml-md remove_favoris favoris_i"><i
@@ -60,13 +60,13 @@
 
           <div class="q-mt-sm prix text-left">
             <span><span class="chiffre">{{
-            replaceVirgule(vins.prixBoisson)
+                replaceVirgule(vins.prixBoisson)
             }}</span>
               €</span>
           </div>
 
           <div class="contenance text-subtitle1 text-left">
-            <span>Bouteille de {{ vins.contenanceBoisson }}</span>
+            <span>{{ $t('CONTENANCE') }} {{ vins.contenanceBoisson }}</span>
           </div>
         </q-card-section>
       </q-card>
@@ -106,7 +106,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Votre vin a bien été supprimer de vos favoris.',
+          message: this.$t('REMOVE_CART'),
           timeout: 2500,
         });
       },
@@ -114,7 +114,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'warning',
-          message: "Votre vin n'a pas été supprimer de vos favoris !",
+          message: this.$t('ERROR_REMOVE_CART'),
           timeout: 2500,
         });
       },

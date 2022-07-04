@@ -11,7 +11,7 @@
         <q-space />
 
         <q-select v-model="locale" class="q-py-sm q-px-sm" :options="localeOptions" :options-html="optionsHtml" dark
-          dense borderless emit-value map-options>
+          dense borderless map-options emit-value>
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section class="q-pa-none" avatar>
@@ -46,7 +46,8 @@
           " v-if="this.user.id && this.user.email" />
 
 
-          <q-menu class="bg-dark text-white" style="min-width: 190px" v-if="!this.user.id && !this.user.email">
+          <q-menu class="bg-dark text-white" style="min-width: 190px; max-width: 250px;"
+            v-if="!this.user.id && !this.user.email">
             <q-list>
               <q-item clickable @click="login = true">
                 <q-item-section avatar style="min-width: 20px;padding: 0 10px 0 0;">
@@ -75,8 +76,18 @@
                   " v-if="logged && this.user.avatar != 'undefined'" />
                 </q-avatar>
 
-                <div class="text-subtitle1 q-mt-md q-mb-xs text-center q-mb-md" style="font-weight: 500">
+                <div v-if="user.premium == 1" class="text-subtitle1 q-mt-md q-mb-xs text-center"
+                  style="font-weight: 500">
                   {{ user.prenom }} {{ user.nom }}
+                </div>
+
+                <div v-else class="text-subtitle1 q-mb-md q-mt-md q-mb-xs text-center" style="font-weight: 500">
+                  {{ user.prenom }} {{ user.nom }}
+                </div>
+
+                <div v-if="user.premium == 1" class="text-subtitle1 q-mb-xs text-center q-mt-none q-mb-md"
+                  style="font-weight: 500">
+                  <i class="fa-solid fa-star" style="color: #ffd700;margin-right: 0.3rem;"></i> Membre premium
                 </div>
 
                 <q-btn color="red-5" :label="$t('LOGOUT')" push @click="logout()" size="md" v-close-popup />
@@ -119,7 +130,7 @@
               <q-item class="q-pa-none q-ma-none text-center q-mb-sm" style="display: block;min-height: auto;">
                 {{
                     replaceGuillemet(params.appVersion)
-                }} - <span style="text-transform: uppercase;">{{ locale }}</span> - <span
+                }} - <span style="text-transform: uppercase;">{{ locale.substring(3) }}</span> - <span
                   style="text-transform:capitalize;">{{ platform.platform }}</span>
               </q-item>
             </div>
@@ -246,7 +257,7 @@
               $t('NEWSLETTER_TITLE')
           }}</span>
         <q-form @submit="submitNewsLetter()">
-          <q-input v-model="formNewsLetter.email" :rules="[(val) => validateEmail(val) || $('EMAIL_VALIDE')]" dark
+          <q-input v-model="formNewsLetter.email" :rules="[(val) => validateEmail(val) || $t('EMAIL_VALIDE')]" dark
             lazy-rules :hint="$t('LABEL_1')" :label="$t('EMAIL_INPUT')" stack-label :dense="dense" />
           <q-btn class="q-mt-md" type="submit" size="md" push color="info">{{ $t('SUSCRIBE') }}</q-btn>
         </q-form>
@@ -417,17 +428,17 @@
           <q-btn flat round dense icon="close" v-close-popup />
         </q-toolbar>
 
-        <q-card-section class="text-bold" style="font-size: 18px; text-align: center">
+        <q-card-section v-if="!forgot" class="text-bold" style="font-size: 18px; text-align: center">
           {{ $t('SUBTITLE_PAGE_LOGIN') }}
         </q-card-section>
 
-        <q-form @submit="submitForm" class="q-mb-lg" style="padding: 0 5vw">
+        <q-form @submit="submitForm" v-if="!forgot" class="q-mb-lg" style="padding: 0 5vw">
 
           <q-input class="q-mb-lg" v-model="form.email" label="E-mail"
-            :rules="[(val) => validateEmail(val) || $('EMAIL_VALIDE')]" lazy-rules :hint="$t('LABEL_1')" />
+            :rules="[(val) => validateEmail(val) || $t('EMAIL_VALIDE')]" lazy-rules :hint="$t('LABEL_1')" />
 
-          <q-input v-if="showPassword" type="password" bottom-slots v-model="form.password" label="Mot de passe"
-            :dense="dense">
+          <q-input v-if="showPassword" type="password" bottom-slots v-model="form.password"
+            :label="$t('PASSWORD_INPUT')" :dense="dense">
             <template v-slot:hint>
               {{ $t('LABEL_2') }}
             </template>
@@ -447,10 +458,27 @@
             </q-btn>
           </q-input>
 
-          <q-item class="q-pa-none q-mb-none q-mt-lg text-center" clickable to="">{{ $t('FORGOT_PASSWORD') }}</q-item>
+          <q-item class="q-pa-none q-mb-none q-mt-lg text-center" clickable @click="forgot = true">{{
+              $t('FORGOT_PASSWORD')
+          }}</q-item>
 
           <q-btn type="submit" color="warning" push :label="$t('SIGNIN')" />
         </q-form>
+
+        <q-form @submit="submitFormForgot" class="q-mb-lg" v-if="forgot" style="padding: 0 5vw">
+
+          <q-card-section class="text-bold" style="font-size: 18px; text-align: center">
+            {{ $t('TITLE_MODAL_FORGOT') }}
+          </q-card-section>
+
+          <q-input class="q-mb-lg" v-model="formForgot.email" label="E-mail"
+            :rules="[(val) => validateEmail(val) || $t('EMAIL_VALIDE')]" lazy-rules :hint="$t('LABEL_1')" />
+
+          <q-btn type="submit" color="warning" push :label="$t('VALIDER')" />
+          <q-btn class="q-ml-md" color="info" @click="forgot = false" push :label="$t('BACK')" />
+
+        </q-form>
+
       </q-card>
     </q-dialog>
 
@@ -1690,6 +1718,14 @@ export default defineComponent({
           timeout: 2500,
         });
       },
+      showNotifErrorForgot() {
+        $q.notify({
+          position: 'top-left',
+          type: 'negative',
+          message: this.$t('MESSAGE_LOGIN_6'),
+          timeout: 2500,
+        });
+      },
       showNotifErrorGeneral() {
         $q.notify({
           position: 'top-left',
@@ -1710,17 +1746,19 @@ export default defineComponent({
   },
   data() {
     return {
+      forgot: false,
       showPassword: true,
       logged: Cookies.get('setLoggedIn'),
       livraisonValue: false,
       societeValue: false,
       params: {
-        appVersion: '3.1.4',
-        appVersionOnline: '3.1.4',
+        appVersion: '3.1.6',
+        appVersionOnline: '3.1.6',
       },
       user: {
         id: null,
         email: null,
+        premium: 0,
         avatar: 'user_empty.png',
         nom: null,
         prenom: null,
@@ -1733,6 +1771,9 @@ export default defineComponent({
         email: null,
         password: null,
         page: null
+      },
+      formForgot: {
+        email: null
       },
       form2: {
         email2: null,
@@ -1795,6 +1836,7 @@ export default defineComponent({
       this.user.id = this.setListUser.id;
       this.user.email = this.setListUser.email;
       this.user.avatar = this.setListUser.user_profil_image;
+      this.user.premium = this.setListUser.premium;
       this.user.nom = this.setListUser.nom;
       this.user.prenom = this.setListUser.prenom;
       this.user.carte = this.setListUser.carte;
@@ -1847,6 +1889,13 @@ export default defineComponent({
         this.registerUser(this.form2);
       }
     },
+    submitFormForgot() {
+      if (this.formForgot.email == null) {
+        this.showNotifError();
+      } else {
+        this.forgotUser(this.formForgot);
+      }
+    },
     submitNewsLetter() {
       if (this.formNewsLetter.email == null) {
         this.showNotifErrorGeneral();
@@ -1864,6 +1913,7 @@ export default defineComponent({
     },
     ...mapActions('users', ['loginUser']),
     ...mapActions('users', ['registerUser']),
+    ...mapActions('users', ['forgotUser']),
     ...mapActions('users', ['verifPointCash']),
     ...mapActions('users', ['newsLetterUser']),
     ...mapActions('users', ['convertPointCash']),
@@ -1891,7 +1941,7 @@ export default defineComponent({
         this.user.cashback = Cookies.get('cashback');
         setTimeout(this.reloadGift, 1000);
       }
-    }
+    },
   },
   mounted() {
 

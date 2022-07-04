@@ -7,7 +7,7 @@
         width: 100%;
         margin: 24px 0;
       ">
-      <q-item class="title">Mon Panier</q-item>
+      <q-item class="title">{{ $t('TITLE_PAGE_CART') }}</q-item>
     </div>
 
     <!-- BreadCrump -->
@@ -18,7 +18,7 @@
         </template>
 
         <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
-        <q-breadcrumbs-el label="Panier" style="color: white" />
+        <q-breadcrumbs-el :label="$t('LINK_16')" style="color: white" />
       </q-breadcrumbs>
     </div>
 
@@ -35,7 +35,7 @@
             " icon="fa fa-bag-shopping" id="1">
               <div class="step-title">
                 <span class="step-number">01</span>
-                <div class="step-text">Panier</div>
+                <div class="step-text">{{ $t('TITLE_PAGE_CARTE') }}</div>
               </div>
               <div class="step-indicator">
                 <div class="step-node">
@@ -52,7 +52,7 @@
             " icon="fa fa-user-clock" id="2">
               <div class="step-title">
                 <span class="step-number">02</span>
-                <div class="step-text">Identification</div>
+                <div class="step-text">{{ $t('STEP_1') }}</div>
               </div>
               <div class="step-indicator">
                 <div class="step-node">
@@ -69,7 +69,7 @@
             " icon="fa fa-map-location-dot" id="3">
               <div class="step-title">
                 <span class="step-number">03</span>
-                <div class="step-text">Mode de livraison</div>
+                <div class="step-text">{{ $t('STEP_2') }}</div>
               </div>
               <div class="step-indicator">
                 <div class="step-node">
@@ -86,7 +86,7 @@
             " icon="fa fa-credit-card" id="4">
               <div class="step-title">
                 <span class="step-number">04</span>
-                <div class="step-text">Paiement</div>
+                <div class="step-text">{{ $t('STEP_3') }}</div>
               </div>
               <div class="step-indicator">
                 <div class="step-node">
@@ -103,7 +103,7 @@
             " icon="fa fa-check" id="5">
               <div class="step-title">
                 <span class="step-number">05</span>
-                <div class="step-text">Confirmation</div>
+                <div class="step-text">{{ $t('STEP_4') }}</div>
               </div>
               <div class="step-indicator">
                 <div class="step-node">
@@ -144,7 +144,9 @@
                       }}</b></q-item>
                   </h5>
                   <q-item clickable style="padding: 0 0" class="text-white text-decoration-none"
-                    :to="'/' + item.typeBoisson + '/' + item.idBoisson + ''">Bouteille de {{ item.contenanceBoisson }}
+                    :to="'/' + item.typeBoisson + '/' + item.idBoisson + ''">{{ $t('CONTENANCE') }} {{
+                        item.contenanceBoisson
+                    }}
                   </q-item>
                 </div>
 
@@ -168,7 +170,7 @@
                       display: block;
                       position: relative;
                       top: -7px;
-                    ">Supprimer</q-item>
+                    ">{{ $t('SUPPRIMER') }}</q-item>
                 </div>
               </div>
 
@@ -194,12 +196,11 @@
                       padding: 0 0;
                       margin: 0 5px 0 0;
                       display: inline-block;
-                    ">Avec un</span>compte et une carte privilège
-                  <span style="padding: 0 0; margin: 0 0; display: inline-block">cumulé des points sur votre commande
-                    !</span>
+                    ">
+                    {{ $t('CUMULE_POINTS') }}</span>
                 </q-item-section>
 
-                <q-item-section v-if="user.id && user.email">Nombre de point avec vos achats :
+                <q-item-section v-if="user.id && user.email">{{ $t('POINTS') }}
                   {{ points }} PTS</q-item-section>
               </p>
             </div>
@@ -209,21 +210,39 @@
             :class="!user.id && !user.email && this.$route.params.etape == 2 ? 'stepper-content fade-in active show q-pa-none' : 'stepper-content q-pa-none'"
             v-if="this.$route.params.etape == 2">
             <q-card-section class="text-bold" style="font-size: 18px; text-align: center">
-              Accéder à votre compte Nosvinsdumonde
+              {{ $t('SUBTITLE_PAGE_LOGIN') }}
             </q-card-section>
 
-            <q-form @submit="submitForm" class="q-mb-lg text-white">
-              <q-input v-model="form.email" dark label="E-mail"
-                :rules="[(val) => validateEmail(val) || 'Adresse email invalide']" lazy-rules
-                hint="Nous ne divulguons jamais votre adresse e-mail." />
+            <q-form @submit="submitForm" class="q-mb-lg text-white" v-if="!forgot">
+              <q-input v-model="form.email" dark :label="$t('EMAIL_INPUT')"
+                :rules="[(val) => validateEmail(val) || $t('EMAIL_VALIDE')]" lazy-rules :hint="$t('LABEL_1')" />
 
-              <q-input type="password" dark v-model="form.password" label="Mot de passe" lazy-rules
-                hint="Nous ne divulguons jamais votre mot de passe." />
+              <q-input type="password" dark v-model="form.password" :label="$t('PASSWORD_INPUT')" lazy-rules
+                :hint="$t('LABEL_2')" />
 
-              <q-item class="q-pa-none q-mb-none q-mt-lg text-center" clickable to="">Mot de passe oublié ?</q-item>
+              <q-item class="q-pa-none q-mb-none q-mt-lg text-center" clickable @click="forgot = true">{{
+                  $t('FORGOT_PASSWORD')
+              }}
+              </q-item>
 
-              <q-btn type="submit" color="warning" push label="Se connecter" />
+              <q-btn type="submit" color="warning" push :label="$t('SIGNIN')" />
+
             </q-form>
+
+            <q-form @submit="submitFormForgot" class="q-mb-lg" v-if="forgot">
+
+              <q-card-section class="text-bold" style="font-size: 18px; text-align: center">
+                {{ $t('TITLE_MODAL_FORGOT') }}
+              </q-card-section>
+
+              <q-input dark class="q-mb-lg" v-model="formForgot.email" label="E-mail"
+                :rules="[(val) => validateEmail(val) || $t('EMAIL_VALIDE')]" lazy-rules :hint="$t('LABEL_1')" />
+
+              <q-btn type="submit" color="warning" push :label="$t('VALIDER')" />
+              <q-btn class="q-ml-md" color="info" @click="forgot = false" push :label="$t('BACK')" />
+
+            </q-form>
+
           </q-item>
 
           <q-item
@@ -241,7 +260,7 @@
                     <div class="col-lg-12 m-auto text-left">
 
                       <div class="m-auto text-center w-100">
-                        <h4 class="text-white">Votre mode de livraison</h4>
+                        <h4 class="text-white">{{ $t('MODE_LIVRAISON') }}</h4>
                       </div>
 
                     </div>
@@ -259,10 +278,8 @@
                       <div class="col-md-6">
 
                         <q-radio size="sm" dark name="livraisonMode1" v-model="formLivraison.livraisonMode1"
-                          :dense="dense" @click="addPort(1)" val="1" color="orange"
-                          label="Retrait chez votre caviste *" />
-                        <span class="small">uniquement sur
-                          Le Mans 72100 situés en France</span>
+                          :dense="dense" @click="addPort(1)" val="1" color="orange" :label="$t('RETRAIT')" />
+                        <span class="small">{{ $t('RETRAIT_2') }}</span>
 
                         <h6 class="no-border q-pa-none q-ma-none q-mt-sm">0,00
                           €</h6>
@@ -271,8 +288,8 @@
 
                           <q-radio @click="addPort(2)" size="sm" dark name="livraisonMode1"
                             v-model="formLivraison.livraisonMode1" :dense="dense" val="2" color="orange"
-                            label="Livraison standard à domicile" />
-                          <span class="small"> (En France uniquement)</span>
+                            :label="$t('DOMICILE')" />
+                          <span class="small"> {{ $t('RETRAIT_2') }}</span>
 
                           <h6 class="no-border q-pa-none q-ma-none q-mt-sm">
                             {{ port_definitif }} €</h6>
@@ -288,25 +305,25 @@
 
                   <div class="col-md-12 q-mt-lg">
 
-                    <h4 class="no-border">Ajouter une carte message à mon colis</h4>
-                    <span>(maximum 360 caractères)</span>
+                    <h4 class="no-border">{{ $t('COLIS') }}</h4>
+                    <span>({{ $t('CHAR') }})</span>
 
                     <q-input @change="addGiftMessage()" class="q-mt-md" color="white" dark :dense="dense"
                       v-model="formLivraison.giftMessage" filled type="textarea" lazy-rules
-                      :rules="[val => val && val.length <= 360 || 'Veuillez écrire un maximum de 360 caractères']" />
+                      :rules="[val => val && val.length <= 360 || $t('CARA_360')]" />
 
                     <div class="row d-flex q-mt-md q-mb-lg" style="align-items: center;">
 
                       <div class="text-start col">
                         <q-btn @click="showTextLoading()" to="/cart/1" size="md" push color="warning"><i
                             class="fa-solid fa-angle-left q-mr-sm"></i>
-                          Précédent</q-btn>
+                          {{ $t('BACK_PAIEMENT') }}</q-btn>
                       </div>
 
                       <div class="text-end col">
                         <q-btn @click="showTextLoading()" to="/cart/4" size="md" push color="warning"><i
                             class="fa-solid fa-angle-right q-mr-sm"></i>
-                          Continuer</q-btn>
+                          {{ $t('CONTINUER_PAIEMENT') }}</q-btn>
                       </div>
 
                     </div>
@@ -334,7 +351,7 @@
                     <div class="col-lg-12 m-auto text-left">
 
                       <div class="m-auto text-center w-100">
-                        <h4 class="text-white">Votre mode de paiement</h4>
+                        <h4 class="text-white">{{ $t('MODE_PAIEMENT') }}</h4>
                       </div>
 
                     </div>
@@ -353,11 +370,11 @@
 
                         <q-radio size="sm" @click="showPaiement(1)" dark name="paiementMethod"
                           v-model="formLivraison.paiementMethod" :dense="dense" val="1" color="orange"
-                          label="Carte bancaire" />
+                          :label="$t('METHODE_1')" />
 
                         <q-item class="q-pa-none q-ma-none" v-show="card" v-model="card">
                           <q-btn color="warning" :class="disabled == true ? 'q-mt-md disabled' : 'q-mt-md'" push
-                            @click="addPaiementIntentCard()" label="Payer maintenant" />
+                            @click="addPaiementIntentCard()" :label="$t('PAY_NOW')" />
                         </q-item>
 
                         <div class="q-mt-lg q-mb-sm">
@@ -367,24 +384,20 @@
 
                           <q-item class="q-pa-none q-ma-none" v-model="paypal" v-show="paypal">
                             <q-btn color="info" :class="disabled == true ? 'q-mt-md disabled' : 'q-mt-md'" push
-                              @click="addPaiementIntentPaypal()" label="Payer maintenant" />
+                              @click="addPaiementIntentPaypal()" :label="$t('PAY_NOW')" />
                           </q-item>
 
                         </div>
 
                         <div class="p-0 text-start q-mt-lg" v-if="user.cashback >= 1">
-                          <h6 class="no-border text-white q-ma-none q-pa-none">Mes euros cumulé : </h6>
+                          <h6 class="no-border text-white q-ma-none q-pa-none">{{ $t('CASHBACK_DIV') }}</h6>
                           <h6 class="no-border text-info q-ma-none q-pa-none">
                             {{ replaceVirgule(user.cashback) }} € </h6>
                           <q-btn @click="useCashBack()" v-if="user.cashBackActive == 0" size="md" class="q-mt-lg"
-                            color="info" push>
-                            Utiliser
-                            pour ma commande</q-btn>
+                            color="info" push>{{ $t('UTILISE_CASH') }}</q-btn>
 
                           <q-btn @click="removeCashBack()" v-if="user.cashBackActive == 1" size="md" class="q-mt-lg"
-                            color="info" push>
-                            Supprimer
-                            pour ma commande</q-btn>
+                            color="info" push>{{ $t('REMOVE_CASH') }}</q-btn>
                         </div>
 
                       </div>
@@ -392,24 +405,24 @@
                       <div class="col-md-6" v-if="getCookiePaiementToken()">
 
                         <div class="doc-note doc-note--tip">
-                          <p class="doc-note__title text-dark">Validation de paiement</p>
-                          <p class="text-dark">Merci de valider votre paiement en <a
-                              :href="'https://nosvinsdumonde.com/fr/paiement/' + getCookiePaiementToken()">cliquant
-                              ici</a>
+                          <p class="doc-note__title text-dark">{{ $t('VALIDE_PAY') }}</p>
+                          <p class="text-dark">{{ $t('VALIDE_PAIEMENT') }} <a
+                              :href="'https://nosvinsdumonde.com/fr/paiement/' + getCookiePaiementToken()">{{
+                                  $t('CLICK_HERE')
+                              }}</a>
                           </p>
                         </div>
 
                       </div>
 
                       <div class="p-0 text-start q-mt-lg q-mb-lg">
-                        <span>En passant commande sur le site et en acceptant les conditions générales de vente, je
-                          certifie être en âge de contracter.</span>
+                        <span>{{ $t('COMMANDE_LEGALE') }}</span>
                       </div>
 
                       <div class="text-start col q-mb-lg">
                         <q-btn @click="showTextLoading()" to="/cart/3" size="md" push color="warning"><i
                             class="fa-solid fa-angle-left q-mr-sm"></i>
-                          Précédent</q-btn>
+                          {{ $t('BACK_PAIEMENT') }}</q-btn>
                       </div>
 
                     </div>
@@ -437,7 +450,7 @@
                     <div class="col-lg-12 m-auto text-left">
 
                       <div class="m-auto text-center w-100">
-                        <h4 class="text-white">Paiement validé</h4>
+                        <h4 class="text-white">{{ $t('MESSAGE_PAY_VALIDE') }}</h4>
                       </div>
 
                     </div>
@@ -455,26 +468,23 @@
                       <div class="col-md-6">
 
                         <div class="doc-note doc-note--tip">
-                          <p class="text-dark"><span class="text-bold text-dark">Merci pour votre
-                              achat.</span><br /><br />À
-                            n'importe quel moment
-                            trouvez-le
-                            dans votre espace personnel.
+                          <p class="text-dark"><span class="text-bold text-dark">{{ $t('MESSAGE_PAY_VALIDE')
+                          }}</span><br /><br />{{ $t('MESSAGE_PAY_VALIDE_2')
+}}<br /><br />{{ $t('MESSAGE_PAY_VALIDE_3') }}
                           </p><br />
-                          <p class="text-dark"><a href="/" style="text-decoration: none;">Retour</a></p>
+                          <p class="text-dark"><a href="/" style="text-decoration: none;">{{ $t('BACK') }}</a></p>
                         </div>
 
                       </div>
 
                       <div class="p-0 text-start q-mt-lg q-mb-lg">
-                        <span>En passant commande sur le site et en acceptant les conditions générales de vente, je
-                          certifie être en âge de contracter.</span>
+                        <span>{{ $t('COMMANDE_LEGALE') }}</span>
                       </div>
 
                       <div class="text-start col q-mb-lg">
                         <q-btn @click="showTextLoading()" to="/cart/3" size="md" push color="warning"><i
                             class="fa-solid fa-angle-left q-mr-sm"></i>
-                          Précédent</q-btn>
+                          {{ $t('BACK_PAIEMENT') }}</q-btn>
                       </div>
 
                     </div>
@@ -500,12 +510,7 @@
                 <img style="width: 80px" src="https://nosvinsdumonde.com/assets/img/assistance.png" alt="" />
               </div>
 
-              <div class="col ps-0 service_assistance">
-                <span>Besoin d'aide ?</span><br />
-                <span>06 15 75 93 02 Service &amp; appel gratuit</span><br />
-                <span>Lundi au Vendredi 9h/19h</span><br />
-                <span>Samedi 10h/13h et 14h/17h</span><br />
-              </div>
+              <div class="col ps-0 service_assistance" v-html="$t('INFO_ENTREPRISE')"></div>
 
             </div>
 
@@ -516,20 +521,18 @@
               background: darkslategrey;
               display: block;
             ">
-              <h5 style="font-size: 22px;"><b>Total commande</b></h5>
+              <h5 style="font-size: 22px;"><b>{{ $t('TOTAL') }}</b></h5>
 
               <span class="total">{{ replaceVirgule(total) }} €</span>
 
               <div class="text-center q-mt-md q-mb-md">
                 <q-btn :to="(!user.id && !user.email) ? '/cart/2' : '/cart/3'" @click="showTextLoading()" size="md" push
-                  color="warning"><i class="fa-solid fa-angle-right q-mr-sm"></i> Valider
-                  et
-                  commander</q-btn>
+                  color="warning"><i class="fa-solid fa-angle-right q-mr-sm"></i> {{ $t('VALIDER_CART') }}</q-btn>
               </div>
 
               <div class="text-center q-mt-md q-mb-md">
                 <span><i class="fa-solid fa-lock"></i></span>
-                <span class="q-ml-sm">Paiement 100% sécurisé</span>
+                <span class="q-ml-sm">{{ $t('PAIEMENT_SECUR') }}</span>
               </div>
 
               <div class="text-center">
@@ -539,18 +542,38 @@
 
             <q-item id="bloc_paiement_final" v-if="this.$route.params.etape == 3 || this.$route.params.etape == 4"
               class="col text-white q-mt-md q-pa-none"
-              style="border: 1px solid rgb(204, 204, 204); padding: 12px; background: darkslategrey;">
+              style="display: block; border: 1px solid rgb(204, 204, 204); padding: 12px; background: darkslategrey;">
 
               <div>
 
-                <h5 style="font-size: 22px;"><b>Récapitulatif de la commande</b></h5>
+                <h5 style="font-size: 22px;"><b>{{ $t('RECAP_COMMANDE') }}</b></h5>
 
-                <div class="col-md-12 q-mt-lg" v-if="user.cashBackActive == 1">
+                <div class="col-md-12 q-mt-lg" v-if="user.premium == 1">
 
-                  <div class="row" style="display: flex;align-items: center;justify-content: space-between;">
+                  <div style="display: flex;align-items: center;justify-content: space-between;">
 
                     <div class="col-md-6" style="display: flex;align-items: center;justify-content: space-between;">
-                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;"><b>MES EUROS CUMULÉ</b></h6>
+                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;text-transform: uppercase;"><b>{{
+                          $t('PREMIUM')
+                      }}</b>
+                      </h6>
+                    </div>
+
+                    <div class="col-md-6 text-end">
+                      <span>-10 %</span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="col-md-12 q-mt-sm" v-if="user.cashBackActive == 1">
+
+                  <div style="display: flex;align-items: center;justify-content: space-between;">
+
+                    <div class="col-md-6" style="display: flex;align-items: center;justify-content: space-between;">
+                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;"><b>{{ $t('CASHBACK') }}</b>
+                      </h6>
                     </div>
 
                     <div class="col-md-6 text-end">
@@ -563,10 +586,10 @@
 
                 <div class="col-md-12 q-mt-sm">
 
-                  <div class="row" style="display: flex;align-items: center;justify-content: space-between;">
+                  <div style="display: flex;align-items: center;justify-content: space-between;">
 
                     <div class="col-md-6" style="display: flex;align-items: center;justify-content: space-between;">
-                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;"><b>SOUS-TOTAL</b></h6>
+                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;"><b>{{ $t('TOTAL_1') }}</b></h6>
                     </div>
 
                     <div class="col-md-6 text-end">
@@ -582,7 +605,7 @@
                   <div style="display: flex;align-items: center;justify-content: space-between;">
 
                     <div class="col-md-6">
-                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;"><b>FRAIS DE PORT</b></h6>
+                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;"><b>{{ $t('FDP') }}</b></h6>
                     </div>
 
                     <div class="col-md-6 text-end">
@@ -598,7 +621,9 @@
                   <div style="display: flex;align-items: center;justify-content: space-between;">
 
                     <div class="col-md-6">
-                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;"><b>TOTAL</b></h6>
+                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;text-transform: uppercase;"><b>{{
+                          $t('TOTALS')
+                      }}</b></h6>
                     </div>
 
                     <div class="col-md-6 text-end">
@@ -616,12 +641,14 @@
             </q-item>
 
             <div id="bloc_adresse_final" class="col text-white q-mt-md"
-              style="border: 1px solid rgb(204, 204, 204); padding: 12px; background: darkslategrey;"
+              style="border: 1px solid rgb(204, 204, 204); padding: 12px; background: darkslategrey;display: block;"
               v-if="this.$route.params.etape == 3 || this.$route.params.etape == 4">
 
               <div>
 
-                <h5 style="font-size: 22px;"><b>Adresse de facturation</b></h5>
+                <h5 style="font-size: 22px;"><b>{{
+                    $t('ADRESSE_1')
+                }}</b></h5>
 
                 <div class="col-md-12 q-mt-md">
 
@@ -638,7 +665,9 @@
 
               <div class="q-mt-md">
 
-                <h5 style="font-size: 22px;"><b>Adresse de livraison</b></h5>
+                <h5 style="font-size: 22px;"><b>{{
+                    $t('ADRESSE_2')
+                }}</b></h5>
 
                 <div class="col-md-12 q-mt-md" v-if="user.livraison == 1">
 
@@ -2093,11 +2122,19 @@ export default {
       paypal: null,
       dense: ref(null),
       carts: [],
+      showNotifErrorForgot() {
+        $q.notify({
+          position: 'top-left',
+          type: 'negative',
+          message: this.$t('MESSAGE_LOGIN_6'),
+          timeout: 2500,
+        });
+      },
       showNotifCart() {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Votre vin a bien été ajouter à votre panier.',
+          message: this.$t('VIN_ADD_CART'),
           timeout: 2500,
         });
       },
@@ -2105,7 +2142,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Votre vin a bien été supprimer de votre panier.',
+          message: this.$t('REMOVE_CART'),
           timeout: 2500,
         });
       },
@@ -2113,7 +2150,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'warning',
-          message: "Votre vin n'a pas été supprimer de votre panier !",
+          message: this.$t('ERROR_REMOVE_CART'),
           timeout: 2500,
         });
       },
@@ -2121,7 +2158,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Vous allez être redirigés dans quelques secondes...',
+          message: this.$t('REDIRECTION'),
           timeout: 2000,
         });
       },
@@ -2141,6 +2178,7 @@ export default {
   data() {
 
     return {
+      forgot: false,
       loading: ref(false),
       versionTable: 1,
       disabled: false,
@@ -2149,6 +2187,9 @@ export default {
       port_definitif: 14.00,
       totalFDP: 0.00,
       nomBoisson: null,
+      formForgot: {
+        email: null
+      },
       form: {
         email: null,
         password: null,
@@ -2163,6 +2204,7 @@ export default {
       user: {
         cashBackActive: 0,
         point: null,
+        premium: 0,
         cashback: 0.00,
         id: null,
         email: null,
@@ -2218,7 +2260,7 @@ export default {
       $q.notify({
         position: 'top-left',
         type: 'positive',
-        message: 'Connexion réussi à Nosvinsdumonde !',
+        message: this.$t('MESSAGE_LOGIN_1'),
         timeout: 2500,
       });
     },
@@ -2226,7 +2268,7 @@ export default {
       $q.notify({
         position: 'top-left',
         type: 'negative',
-        message: 'Mauvais email ou mot de passe !',
+        message: this.$t('MESSAGE_LOGIN_4'),
         timeout: 2500,
       });
     },
@@ -2264,6 +2306,8 @@ export default {
         this.user.prenom = this.setListUser.prenom;
         this.user.livraison = this.setListUser.livraison;
 
+        this.user.premium = this.setListUser.premium;
+
         this.user.adresse = this.setListUser.adresse;
         this.user.code_postal = this.setListUser.code_postal;
         this.user.ville = this.setListUser.ville;
@@ -2293,6 +2337,7 @@ export default {
     },
     ...mapActions('users', ['loggedDataUser']),
     ...mapActions('carts', ['getCartId']),
+    ...mapActions('users', ['forgotUser']),
     decode(html) {
       decoder = decoder || document.createElement('div');
       decoder.innerHTML = html;
@@ -2405,8 +2450,7 @@ export default {
             if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
             else var cashback = 0.00;
 
-            this.totalFDP = (this.totalFDP - cashback);
-
+            this.totalFDP = (this.totalFDP - cashback - 11.8);
 
           }
 
@@ -2550,22 +2594,24 @@ export default {
         if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
         else var cashback = 0.00;
 
-        this.totalFDP = (this.totalFDP - cashback);
+        this.totalFDP = (this.totalFDP - cashback - 11.8);
 
         this.versionTable++;
 
       }
 
     },
+    submitFormForgot() {
+      if (this.formForgot.email == null) {
+        this.showNotifError();
+      } else {
+        this.forgotUser(this.formForgot);
+      }
+    },
     removeCart(idItem) {
       if (Cookies.has('cart')) {
 
         var input = idItem;
-
-        var counter = Cookies.get('cart').split(',').length;
-
-        console.log(input);
-        console.log(counter);
 
         var cookie = Cookies.get('cart');
 
@@ -2701,7 +2747,7 @@ export default {
           if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
           else var cashback = 0.00;
 
-          this.totalFDP = (this.totalFDP - cashback);
+          this.totalFDP = (this.totalFDP - cashback - 11.8);
 
           this.versionTable++;
 

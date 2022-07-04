@@ -14,6 +14,7 @@ const state = {
   listNewsSearch2: [],
   listNewsReadMore: [],
   listNewsAll: [],
+  listNewsAllNotification: [],
   listNewsId: [],
   listNewsCommentsId: [],
   listNewsCommentsCount: [],
@@ -31,6 +32,9 @@ const mutations = {
   },
   setListNewsAll(state, value) {
     state.listNewsAll = value
+  },
+  setListNewsAllNotification(state, value) {
+    state.listNewsAllNotification = value
   },
   setListNewsReadMore(state, value) {
     state.listNewsReadMore = value
@@ -161,9 +165,20 @@ const actions = {
     axios
       .get('/searchPage2/' + payload)
       .then(res => {
-        console.log(res.data);
         if (res.data.listNewsSearch2 != 0) {
           commit('setListNewsSearch2', res.data.listNewsSearch2)
+        }
+      })
+  },
+  getNewsAllNotification({
+    commit
+  }) {
+
+    axios
+      .get('/actualitesAllNotification')
+      .then(res => {
+        if (res.data.listNewsAllNotification != 0) {
+          commit('setListNewsAllNotification', res.data.listNewsAllNotification)
         }
       })
   },
@@ -181,6 +196,9 @@ const getters = {
   },
   setListNewsAll: state => {
     return state.listNewsAll
+  },
+  setListNewsAllNotification: state => {
+    return state.listNewsAllNotification
   },
   setListNewsReadMore: state => {
     return state.listNewsReadMore

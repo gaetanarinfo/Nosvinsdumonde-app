@@ -20,7 +20,7 @@
           <span class="badge_region">{{ vins.apellationBoisson }}</span>
         </div>
 
-        <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
+        <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0;text-transform: uppercase;">
           <q-btn v-ripple outline text-color="warning"> {{ $t('DECOUVRIR_BTN') }} </q-btn>
         </q-item>
 

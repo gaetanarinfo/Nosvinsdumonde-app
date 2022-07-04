@@ -259,7 +259,7 @@
                       <div>
                         <p class="text-white"
                           v-if="listChampagnesId.contentCaracteristiqueBoisson2 && locale == 'en-US'">
-                          {{ $t(listChampagnesId.contentCaracteristiqueBoisson2) }}
+                          {{ listChampagnesId.contentCaracteristiqueBoisson2 }}
                         </p>
 
                         <p class="text-white" v-else>
@@ -279,7 +279,7 @@
                     <div class="card-body q-px-md text-center">
                       <h3 class="card-title text-dark"
                         v-if="listChampagnesId.titreCaracteristiqueBoisson2 && locale == 'en-US'">
-                        {{ $t(listChampagnesId.titreCaracteristiqueBoisson2) }}
+                        {{ listChampagnesId.titreCaracteristiqueBoisson2 }}
                       </h3>
 
                       <h3 class="card-title text-dark" v-else>
@@ -371,7 +371,8 @@
                 }}</span>
               </div>
 
-              <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
+              <q-item class="q-my-md q-mx-none"
+                style="justify-content: start; padding: 1em 0;text-transform: uppercase;">
                 <q-btn :to="'/' + champagnes.typeBoisson + '/' + champagnes.idBoisson"
                   @click="actuBtn(champagnes.idBoisson)" color="warning" push>
                   {{ $t('DECOUVRIR_BTN') }}

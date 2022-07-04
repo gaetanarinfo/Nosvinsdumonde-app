@@ -55,7 +55,7 @@ const actions = {
               position: 'top-left',
               timeout: 2500,
               type: 'positive',
-              message: 'Une erreur est survenue !'
+              message: this.$t('MESSAGE_UPDATE_3')
             })
 
             setTimeout(() => {

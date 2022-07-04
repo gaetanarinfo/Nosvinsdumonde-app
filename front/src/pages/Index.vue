@@ -2,6 +2,30 @@
   <q-page class="body_page q-mt-lg">
 
     <div class="q-pa-md q-mb-lg" style="padding: 0 5vw;width: 100%">
+
+      <h6 style="color: white;border-bottom: 3px solid #ffc107; padding-bottom: 12px; text-transform: uppercase;"
+        class="q-mb-md q-mt-md text-left"><i class="fa-brands fa-gitlab "></i> {{ $t('TITLE_ABONNEMENT') }}
+      </h6>
+
+      <q-item transition-show="flip-down" transition-hide="flip-up" class="q-ma-none q-pa-none q-mb-md"
+        style="width: 100%;justify-content: center;">
+        <q-img style="width: 100%;max-width: 300px" src="../assets/img/promotion-stamp-png.png" alt="Promotion" />
+      </q-item>
+
+      <q-item class="q-ma-none q-pa-none q-mb-md" style="width: 100%;justify-content: center;"
+        transition-show="flip-down" transition-hide="flip-up">
+        <q-img style="width: 100%;max-width: 135px;" src="../assets/img/cc-plan-subscriptio.png" />
+      </q-item>
+
+      <q-item class="q-ma-none q-pa-none" style="justify-content: center;" transition-show="flip-down"
+        transition-hide="flip-up">
+        <q-btn push color="info" href="https://buy.stripe.com/bIY4j7eqT2RUd4k7ss">
+          <i class="fa-solid fa-certificate q-mr-sm"></i> {{ $t('BTN_ABONNEMENT') }}
+        </q-btn>
+      </q-item>
+    </div>
+
+    <div class="q-pa-md q-mb-lg" style="padding: 0 5vw;width: 100%">
       <q-expansion-item class="shadow-1 overflow-hidden" style="border-radius: 12px" icon="fa-solid fa-magnifying-glass"
         :label="$t('RECHERCHE')" header-class="bg-primary text-white" expand-icon-class="text-white">
         <q-card>
@@ -79,10 +103,10 @@
       <div style="justify-content: center; padding: 0 5vw" class="q-mb-lg">
         <q-item class="q-my-md q-mx-none" style="justify-content: center; padding: 1em 0">
           <q-btn push to="/produits" color="warning" size="18px">
-            <q-item-section avatar style="min-width: 20px; padding-right: 10px">
+            <q-item-section avatar style="min-width: 20px; padding-right: 10px; text-transform: uppercase;">
               <q-icon size="15px" name="fa-solid fa-list" />
             </q-item-section>
-            Tous nos produits
+            {{ $t('TITLE_PAGE_PRODUITS') }}
           </q-btn>
         </q-item>
       </div>

@@ -368,7 +368,7 @@
             }}</span>
           </div>
 
-          <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0">
+          <q-item class="q-my-md q-mx-none" style="justify-content: start; padding: 1em 0;text-transform: uppercase;">
             <q-btn :to="'/' + champagnes.typeBoisson + '/' + champagnes.idBoisson" push color="warning">
               {{ $t('DECOUVRIR_BTN') }}
             </q-btn>

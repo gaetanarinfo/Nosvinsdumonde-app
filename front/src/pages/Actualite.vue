@@ -7,7 +7,7 @@
       </template>
 
       <q-breadcrumbs-el clickable to="/" :label="$t('NAVBAR_ITEM_1')" style="color: #ffc107" />
-      <q-breadcrumbs-el clickable href="/#/actualites" label="Actualités" style="color: #ffc107" />
+      <q-breadcrumbs-el clickable href="/#/actualites" :label="$t('LINK_ACTUALITE')" style="color: #ffc107" />
       <q-breadcrumbs-el :label="decode(listNewsId.title)" style="color: white" />
     </q-breadcrumbs>
   </div>
@@ -64,7 +64,7 @@
             ">
             <div>Par {{ listNewsId.author }}</div>
             <div>
-              <span class="text-muted" style="font-size: inherit">Le {{ listNewsId.date }}</span>
+              <span class="text-muted" style="font-size: inherit">{{ $t('LE') }} {{ listNewsId.date }}</span>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
         <hr />
 
         <div class="text-white q-mt-md" style="display: flex; gap: 16px; justify-content: flex-end">
-          <div>Partage</div>
+          <div>{{ $t('PARTAGE') }}</div>
           <div>
             <a :href="
               'https://www.facebook.com/sharer/sharer.php?u=https://nosvinsdumonde.com/fr/actualite/' +
@@ -97,7 +97,7 @@
         <hr />
 
         <div class="text-white q-py-sm" style="display: flex; gap: 16px">
-          <div>Partage</div>
+          <div>{{ $t('PARTAGE') }}</div>
           <div>
             <a href="https://www.facebook.com/sharer/sharer.php?u=https://nosvinsdumonde.com/fr/actualite/les-grands-crus-classes-en-1855-ouvrent-leurs-portes-et-leur-carnet-d-experiences"
               style="color: #dc3e72; text-decoration: none"><i class="fa-brands fa-facebook-f"></i></a>
@@ -111,46 +111,46 @@
 
         <hr />
 
-        <p class="text-white fw-bold q-mt-md">Tags :</p>
+        <p class="text-white fw-bold q-mt-md">{{ $t('TAGS') }} :</p>
 
         <div class="tags q-mb-md" v-html="decode(listNewsId.tags)"></div>
 
         <div class="q-mb-md text-center">
           <q-btn @click="toggle = !toggle" outline color="info" size="md">
             <i class="fa-solid fa-comment"></i>
-            <div class="q-pl-sm">Laisser un commentaire</div>
+            <div class="q-pl-sm">{{ $t('LAISSE_COMMENT') }}</div>
           </q-btn>
         </div>
 
         <div class="q-mb-md q-mt-lg">
           <h3 class="text-white">
-            Tous les commentaires ({{ listNewsCommentsCount }})
+            {{ $t('COUNT_COMMENT') }} ({{ listNewsCommentsCount }})
           </h3>
         </div>
 
         <div class="comments" v-show="toggle">
           <div class="row">
             <q-form ref="myForm2" class="q-mt-md q-mb-md text-white" style="width: 100%">
-              <q-input v-model="form2.c_mail" label="Votre email *" lazy-rules filled dark type="email" :dense="dense"
+              <q-input v-model="form2.c_mail" :label="$t('EMAIL_VOTRE')" lazy-rules filled dark type="email"
+                :dense="dense" :rules="[
+                  (val) =>
+                    (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
+                ]" />
+
+              <q-input v-model="form2.c_nom" :label="$t('EMAIL_NOM')" lazy-rules filled dark type="text" :dense="dense"
                 :rules="[
                   (val) =>
-                    (val && val.length > 2) || 'Veuillez taper quelque chose',
+                    (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
                 ]" />
 
-              <q-input v-model="form2.c_nom" label="Votre nom/pseudo *" lazy-rules filled dark type="text"
+              <q-input v-model="form2.c_message" lazy-rules type="textarea" filled dark :label="$t('EMAIL_CONTENT')"
                 :dense="dense" :rules="[
                   (val) =>
-                    (val && val.length > 2) || 'Veuillez taper quelque chose',
-                ]" />
-
-              <q-input v-model="form2.c_message" lazy-rules type="textarea" filled dark label="Votre commentaire *"
-                :dense="dense" :rules="[
-                  (val) =>
-                    (val && val.length > 2) || 'Veuillez taper quelque chose',
+                    (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
                 ]" />
 
               <div>
-                <q-btn label="Valider" @click="onSubmit2(listNewsId.id)" type="submit" color="positive"
+                <q-btn :label="$t('VALIDER')" @click="onSubmit2(listNewsId.id)" type="submit" color="positive"
                   :disabled="submitted2" v-close-popup />
               </div>
             </q-form>
@@ -160,7 +160,7 @@
 
         <div class="comments_show q-mt-md" v-if="listNewsCommentsCount < 1">
           <p class="fw-bold text-white" style="font-size: 15px">
-            Pas encore de commentaire à cet article.
+            {{ $t('ALL_COMMENTS') }}
           </p>
         </div>
 
@@ -183,7 +183,7 @@
               <div class="q-my-lg">
                 <a role="button" class="text-start text-warning text-decoration-none abuse"
                   @click="(modal = true), recupInfo(comments.id, listNewsId.id)">
-                  <i class="fa-solid fa-triangle-exclamation q-mr-sm"></i>Signaler le commentaire
+                  <i class="fa-solid fa-triangle-exclamation q-mr-sm"></i>{{ $t('SIGNAL_COMMENTS') }}
                 </a>
               </div>
 
@@ -202,7 +202,7 @@
             <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
           </q-item>
 
-          <q-item style="padding: 0 0">A LIRE AUSSI</q-item>
+          <q-item style="padding: 0 0">{{ $t('LIRE_AUSSI') }}</q-item>
         </div>
 
         <div class="q-mt-lg">
@@ -231,7 +231,7 @@
                   align-items: center;
                 ">
                 <q-btn :to="'/actualite/' + news.url" @click="actuBtn(news.url)" push color="info">
-                  Lire la suite
+                  {{ $t('SUITE') }}
                 </q-btn>
 
                 <div>{{ news.date }}</div>
@@ -259,38 +259,30 @@
       <q-card style="max-height: 50vh" class="scroll">
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6" style="font-size: 15px">
-            SIGNALER UN COMMENTAIRE
+            {{ $t('SIGNAL_COMMENT') }}
           </div>
           <q-space />
           <q-btn icon="close" size="sm" flat round dense v-close-popup />
         </q-card-section>
 
         <q-card-section>
-          <p>
-            Vous avez repéré un commentaire avec un contenu illégal ou portant
-            atteinte à vos droits ?
-          </p>
-          <p>
-            Afin de nous aider à traiter votre alerte, merci de nous décrire
-            précisément ce qui vous paraît illégal dans ce message.
-          </p>
+          <div v-html="$t('SIGNAL_COMMENT_TEST')"></div>
 
           <q-form ref="myForm" class="q-gutter-md q-mt-md">
-            <q-input v-model="form.email_comm" label="Veuillez saisir votre mail *" lazy-rules type="email" :rules="[
+            <q-input v-model="form.email_comm" :label="$t('FORM_ABUSE_1')" lazy-rules type="email" :rules="[
               (val) =>
-                (val && val.length > 2) || 'Veuillez taper quelque chose',
+                (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
             ]" />
 
-            <q-input v-model="form.title_comm" label="Titre de votre signalement *" lazy-rules type="text" :rules="[
+            <q-input v-model="form.title_comm" :label="$t('FORM_ABUSE_2') + '*'" lazy-rules type="text" :rules="[
               (val) =>
-                (val && val.length > 2) || 'Veuillez taper quelque chose',
+                (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
             ]" />
 
-            <q-input v-model="form.message_comm" lazy-rules type="textarea"
-              label="Expliquez ici pourquoi le message vous parait illégal *" :rules="[
-                (val) =>
-                  (val && val.length > 2) || 'Veuillez taper quelque chose',
-              ]" />
+            <q-input v-model="form.message_comm" lazy-rules type="textarea" :label="$t('FORM_ABUSE_3')" :rules="[
+              (val) =>
+                (val && val.length > 2) || $t('VEUILLEZ_TAPEZ'),
+            ]" />
 
             <div>
               <q-btn label="Valider" @click="onSubmit()" type="submit" color="positive" :disabled="submitted" />
@@ -336,7 +328,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Votre signalement a bien été pris en compte.',
+          message: this.$t('MESSAGE_ABUSE_1'),
           timeout: 2500,
         });
       },
@@ -344,7 +336,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'negative',
-          message: 'Une erreur est survenue !',
+          message: this.$t('MESSAGE_ABUSE_2'),
           timeout: 2500,
         });
       },
@@ -352,7 +344,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'positive',
-          message: 'Merci pour votre commentaire.',
+          message: $t('MESSAGE_MERCI_COMMENT'),
           timeout: 2500,
         });
       },
@@ -360,7 +352,7 @@ export default {
         $q.notify({
           position: 'top-left',
           type: 'negative',
-          message: 'Vous avez déjà commenté cette actualité.',
+          message: $t('MESSAGE_ERROR_COMMENT'),
           timeout: 2500,
         });
       },

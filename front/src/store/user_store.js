@@ -2,12 +2,53 @@
  * Store Auth
  *
  *************/
-
 import axios from 'axios'
 import {
   Cookies,
   Notify
 } from 'quasar'
+
+// outside of a Vue file
+import {
+  Quasar
+} from 'quasar'
+
+Quasar.lang.getLocale() // returns a string
+
+if (Quasar.lang.getLocale() == 'fr-FR') {
+
+  var langs = {
+    MESSAGE_USER_1: 'Votre compte ne semble pas exister sur Nosvinsdumonde !',
+    MESSAGE_USER_2: 'Le mot de passe ne correspond pas à vore compte !',
+    MESSAGE_USER_3: 'Merci de votre visite',
+    MESSAGE_USER_4: ' à bientôt !',
+    MESSAGE_USER_4_4: 'Votre compte semble exister sur Nosvinsdumonde !',
+    MESSAGE_USER_5: 'Merci pour votre inscription ',
+    MESSAGE_USER_6: 'Votre profil est maintenant à jour.',
+    MESSAGE_USER_7: 'Vous n\'avez pas assez de point !',
+    MESSAGE_USER_8: 'Vos points ont été transformés en euro.',
+    BONJOUR: 'Bonjour',
+    MESSAGE_USER_5: 'Merci pour votre inscription ',
+    MESSAGE_FORGOT_SUCCESS: 'Vous allez recevoir un email prochainement.',
+  }
+
+} else if (Quasar.lang.getLocale() == 'en-US') {
+
+  var langs = {
+    MESSAGE_USER_1: 'Your account does not seem to exist on Nosvinsdumonde !',
+    MESSAGE_USER_2: 'The password does not match your account!',
+    MESSAGE_USER_3: 'Thank you for visiting',
+    MESSAGE_USER_4: 'see you soon!',
+    MESSAGE_USER_4: 'Your account seems to exist on Nosvinsdumonde !',
+    MESSAGE_USER_5: 'Thank you for registering',
+    MESSAGE_USER_6: 'Your profile is now up to date.',
+    MESSAGE_USER_7: 'You don\'t have enough points!',
+    MESSAGE_USER_8: 'Your points have been converted into euros.',
+    BONJOUR: 'Hello',
+    MESSAGE_FORGOT_SUCCESS: 'You will receive an email soon.',
+  }
+
+}
 
 const state = {
   listUser: {},
@@ -31,6 +72,7 @@ var compteur = 1;
 var compteur2 = 1;
 var compteur3 = 1;
 var compteur4 = 1;
+var compteur5 = 1;
 
 const mutations = {
   setListUser(state, value) {
@@ -60,6 +102,7 @@ const actions = {
   loginUser({
     commit
   }, payload) {
+
     axios
       .post('/login', {
         email: payload.email,
@@ -76,7 +119,7 @@ const actions = {
           Notify.create({
             position: 'top-left',
             type: 'negative',
-            message: 'Votre compte ne semble pas exister sur Nosvinsudmonde !',
+            message: langs.MESSAGE_USER_1,
             timeout: 2500,
           });
         }
@@ -85,7 +128,7 @@ const actions = {
           Notify.create({
             position: 'top-left',
             type: 'negative',
-            message: 'Le mot de passe ne correspond pas à vore compte !',
+            message: t('MESSAGE_USER_2'),
             timeout: 2500,
           })
         } else {
@@ -109,7 +152,7 @@ const actions = {
               position: 'top-left',
               timeout: 2500,
               type: 'positive',
-              message: `Bonjour ${res.data.sess.firstname} ${res.data.sess.lastname}`
+              message: langs.BONJOUR + ` ${res.data.sess.firstname} ${res.data.sess.lastname}`
             })
 
             Cookies.set('setLoggedIn', true, {
@@ -138,6 +181,8 @@ const actions = {
     commit
   }) {
 
+
+
     const token = localStorage.getItem('token')
 
     axios
@@ -164,6 +209,8 @@ const actions = {
     commit
   }) {
 
+
+
     const token = localStorage.getItem('token')
 
     if (token !== null) {
@@ -189,6 +236,8 @@ const actions = {
     commit
   }) {
 
+
+
     const userToken = localStorage.getItem('token')
 
     if (userToken !== null) {
@@ -211,6 +260,8 @@ const actions = {
   loggedAuth({
     commit
   }) {
+
+
 
     const token = localStorage.getItem('token')
 
@@ -240,11 +291,13 @@ const actions = {
       .get('/logout')
       .then(() => {
 
+
+
         Notify.create({
           position: 'top-left',
           timeout: 2500,
           type: 'positive',
-          message: `Merci de votre visite ${payload} à bientôt !`
+          message: langs.MESSAGE_USER_3 + ` ${payload} ` + langs.MESSAGE_USER_4
         })
 
         Cookies.set('setLoggedIn', false, {
@@ -265,6 +318,8 @@ const actions = {
       })
   },
   registerUser({}, payload) {
+
+
 
     const users = {
       email2: payload.email2,
@@ -305,7 +360,7 @@ const actions = {
             Notify.create({
               position: 'top-left',
               type: 'negative',
-              message: 'Votre compte semble exister sur Nosvinsudmonde !',
+              message: langs.MESSAGE_USER_4_4,
               timeout: 2500,
             });
 
@@ -315,7 +370,7 @@ const actions = {
             position: 'top-left',
             timeout: 2500,
             type: 'positive',
-            message: `Merci pour votre inscription ${users.prenom} ${users.nom} !`
+            message: langs.MESSAGE_USER_5 + ` ${users.prenom} ${users.nom} !`
           })
 
         });
@@ -328,6 +383,8 @@ const actions = {
 
   },
   newsLetterUser({}, payload) {
+
+
 
     const newsletter = {
       email: payload.email,
@@ -350,7 +407,7 @@ const actions = {
             Notify.create({
               position: 'top-left',
               type: 'negative',
-              message: 'Votre compte semble exister sur Nosvinsudmonde !',
+              message: langs.MESSAGE_USER_4_4,
               timeout: 2500,
             });
 
@@ -362,7 +419,7 @@ const actions = {
               position: 'top-left',
               timeout: 2500,
               type: 'positive',
-              message: 'Nous avons tenu compte de votre abonnement à notre newsletter.',
+              message: langs.MESSAGE_1_NEWSLETTER
             })
 
           }
@@ -379,6 +436,9 @@ const actions = {
   paramsVerif({
     commit
   }) {
+
+
+
     axios
       .get('/params')
       .then((res) => {
@@ -386,6 +446,8 @@ const actions = {
       })
   },
   updateUser({}, payload) {
+
+
 
     const users = {
       email2: payload.email2,
@@ -427,7 +489,7 @@ const actions = {
             Notify.create({
               position: 'top-left',
               type: 'negative',
-              message: 'Une erreur est survenue !',
+              message: langs.MESSAGE_2_NEWSLETTER,
               timeout: 2500,
             });
 
@@ -438,7 +500,7 @@ const actions = {
               position: 'top-left',
               timeout: 2500,
               type: 'positive',
-              message: 'Votre profil est maintenant à jour.'
+              message: langs.MESSAGE_USER_6
             })
           }
 
@@ -452,6 +514,8 @@ const actions = {
 
   },
   convertPointCash({}, payload) {
+
+
 
     const users = {
       id: payload.id,
@@ -475,7 +539,7 @@ const actions = {
             Notify.create({
               position: 'top-left',
               type: 'negative',
-              message: 'Vous n\'avez pas assez de point !',
+              message: langs.MESSAGE_USER_7,
               timeout: 2500,
             });
 
@@ -486,7 +550,7 @@ const actions = {
               position: 'top-left',
               timeout: 2500,
               type: 'positive',
-              message: 'Vos points ont été transformés en euro.'
+              message: langs.MESSAGE_USER_8,
             })
 
           }
@@ -503,6 +567,8 @@ const actions = {
   verifPointCash({
     // commit
   }, payload) {
+
+
 
     axios
       .get('/verifCashback/' + payload)
@@ -526,6 +592,8 @@ const actions = {
     commit
   }, payload) {
 
+
+
     axios
       .get('/commandesHistorique/' + payload)
       .then(res => {
@@ -541,6 +609,8 @@ const actions = {
     commit
   }, payload) {
 
+
+
     axios
       .get('/colisHistorique/' + payload)
       .then(res => {
@@ -548,6 +618,53 @@ const actions = {
           res.data.listcolisHistorique,
         )
       })
+  },
+  forgotUser({}, payload) {
+
+    const users = {
+      email: payload.email,
+    };
+
+    if (compteur5 <= 1) {
+
+      compteur5++;
+
+      axios
+        .post('/forgot', users)
+        .then((res) => {
+
+          const err = res.data.error;
+          const suc = res.data.success;
+
+          // User empty
+          if (err === true) {
+
+            Notify.create({
+              position: 'top-left',
+              type: 'negative',
+              message: langs.MESSAGE_USER_1,
+              timeout: 2500,
+            });
+
+          }
+
+          if (suc === true) {
+            Notify.create({
+              position: 'top-left',
+              timeout: 2500,
+              type: 'positive',
+              message: langs.MESSAGE_FORGOT_SUCCESS
+            })
+          }
+
+        });
+
+    }
+
+    setTimeout(() => {
+      compteur5 = 1;
+    }, 2500);
+
   },
 }
 

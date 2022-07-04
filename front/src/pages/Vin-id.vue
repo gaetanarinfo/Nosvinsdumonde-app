@@ -254,7 +254,7 @@
 
                       <div>
                         <p class="text-white" v-if="listVinsId.contentCaracteristiqueBoisson2 && locale == 'en-US'">
-                          {{ $t(listVinsId.contentCaracteristiqueBoisson2) }}
+                          {{ listVinsId.contentCaracteristiqueBoisson2 }}
                         </p>
 
                         <p class="text-white" v-else>
@@ -274,7 +274,7 @@
                     <div class="card-body q-px-md text-center">
                       <h3 class="card-title text-dark"
                         v-if="listVinsId.titreCaracteristiqueBoisson2 && locale == 'en-US'">
-                        {{ $t(listVinsId.titreCaracteristiqueBoisson2) }}
+                        {{ listVinsId.titreCaracteristiqueBoisson2 }}
                       </h3>
 
                       <h3 class="card-title text-dark" v-else>

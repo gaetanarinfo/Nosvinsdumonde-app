@@ -1,6 +1,6 @@
 {
   "name": "nosvinsdumonde",
-  "version": "3.1.4",
+  "version": "3.1.6",
   "description": "Nosvinsdumonde - ACHAT DE VIN - rouge, blanc, rosé, champagne ★★★",
   "productName": "Nosvinsdumonde",
   "author": "Seigneur Gaëtan",
@@ -14,6 +14,7 @@
   "dependencies": {
     "@awesome-cordova-plugins/fcm": "^5.43.0",
     "@capacitor-community/fcm": "^2.0.2",
+    "@capacitor-community/stripe": "^3.8.1",
     "@capacitor/cli": "^3.6.0",
     "@capacitor/core": "^3.6.0",
     "@capacitor/ios": "^3.6.0",
@@ -31,6 +32,7 @@
     "composition-api": "^0.0.0",
     "cordova": "^5.3.3",
     "cordova-plugin-fcm-with-dependecy-updated": "^7.8.0",
+    "cordova-plugin-purchase": "^11.0.0",
     "core-js": "^3.6.5",
     "dotenv": "^16.0.1",
     "html-entities": "^2.3.3",
