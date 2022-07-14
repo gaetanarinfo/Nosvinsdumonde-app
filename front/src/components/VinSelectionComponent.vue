@@ -24,9 +24,13 @@
     <div class="q-mt-md appellation">
       <span class="text-white">{{ vinsOne.apellationBoisson }}</span>
     </div>
-    <div class="q-mt-sm prix">
-      <span class="text-white"><span class="chiffre">{{ replaceVirgule(vinsOne.prixBoisson) }}</span>
-        €</span>
+    <div class="q-mt-sm prix text-white">
+      <span class="chiffre"><span :class="vinsOne.planBoisson == 1 ? 'text-warning' : ''"
+          :style="vinsOne.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : 'font-size: 30px;'">{{
+              replaceVirgule(vinsOne.prixBoisson)
+          }} €</span> <span v-if="vinsOne.planBoisson == 1">{{
+    replaceVirgule(vinsOne.remiseBoisson)
+}} €</span></span>
     </div>
     <div class="q-mb-lg contenance">
       <span class="text-white">{{ $t('CONTENANCE') }} {{ vinsOne.contenanceBoisson }}</span>

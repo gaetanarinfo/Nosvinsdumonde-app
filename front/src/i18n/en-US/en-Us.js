@@ -654,6 +654,7 @@ export default {
   NUMERO_TRANSACTION: 'Transaction number',
   STATUS_TRANSACTION: 'Order status',
   TOTALS: 'Total',
+  TOTALS_HT: 'Total HT',
   DATE_PAIMENT: 'Date of payment',
   STATUS_COLIS: 'Package status',
   BLANC: 'White',
@@ -726,5 +727,18 @@ export default {
   BTN_ABONNEMENT: 'Subscribe',
 
   PREMIUM: 'Premium subscription',
+
+  VIGNERON_MONTH: 'The winemaker of the month',
+  VIGNERON_DOMAINE_MONTH: 'Domaine de la Grange Tiphaine',
+
+  SOLDE_MONTH: 'Summer Sale',
+  SOLDE_DOMAINE_MONTH: 'On the program the strongest discounts on more than 100 references of Wines and Champagnes!',
+
+  PAGE_SOLDE: '<h2 class="q-mb-lg">Opening of Sales at Nosvinsdumonde!</h2><p>Whether you are a total neophyte in wine, an amateur looking for new products, or a true enthusiast sharp, this selection is made for you!</p><p>On the program the strongest discounts on more than 300 references of Wines and Champagnes! It\'s now or never to get the best bargains in your sales.</p><p>So don\'t wait any longer to share a good bottle with your loved ones on your terrace, take the time to feel the emotions locked up in large (or small) bottles by the pool, rediscover the great classics and the latest nuggets around a barbecue...</p><p>Find legendary vintages, new releases, trendy AOCs and of course we treat you again and again with your favorite cuvées at absolutely unheard of prices!</p><p>Don\'t wait any longer to discover the selections from the summer sales! Now is the time to expand your cellar and indulge yourself at the best price!</p><p>Good tasting!</p><p>*From Wednesday July 6th until Thursday August 19, 2022, midnight.</p>',
+  PAGE_SOLDE_2: '<h2 class="q-mt-lg q-mb-lg">Find the region that suits you</h2><p>Discover the greatest wine-growing regions that we have selected for you. Discover the specificities of their wines, the richness of their terroirs, grape varieties and climates, which gives their wines an extraordinary variety. From Champagne to the South-West, from Bordeaux to Burgundy, from the Loire Valley to Languedoc, from Alsace to Spain. Let yourself be guided by this tour of the wine regions!</p>',
+  PAGE_SOLDE_3: '<h2 class="q-mt-lg q-mb-lg">Discover our selections from the 2022 Summer Sales</h2><p>Find among this selection the favorite wines that have aroused the enthusiasm during our tastings! Perfect wines, champagnes and spirits for your cellar without going wrong!</p>',
+
+  TITLE_PAGE_SOLDES: 'Sales and promotions ' + new Date().getFullYear(),
+  LINK_23: 'Sales',
 
 }

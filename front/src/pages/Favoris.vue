@@ -25,6 +25,12 @@
     <div class="items-start q-mt-lg" v-show="showSimulatedReturnData">
       <q-card class="card_vin q-mb-lg" flat v-for="vins in listVinsFavorisId" :key="vins.idBoisson">
         <q-item class="card_imgs_vin">
+
+          <div v-if="vins.planBoisson == 1" class="vin_plan">
+            <span>-{{ vins.planPourcentBoisson }}%</span>
+            <span>{{ $t('PLAN_POURCENT') }}</span>
+          </div>
+
           <q-img class="card_image_vin q-ma-sm" :src="
             'https://nosvinsdumonde.com/assets/img/' +
             vins.typeBoisson +
@@ -59,10 +65,12 @@
           </div>
 
           <div class="q-mt-sm prix text-left">
-            <span><span class="chiffre">{{
-                replaceVirgule(vins.prixBoisson)
-            }}</span>
-              €</span>
+            <span class="chiffre"><span :class="vins.planBoisson == 1 ? 'text-warning' : ''"
+                :style="vins.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : 'font-size: 30px;'">{{
+                    replaceVirgule(vins.prixBoisson)
+                }} €</span> <span v-if="vins.planBoisson == 1">{{
+    replaceVirgule(vins.remiseBoisson)
+}} €</span></span>
           </div>
 
           <div class="contenance text-subtitle1 text-left">

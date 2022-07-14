@@ -941,3 +941,27 @@ h1 {
 #message_privilege {
   display: none !important;
 }
+
+.prix .chiffre {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.vin_plan {
+  background-color: #942738;
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center !important;
+  border-radius: 50%;
+  font-weight: 500;
+  height: 90px;
+  width: 90px;
+  margin: 0 0;
+  line-height: 22px;
+  margin-top: 10px;
+}
+
+.vin_plan span:last-child {
+  display: block;
+}

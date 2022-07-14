@@ -181,7 +181,11 @@
                   flex-direction: column;
                   align-items: flex-end;
                 ">
-                <span class="total">{{ replaceVirgule(item.prixBoisson) }} €</span>
+                <span class="total" :class="item.planBoisson == 1 ? 'text-warning' : ''"
+                  :style="item.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : ''">{{
+                      replaceVirgule(item.prixBoisson)
+                  }} €</span>
+                <span class="total" v-if="item.planBoisson == 1">{{ replaceVirgule(item.remiseBoisson) }} €</span>
               </div>
             </div>
 
@@ -622,13 +626,33 @@
 
                     <div class="col-md-6">
                       <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;text-transform: uppercase;"><b>{{
+                          $t('TOTALS_HT')
+                      }}</b></h6>
+                    </div>
+
+                    <div class="col-md-6 text-end">
+                      <span>
+                        {{ replaceVirgule(totalHT.toFixed(2)) }} €
+                      </span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="col-md-12 q-mt-sm">
+
+                  <div style="display: flex;align-items: center;justify-content: space-between;">
+
+                    <div class="col-md-6">
+                      <h6 class="no-border q-pa-none q-ma-none" style="font-size: 16px;text-transform: uppercase;"><b>{{
                           $t('TOTALS')
                       }}</b></h6>
                     </div>
 
                     <div class="col-md-6 text-end">
                       <span>
-                        {{ replaceVirgule(totalFDP) }} €
+                        {{ replaceVirgule(totalFDP.toFixed(2)) }} €
                       </span>
                     </div>
 
@@ -1135,11 +1159,6 @@ var compteur = 1;
 function round(num) {
   var m = Number((Math.abs(num) * 100).toPrecision(15));
   return (Math.round(m) / 100) * Math.sign(num);
-}
-
-function checkNumberDigits(myNumber) {
-  var myNumbers = myNumber.toString().split('.');
-  return myNumbers[1] <= 9 ? parseFloat(myNumbers[0] + '.' + myNumbers[1] + '0') : parseFloat(myNumber);
 }
 
 var stringOptions = [
@@ -2178,6 +2197,7 @@ export default {
   data() {
 
     return {
+      totalHT: 0.00,
       forgot: false,
       loading: ref(false),
       versionTable: 1,
@@ -2370,8 +2390,12 @@ export default {
               var prixBoisson = 0;
               var typeBoisson = '';
               var contenanceBoisson = '';
+              var planBoisson = 0;
+              var remiseBoisson = 0;
 
               id = this.listCartId[i].idBoisson;
+              planBoisson = this.listCartId[i].planBoisson;
+              remiseBoisson = this.listCartId[i].remiseBoisson;
               nomBoisson = this.listCartId[i].nomBoisson;
               millesimeBoisson = this.listCartId[i].millesimeBoisson;
               imageBoisson = this.listCartId[i].imageBoisson;
@@ -2384,6 +2408,8 @@ export default {
               this.carts.push({
                 idBoisson: id,
                 nomBoisson: nomBoisson,
+                planBoisson: planBoisson,
+                remiseBoisson: remiseBoisson,
                 millesimeBoisson: millesimeBoisson,
                 imageBoisson: imageBoisson,
                 prixBoisson: prixBoisson,
@@ -2392,10 +2418,17 @@ export default {
                 contenanceBoisson: contenanceBoisson,
               });
 
-              this.total += round(
-                this.listCartId[i].prixBoisson *
-                res.filter((e) => e == id).length
-              );
+              if (planBoisson == 1) {
+                this.total += round(
+                  this.listCartId[i].remiseBoisson *
+                  Cookies.get('cart').split('-').filter((e) => e == id).length
+                );
+              } else {
+                this.total += round(
+                  this.listCartId[i].prixBoisson *
+                  Cookies.get('cart').split('-').filter((e) => e == id).length
+                );
+              }
 
               var point = 0;
 
@@ -2407,7 +2440,7 @@ export default {
 
             }
 
-            this.total = checkNumberDigits(round(this.total));
+            this.total = new Intl.NumberFormat('fr-FR').format(this.total);
 
             //Frais port
             if (Cookies.has('port') && Cookies.get('port') == '1') {
@@ -2442,15 +2475,20 @@ export default {
 
             // Calcul du total + des FDPS
             if (Cookies.has('port') && Cookies.get('port') == '2') {
-              this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port_definitif));
+              this.totalFDP = parseFloat(this.total) + parseFloat(this.port_definitif);
             } else {
-              this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port));
+              this.totalFDP = parseFloat(this.total) + parseFloat(this.port);
             }
+
+            var tva = round((this.totalFDP * 20.00) / 100, 2);
+            this.totalHT = this.totalFDP;
 
             if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
             else var cashback = 0.00;
 
-            this.totalFDP = (this.totalFDP - cashback - 11.8);
+            if (this.user.premium == 1) this.totalFDP = (round(this.totalFDP + tva, 2) - cashback - 11.8);
+            else
+              this.totalFDP = (round(this.totalFDP + tva, 2) - cashback);
 
           }
 
@@ -2494,8 +2532,12 @@ export default {
           var prixBoisson = 0;
           var typeBoisson = '';
           var contenanceBoisson = '';
+          var planBoisson = 0;
+          var remiseBoisson = 0;
 
           id = this.listCartId[i].idBoisson;
+          planBoisson = this.listCartId[i].planBoisson;
+          remiseBoisson = this.listCartId[i].remiseBoisson;
           nomBoisson = this.listCartId[i].nomBoisson;
           millesimeBoisson = this.listCartId[i].millesimeBoisson;
           imageBoisson = this.listCartId[i].imageBoisson;
@@ -2519,6 +2561,8 @@ export default {
               millesimeBoisson: millesimeBoisson,
               imageBoisson: imageBoisson,
               prixBoisson: prixBoisson,
+              planBoisson: planBoisson,
+              remiseBoisson: remiseBoisson,
               typeBoisson: typeBoisson,
               quantityBoisson: quantitys,
               contenanceBoisson: contenanceBoisson,
@@ -2536,10 +2580,17 @@ export default {
 
           this.total = 0;
 
-          this.total += round(
-            this.listCartId[i].prixBoisson *
-            Cookies.get('cart').split('-').filter((e) => e == id).length
-          );
+          if (planBoisson == 1) {
+            this.total += round(
+              this.listCartId[i].remiseBoisson *
+              Cookies.get('cart').split('-').filter((e) => e == id).length
+            );
+          } else {
+            this.total += round(
+              this.listCartId[i].prixBoisson *
+              Cookies.get('cart').split('-').filter((e) => e == id).length
+            );
+          }
 
           var point = 0;
 
@@ -2551,7 +2602,7 @@ export default {
 
         }
 
-        this.total = checkNumberDigits(round(this.total));
+        this.total = new Intl.NumberFormat('fr-FR').format(this.total);
 
         //Frais port
         if (Cookies.has('port') && Cookies.get('port') == '1') {
@@ -2586,15 +2637,20 @@ export default {
 
         // Calcul du total + des FDPS
         if (Cookies.has('port') && Cookies.get('port') == '2') {
-          this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port_definitif));
+          this.totalFDP = parseFloat(this.total) + parseFloat(this.port_definitif);
         } else {
-          this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port));
+          this.totalFDP = parseFloat(this.total) + parseFloat(this.port);
         }
+
+        var tva = round((this.totalFDP * 20.00) / 100, 2);
+        this.totalHT = this.totalFDP;
 
         if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
         else var cashback = 0.00;
 
-        this.totalFDP = (this.totalFDP - cashback - 11.8);
+        if (this.user.premium == 1) this.totalFDP = (round(this.totalFDP + tva, 2) - cashback - 11.8);
+        else
+          this.totalFDP = (round(this.totalFDP + tva, 2) - cashback);
 
         this.versionTable++;
 
@@ -2646,12 +2702,16 @@ export default {
             var prixBoisson = 0;
             var typeBoisson = '';
             var contenanceBoisson = '';
+            var planBoisson = 0;
+            var remiseBoisson = 0;
 
             id = this.listCartId[i].idBoisson;
             nomBoisson = this.listCartId[i].nomBoisson;
             millesimeBoisson = this.listCartId[i].millesimeBoisson;
             imageBoisson = this.listCartId[i].imageBoisson;
             prixBoisson = this.listCartId[i].prixBoisson;
+            planBoisson = this.listCartId[i].planBoisson;
+            remiseBoisson = this.listCartId[i].remiseBoisson;
             typeBoisson = this.listCartId[i].typeBoisson;
             contenanceBoisson = this.listCartId[i].contenanceBoisson;
 
@@ -2670,6 +2730,8 @@ export default {
               this.carts.push({
                 idBoisson: id,
                 nomBoisson: nomBoisson,
+                planBoisson: planBoisson,
+                remiseBoisson: remiseBoisson,
                 millesimeBoisson: millesimeBoisson,
                 imageBoisson: imageBoisson,
                 prixBoisson: prixBoisson,
@@ -2689,10 +2751,17 @@ export default {
             }
             this.total = 0;
 
-            this.total += round(
-              this.listCartId[i].prixBoisson *
-              Cookies.get('cart').split('-').filter((e) => e == id).length
-            );
+            if (planBoisson == 1) {
+              this.total += round(
+                this.listCartId[i].remiseBoisson *
+                Cookies.get('cart').split('-').filter((e) => e == id).length
+              );
+            } else {
+              this.total += round(
+                this.listCartId[i].prixBoisson *
+                Cookies.get('cart').split('-').filter((e) => e == id).length
+              );
+            }
 
             var point = 0;
 
@@ -2704,7 +2773,7 @@ export default {
 
           }
 
-          this.total = checkNumberDigits(round(this.total));
+          this.total = new Intl.NumberFormat('fr-FR').format(this.total)
 
           //Frais port
           if (Cookies.has('port') && Cookies.get('port') == '1') {
@@ -2739,15 +2808,20 @@ export default {
 
           // Calcul du total + des FDPS
           if (Cookies.has('port') && Cookies.get('port') == '2') {
-            this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port_definitif));
+            this.totalFDP = parseFloat(this.total) + parseFloat(this.port_definitif);
           } else {
-            this.totalFDP = checkNumberDigits(round(parseFloat(this.total) + this.port));
+            this.totalFDP = parseFloat(this.total) + parseFloat(this.port);
           }
+
+          var tva = round((this.totalFDP * 20.00) / 100, 2);
+          this.totalHT = this.totalFDP;
 
           if (this.user.cashBackActive == 1) var cashback = parseFloat(this.user.cashback)
           else var cashback = 0.00;
 
-          this.totalFDP = (this.totalFDP - cashback - 11.8);
+          if (this.user.premium == 1) this.totalFDP = (round(this.totalFDP + tva, 2) - cashback - 11.8);
+          else
+            this.totalFDP = (round(this.totalFDP + tva, 2) - cashback);
 
           this.versionTable++;
 

@@ -20,6 +20,7 @@
         <div id="presentation_vin" class="col-md-3">
           <div class="text-center"
             :style="(listVinsId.stickerBoisson != '' && listVinsId.stickerBoisson != null) ? 'display: flex;' : ''">
+
             <div>
               <img :src="
                 'https://nosvinsdumonde.com/assets/img/' +
@@ -36,6 +37,11 @@
                 listVinsId.stickerBoisson +
                 ''
               " class="img-fluid rounded-start" />
+
+              <div v-if="listVinsId.planBoisson == 1" class="vin_plan">
+                <span>-{{ listVinsId.planPourcentBoisson }}%</span>
+                <span>{{ $t('PLAN_POURCENT') }}</span>
+              </div>
             </div>
           </div>
 
@@ -130,7 +136,13 @@
 
             <div class="col">
               <h3 class="text-white text-end no-border q-pa-none q-ma-none">
-                {{ replaceVirgule(listVinsId.prixBoisson) }}<span> €</span>
+                <span :class="listVinsId.planBoisson == 1 ? 'text-warning' : ''"
+                  :style="listVinsId.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : 'font-size: 30px;'">{{
+                      replaceVirgule(listVinsId.prixBoisson)
+                  }} €</span>
+                <span v-if="listVinsId.planBoisson == 1" class="q-ml-sm">{{
+                    replaceVirgule(listVinsId.remiseBoisson)
+                }} €</span>
               </h3>
 
               <div class="text-end">
@@ -346,6 +358,12 @@
         <div class="items-start q-mt-lg">
           <q-card class="card_vin q-mb-lg" flat v-for="vins in listVinsSuggest" :key="vins.idBoisson">
             <q-item class="card_imgs_vin">
+
+              <div v-if="vins.planBoisson == 1" class="vin_plan">
+                <span>-{{ vins.planPourcentBoisson }}%</span>
+                <span>{{ $t('PLAN_POURCENT') }}</span>
+              </div>
+
               <q-img class="card_image_vin q-ma-sm" :src="
                 'https://nosvinsdumonde.com/assets/img/' +
                 vins.typeBoisson +
@@ -378,10 +396,11 @@
               </div>
 
               <div class="q-mt-sm prix text-left">
-                <span><span class="chiffre">{{
-                    replaceVirgule(vins.prixBoisson)
-                }}</span>
-                  €</span>
+                <span class="chiffre"><span v-if="vins.planBoisson == 1"
+                    :class="vins.planBoisson == 1 ? 'text-warning' : ''"
+                    :style="vins.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : ''">{{
+                        replaceVirgule(vins.prixBoisson)
+                    }} €</span> {{ replaceVirgule(vins.remiseBoisson) }} €</span>
               </div>
               <div class="contenance text-subtitle1 text-left">
                 <span>{{ $t('CONTENANCE') }} {{ vins.contenanceBoisson }}</span>

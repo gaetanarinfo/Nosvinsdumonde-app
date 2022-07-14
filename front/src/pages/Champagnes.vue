@@ -346,6 +346,12 @@
       v-show="showSimulatedReturnData">
       <q-card class="card_vin q-mb-lg" flat v-for="(champagnes, index) in getData" :key="index">
         <q-item class="card_imgs_vin">
+
+          <div v-if="champagnes.planBoisson == 1" class="vin_plan">
+            <span>-{{ champagnes.planPourcentBoisson }}%</span>
+            <span>{{ $t('PLAN_POURCENT') }}</span>
+          </div>
+
           <q-img class="card_image_vin q-ma-sm" :src="
             'https://nosvinsdumonde.com/assets/img/' +
             champagnes.typeBoisson +
@@ -378,10 +384,12 @@
             <span class="text-caption">{{ champagnes.apellationBoisson }}</span>
           </div>
           <div class="q-mt-sm prix">
-            <span><span class="chiffre">{{
-                replaceVirgule(champagnes.prixBoisson)
-            }}</span>
-              €</span>
+            <span class="chiffre"><span :class="champagnes.planBoisson == 1 ? 'text-warning' : ''"
+                :style="champagnes.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : 'font-size: 30px;'">{{
+                    replaceVirgule(champagnes.prixBoisson)
+                }} €</span> <span v-if="champagnes.planBoisson == 1">{{
+    replaceVirgule(champagnes.remiseBoisson)
+}} €</span></span>
           </div>
           <div class="contenance text-subtitle1">
             <span>{{ $t('CONTENANCE') }} {{ champagnes.contenanceBoisson }}</span>

@@ -2,30 +2,6 @@
   <q-page class="body_page q-mt-lg">
 
     <div class="q-pa-md q-mb-lg" style="padding: 0 5vw;width: 100%">
-
-      <h6 style="color: white;border-bottom: 3px solid #ffc107; padding-bottom: 12px; text-transform: uppercase;"
-        class="q-mb-md q-mt-md text-left"><i class="fa-brands fa-gitlab "></i> {{ $t('TITLE_ABONNEMENT') }}
-      </h6>
-
-      <q-item transition-show="flip-down" transition-hide="flip-up" class="q-ma-none q-pa-none q-mb-md"
-        style="width: 100%;justify-content: center;">
-        <q-img style="width: 100%;max-width: 300px" src="../assets/img/promotion-stamp-png.png" alt="Promotion" />
-      </q-item>
-
-      <q-item class="q-ma-none q-pa-none q-mb-md" style="width: 100%;justify-content: center;"
-        transition-show="flip-down" transition-hide="flip-up">
-        <q-img style="width: 100%;max-width: 135px;" src="../assets/img/cc-plan-subscriptio.png" />
-      </q-item>
-
-      <q-item class="q-ma-none q-pa-none" style="justify-content: center;" transition-show="flip-down"
-        transition-hide="flip-up">
-        <q-btn push color="info" href="https://buy.stripe.com/bIY4j7eqT2RUd4k7ss">
-          <i class="fa-solid fa-certificate q-mr-sm"></i> {{ $t('BTN_ABONNEMENT') }}
-        </q-btn>
-      </q-item>
-    </div>
-
-    <div class="q-pa-md q-mb-lg" style="padding: 0 5vw;width: 100%">
       <q-expansion-item class="shadow-1 overflow-hidden" style="border-radius: 12px" icon="fa-solid fa-magnifying-glass"
         :label="$t('RECHERCHE')" header-class="bg-primary text-white" expand-icon-class="text-white">
         <q-card>
@@ -74,6 +50,78 @@
           </q-card-section>
         </q-card>
       </q-expansion-item>
+    </div>
+
+    <div class="q-pa-md q-mb-lg" style="padding: 0 5vw;width: 100%">
+
+      <h6 style="color: white;border-bottom: 3px solid #ffc107; padding-bottom: 12px; text-transform: uppercase;"
+        class="q-mb-md q-mt-md text-left"><i class="fa-brands fa-gitlab "></i> {{ $t('TITLE_ABONNEMENT') }}
+      </h6>
+
+      <q-item transition-show="flip-down" transition-hide="flip-up" class="q-ma-none q-pa-none q-mb-md"
+        style="width: 100%;justify-content: center;">
+        <q-img style="width: 100%;max-width: 300px" src="../assets/img/promotion-stamp-png.png" alt="Promotion" />
+      </q-item>
+
+      <q-item class="q-ma-none q-pa-none q-mb-md" style="width: 100%;justify-content: center;"
+        transition-show="flip-down" transition-hide="flip-up">
+        <q-img style="width: 100%;max-width: 135px;" src="../assets/img/cc-plan-subscriptio.png" />
+      </q-item>
+
+      <q-item class="q-ma-none q-pa-none" style="justify-content: center;" transition-show="flip-down"
+        transition-hide="flip-up">
+        <q-btn push color="info" href="https://buy.stripe.com/bIY4j7eqT2RUd4k7ss">
+          <i class="fa-solid fa-certificate q-mr-sm"></i> {{ $t('BTN_ABONNEMENT') }}
+        </q-btn>
+      </q-item>
+    </div>
+
+    <div class="q-pa-md q-mb-lg">
+
+      <q-item clickable to="/appellation/1/169" class="q-pa-none q-ma-none" style="display: block;">
+        <q-item class="text-h5 text-white q-mb-lg q-pa-none"
+          style="font-size: 500; display: flex; width: 100%;text-align: left;border-bottom: 3px solid #ffc107;">
+          <q-item avatar style="min-width: 30px; padding: 0 0">
+            <q-icon size="15px" name="fa-solid fa-chevron-right" style="margin: 0.5rem !important" />
+          </q-item>
+
+          <q-item style="padding: 0 0; padding-bottom: 13px; text-transform: uppercase">{{ $t('VIGNERON_MONTH') }}
+          </q-item>
+        </q-item>
+
+        <q-img style="border-radius: 12px;box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;"
+          src="https://nosvinsdumonde.com/assets/img/vignerons/99528bba093a90a0c18edab6a359276453e31ac9.jpg">
+        </q-img>
+
+        <q-card flat bordered class="q-mt-md">
+          <q-card-section>
+            <div class="text-h6">{{ $t('VIGNERON_MONTH') }}</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            {{ $t('VIGNERON_DOMAINE_MONTH') }}
+          </q-card-section>
+
+        </q-card>
+      </q-item>
+
+      <q-item class="q-mt-md q-pa-none q-ma-none" clickable to="/soldes" style="display: block;">
+        <q-img class="q-mt-md" style="border-radius: 12px;box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;"
+          src="https://nosvinsdumonde.com/assets/img/vignerons/29ac51cfa36cbaa40479ad128c01144e565f86f8.jpg">
+        </q-img>
+
+        <q-card flat bordered class="q-mt-md">
+          <q-card-section>
+            <div class="text-h6">{{ $t('SOLDE_MONTH') }}</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            {{ $t('SOLDE_DOMAINE_MONTH') }}
+          </q-card-section>
+
+        </q-card>
+      </q-item>
+
     </div>
 
     <div class="container-md" id="bloc_vin_jour">
@@ -310,6 +358,7 @@
 
       <div class="container-md q-mb-lg q-mx-lg">
         <div class="text-left m-auto">
+
           <appellations-component :listAppellations="listAppellations"></appellations-component>
 
           <regions-component :listRegions="listRegions"></regions-component>

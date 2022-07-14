@@ -20,6 +20,7 @@
         <div id="presentation_vin" class="col-md-3">
           <div class="text-center"
             :style="(listChampagnesId.stickerBoisson != '' && listChampagnesId.stickerBoisson != null) ? 'display: flex;' : ''">
+
             <div>
               <img :src="
                 'https://nosvinsdumonde.com/assets/img/' +
@@ -36,6 +37,11 @@
                 listChampagnesId.stickerBoisson +
                 ''
               " class="img-fluid rounded-start" />
+
+              <div v-if="listChampagnesId.planBoisson == 1" class="vin_plan">
+                <span>-{{ listChampagnesId.planPourcentBoisson }}%</span>
+                <span>{{ $t('PLAN_POURCENT') }}</span>
+              </div>
             </div>
           </div>
 
@@ -132,7 +138,13 @@
 
             <div class="col">
               <h3 class="text-white text-end no-border q-pa-none q-ma-none">
-                {{ replaceVirgule(listChampagnesId.prixBoisson) }}<span> €</span>
+                <span :class="listChampagnesId.planBoisson == 1 ? 'text-warning' : ''"
+                  :style="listChampagnesId.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : 'font-size: 30px;'">{{
+                      replaceVirgule(listChampagnesId.prixBoisson)
+                  }} €</span>
+                <span v-if="listChampagnesId.planBoisson == 1" class="q-ml-sm">{{
+                    replaceVirgule(listChampagnesId.remiseBoisson)
+                }} €</span>
               </h3>
 
               <div class="text-end">
@@ -349,6 +361,12 @@
         <div class="items-start q-mt-lg">
           <q-card class="card_vin q-mb-lg" flat v-for="champagnes in listChampagnesSuggest" :key="champagnes.idBoisson">
             <q-item class="card_imgs_vin">
+
+              <div v-if="champagnes.planBoisson == 1" class="vin_plan">
+                <span>-{{ champagnes.planPourcentBoisson }}%</span>
+                <span>{{ $t('PLAN_POURCENT') }}</span>
+              </div>
+
               <q-img class="card_image_vin q-ma-sm" :src="
                 'https://nosvinsdumonde.com/assets/img/' +
                 champagnes.typeBoisson +
@@ -384,10 +402,11 @@
               </div>
 
               <div class="q-mt-sm prix text-left">
-                <span><span class="chiffre">{{
-                    replaceVirgule(champagnes.prixBoisson)
-                }}</span>
-                  €</span>
+                <span class="chiffre"><span v-if="champagnes.planBoisson == 1"
+                    :class="champagnes.planBoisson == 1 ? 'text-warning' : ''"
+                    :style="champagnes.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : ''">{{
+                        replaceVirgule(champagnes.prixBoisson)
+                    }} €</span> {{ replaceVirgule(champagnes.remiseBoisson) }} €</span>
               </div>
               <div class="contenance text-subtitle1 text-left">
                 <span> {{ $t('CONTENANCE') }} {{ champagnes.contenanceBoisson }}</span>

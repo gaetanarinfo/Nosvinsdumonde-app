@@ -36,6 +36,12 @@
       <q-card class="card_vin q-mb-lg" flat v-for="champagnes_vins in listAppellationsAll"
         :key="champagnes_vins.idBoisson">
         <q-item class="card_imgs_vin">
+
+          <div v-if="champagnes_vins.planBoisson == 1" class="vin_plan">
+            <span>-{{ champagnes_vins.planPourcentBoisson }}%</span>
+            <span>{{ $t('PLAN_POURCENT') }}</span>
+          </div>
+
           <q-img class="card_image_vin q-ma-sm" :src="
             'https://nosvinsdumonde.com/assets/img/' +
             champagnes_vins.typeBoisson +
@@ -79,10 +85,10 @@
             }}</span>
           </div>
           <div class="q-mt-sm prix">
-            <span><span class="chiffre">{{
-                replaceVirgule(champagnes_vins.prixBoisson)
-            }}</span>
-              €</span>
+            <span class="chiffre"><span :class="champagnes_vins.planBoisson == 1 ? 'text-warning' : ''"
+                :style="champagnes_vins.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : ''">{{
+                    replaceVirgule(champagnes_vins.prixBoisson)
+                }} €</span> {{ replaceVirgule(champagnes_vins.remiseBoisson) }} €</span>
           </div>
           <div class="contenance text-subtitle1">
             <span>{{ $t('CONTENANCE') }} {{ champagnes_vins.contenanceBoisson }}</span>

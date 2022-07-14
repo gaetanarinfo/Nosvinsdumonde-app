@@ -146,6 +146,11 @@ const routes: RouteRecordRaw[] = [
         name: 'OffresStage',
         component: () => import('src/pages/OffresStage.vue'),
       },
+      {
+        path: '/soldes',
+        name: 'SoldesPage',
+        component: () => import('src/pages/SoldesPage.vue'),
+      },
     ],
   },
 

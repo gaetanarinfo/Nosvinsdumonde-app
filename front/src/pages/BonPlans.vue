@@ -343,6 +343,12 @@
 
       <q-card id="my-table" class="card_vin q-mb-lg" flat v-for="(bon_plans, index) in getData" :key="index">
         <q-item class="card_imgs_vin">
+
+          <div v-if="bon_plans.planBoisson == 1" class="vin_plan">
+            <span>-{{ bon_plans.planPourcentBoisson }}%</span>
+            <span>{{ $t('PLAN_POURCENT') }}</span>
+          </div>
+
           <q-img class="card_image_vin q-ma-sm" :src="
             'https://nosvinsdumonde.com/assets/img/' +
             bon_plans.typeBoisson +
@@ -374,10 +380,10 @@
             <span class="text-caption">{{ bon_plans.apellationBoisson }}</span>
           </div>
           <div class="q-mt-sm prix">
-            <span><span class="chiffre">{{
-                replaceVirgule(bon_plans.prixBoisson)
-            }}</span>
-              €</span>
+            <span class="chiffre"><span :class="bon_plans.planBoisson == 1 ? 'text-warning' : ''"
+                :style="bon_plans.planBoisson == 1 ? 'text-decoration: line-through!important; font-size: 18px;' : ''">{{
+                    replaceVirgule(bon_plans.prixBoisson)
+                }} €</span> {{ replaceVirgule(bon_plans.remiseBoisson) }} €</span>
           </div>
           <div class="contenance text-subtitle1">
             <span>{{ $t('CONTENANCE') }} {{ bon_plans.contenanceBoisson }}</span>
@@ -400,6 +406,12 @@
     </div>
   </div>
 </template>
+
+<style>
+.text-warning {
+  color: #ffc107 !important;
+}
+</style>
 
 <script>
 import { mapActions, mapState } from 'vuex';

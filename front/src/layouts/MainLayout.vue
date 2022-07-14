@@ -1752,8 +1752,8 @@ export default defineComponent({
       livraisonValue: false,
       societeValue: false,
       params: {
-        appVersion: '3.1.6',
-        appVersionOnline: '3.1.6',
+        appVersion: '3.1.10',
+        appVersionOnline: '3.1.10',
       },
       user: {
         id: null,

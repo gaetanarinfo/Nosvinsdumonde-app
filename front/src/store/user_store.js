@@ -128,7 +128,7 @@ const actions = {
           Notify.create({
             position: 'top-left',
             type: 'negative',
-            message: t('MESSAGE_USER_2'),
+            message: langs.MESSAGE_USER_2,
             timeout: 2500,
           })
         } else {

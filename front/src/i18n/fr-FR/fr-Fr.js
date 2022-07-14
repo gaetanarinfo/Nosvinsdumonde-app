@@ -656,6 +656,7 @@ export default {
   NUMERO_TRANSACTION: 'Numéro de transaction',
   STATUS_TRANSACTION: 'Statut de la commande',
   TOTALS: 'Total',
+  TOTALS_HT: 'Total HT',
   DATE_PAIMENT: 'Date du paiement',
   STATUS_COLIS: 'Status du colis',
   BLANC: 'Blanc',
@@ -726,5 +727,18 @@ export default {
   BTN_ABONNEMENT: 'S\'abonner',
 
   PREMIUM: 'Abonnement premium',
+
+  VIGNERON_MONTH: 'Le vigneron du mois',
+  VIGNERON_DOMAINE_MONTH: 'Domaine de la Grange Tiphaine',
+
+  SOLDE_MONTH: 'Soldes d\'été',
+  SOLDE_DOMAINE_MONTH: 'Au programme les plus fortes remises sur plus de 100 références de Vins et Champagnes !',
+
+  TITLE_PAGE_SOLDES: 'Soldes et promotions ' + new Date().getFullYear(),
+  LINK_23: 'Soldes',
+
+  PAGE_SOLDE: '<h2 class="q-mb-lg">OUVERTURE des Soldes chez Nosvinsdumonde !</h2><p>Que vous soyez totalement néophyte en matière de vin, amateur à la recherche de nouveautés, ou vrai passionné aux exigences pointues, cette sélection est faite pour vous !</p><p>Au programme les plus fortes remises sur plus de 300 références de Vins et Champagnes ! C’est le moment ou jamais de faire les plus belles affaires de vos soldes.</p><p>Alors n’attendez plus pour partager une bonne bouteille avec vos proches sur votre terrasse, prendre le temps de ressentir les émotions enfermées dans les grands (ou les petits) flacons au bord de la piscine, redécouvrir les grands classiques et les dernières pépites autour d\'un barbecue...</p><p>Retrouvez des crus de légende, des nouveautés, des AOC tendances et bien sûr on vous régale encore et toujours avec vos cuvées préférées à des prix absolument jamais vus !</p><p>N’attendez plus pour découvrir les sélections des soldes d\'été ! C’est le moment d\'étoffer votre cave et de vous faire plaisir au meilleur prix !</p><p>Bonne dégustation !</p><p>*À partir du mercredi 06 juillet et jusqu\'au jeudi 19 août 2022, minuit.</p>',
+  PAGE_SOLDE_2: '<h2 class="q-mt-lg q-mb-lg">Trouvez la région qui vous correspond</h2><p>Partez découvrir les plus grandes régions viticoles que nous vous avons sélectionnées. Découvrez les spécificités de leurs vins, la richesse de leurs terroirs, cépages et climats, qui donne à ses vins une extraordinaire variété. De la Champagne au Sud-Ouest, de Bordeaux à la Bourgogne, de la Vallée de la Loire au Languedoc, de l\'Alsace à l\'Espagne. Laissez-vous guider par ce tour des régions viticoles !</p>',
+  PAGE_SOLDE_3: '<h2 class="q-mt-lg q-mb-lg">Découvrez nos sélections des Soldes d\'été 2022</h2><p>Retrouvez parmi cette sélection les vins coups de coeur qui ont suscité l\'enthousiasme lors de nos dégustations  ! Des vins, champagnes et spiritueux parfaits pour votre cave sans vous tromper !</p>',
 
 }
